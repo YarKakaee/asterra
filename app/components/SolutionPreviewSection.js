@@ -100,7 +100,7 @@ const SolutionPreviewSection = () => {
 		}, 4000);
 
 		return () => clearInterval(interval);
-	}, [isInView]);
+	}, [isInView, solutionCards, toggleBeforeAfter]);
 
 	const containerVariants = {
 		hidden: { opacity: 0 },
