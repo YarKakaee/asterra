@@ -105,6 +105,52 @@ body {
 	min-height: 200vh;
 }
 
+/* Fine dot pattern overlay */
+.dot-pattern {
+	position: relative;
+}
+
+.dot-pattern::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: radial-gradient(
+		circle,
+		rgba(0, 0, 0, 0.08) 1px,
+		transparent 1px
+	);
+	background-size: 24px 24px;
+	background-position: 0 0, 12px 12px;
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* Subtle dot pattern for lighter sections */
+.dot-pattern-light {
+	position: relative;
+}
+
+.dot-pattern-light::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: radial-gradient(
+		circle,
+		rgba(0, 0, 0, 0.04) 1px,
+		transparent 1px
+	);
+	background-size: 32px 32px;
+	background-position: 0 0, 16px 16px;
+	pointer-events: none;
+	z-index: 1;
+}
+
 .hero-bg::before {
 	content: '';
 	position: absolute;

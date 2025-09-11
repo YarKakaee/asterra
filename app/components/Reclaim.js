@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import VideoWord from './VideoWord';
+import CanvasVideoWord from './CanvasVideoWord';
 
 const PROBLEMS = [
 	{ text: 'Missed Calls.', src: '/calls.mp4' },
@@ -13,10 +13,9 @@ const PROBLEMS = [
 	{ text: 'Everything Else.', src: '/everything.mp4' },
 ];
 
-const Reclaim = () => {
+export default function Reclaim() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
-	// Auto-cycle (respects reduced motion)
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
 		const prefersReduced = window.matchMedia(
@@ -29,87 +28,48 @@ const Reclaim = () => {
 		return () => clearInterval(id);
 	}, []);
 
-	// Animation variants
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				duration: 0.6,
-				staggerChildren: 0.08,
-			},
-		},
-	};
-
-	const itemVariants = {
-		hidden: { opacity: 0, y: 24 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				duration: 0.6,
-				ease: 'easeOut',
-			},
-		},
-	};
-
 	return (
-		<section className="py-20 lg:py-32 relative">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true, margin: '-100px' }}
-					className="text-left max-w-4xl"
-				>
-					{/* Section Title */}
-					<motion.h3
-						variants={itemVariants}
-						className="text-lg font-medium text-gray-600 mb-6"
+		<section className="py-12 sm:py-20 lg:py-28 relative">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<h3 className="text-base sm:text-lg font-medium text-gray-700 mb-4 sm:mb-6">
+					Reclaim Your Time
+				</h3>
+
+				{/* tighter gap on mobile; roomier on desktop */}
+				<div className="mb-8 sm:mb-12 flex flex-col gap-3 sm:gap-4">
+					{PROBLEMS.map((p, i) => (
+						<div key={p.text}>
+							<CanvasVideoWord
+								text={p.text}
+								src={p.src}
+								active={i === activeIndex}
+								// you can tune these per your brand
+								activeSize="text-[clamp(1rem,8vw,5.3rem)]"
+								inactiveSize="text-[clamp(1.6rem,6.5vw,3.25rem)]"
+							/>
+						</div>
+					))}
+				</div>
+
+				<motion.div>
+					<motion.a
+						href="#"
+						className="inline-flex items-center sm:px-8 px-5 sm:py-4 py-3 bg-[#FF5633] text-white text-sm sm:text-lg font-semibold rounded-lg shadow-lg"
+						whileHover={{
+							scale: 1.05,
+							boxShadow: '0 20px 40px rgba(255, 86, 51, 0.3)',
+						}}
+						whileTap={{ scale: 0.98 }}
+						transition={{
+							type: 'spring',
+							stiffness: 300,
+							damping: 20,
+						}}
 					>
-						Reclaim Your Time
-					</motion.h3>
-
-					{/* Problems List */}
-					{/* Fixed gaps ensure consistent vertical spacing even when active is larger */}
-					<div className="mb-12 flex flex-col gap-3 sm:gap-4">
-						{PROBLEMS.map((p, i) => (
-							<div key={p.text}>
-								<VideoWord
-									text={p.text}
-									src={p.src}
-									active={i === activeIndex}
-									activeSize="text-6xl sm:text-7xl lg:text-8xl"
-									inactiveSize="text-4xl sm:text-5xl lg:text-6xl"
-								/>
-							</div>
-						))}
-					</div>
-
-					{/* CTA Button */}
-					<motion.div variants={itemVariants}>
-						<motion.a
-							href="#"
-							className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg hover:bg-[#E04A2B] transition-colors duration-200 shadow-lg"
-							whileHover={{
-								scale: 1.05,
-								boxShadow: '0 20px 40px rgba(255, 86, 51, 0.3)',
-							}}
-							whileTap={{ scale: 0.98 }}
-							transition={{
-								type: 'spring',
-								stiffness: 300,
-								damping: 20,
-							}}
-						>
-							Diagnose My Business Problems
-						</motion.a>
-					</motion.div>
+						Diagnose My Business Problems
+					</motion.a>
 				</motion.div>
 			</div>
 		</section>
 	);
-};
-
-export default Reclaim;
+}

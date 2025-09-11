@@ -189,9 +189,17 @@ const Navbar = () => {
 					<div className="hidden md:flex">
 						<motion.a
 							href="#"
-							className="bg-[#FF5633] text-white/95 px-6 py-2 rounded-lg text-sm hover:bg-[#E04A2B] transition-colors duration-200"
-							whileHover={{ scale: 1.05 }}
+							className="bg-[#FF5633] text-white/95 px-6 py-2 rounded-lg text-sm"
+							whileHover={{
+								scale: 1.05,
+								boxShadow: '0 5px 40px rgba(255, 86, 51, 0.3)',
+							}}
 							whileTap={{ scale: 0.98 }}
+							transition={{
+								type: 'spring',
+								stiffness: 300,
+								damping: 20,
+							}}
 						>
 							Contact Sales
 						</motion.a>

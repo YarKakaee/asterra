@@ -28,7 +28,7 @@ export default function VideoWord({
 	const PAD_Y = 70;
 
 	// Overscan to kill 1px “seam” at the top edge on some zoom levels.
-	const SEAM = 2;
+	const SEAM = 3;
 
 	// Baseline for fontSize=220 in a 260-high box (same as your original).
 	const baselineY = 200;

@@ -85,8 +85,8 @@ const HeroSection = () => {
 	};
 
 	return (
-		<section className="py-20 lg:py-48 relative">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<section className="py-18 lg:py-58 relative dot-pattern-light mb-26 lg:mb-0">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 				<motion.div
 					variants={containerVariants}
 					initial="hidden"
