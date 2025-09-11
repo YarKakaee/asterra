@@ -513,7 +513,7 @@ const SolutionPreviewSection = () => {
 					className="text-center"
 				>
 					<motion.button
-						className="inline-flex items-center px-8 py-4 rounded-2xl font-semibold text-sm sm:text-lg text-white cursor-pointer"
+						className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
 						style={{
 							background:
 								'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
