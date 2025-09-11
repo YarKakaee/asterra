@@ -384,7 +384,7 @@ const SolutionPreviewSection = () => {
 
 								{/* Results Badge */}
 								<motion.div
-									className="absolute top-6 left-6 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF6B47] to-[#FF8A65] text-white font-bold text-sm shadow-lg"
+									className="absolute top-6 left-6 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF5633] to-[#ff7a59] text-white font-bold text-sm shadow-lg"
 									animate={{
 										scale: [1, 1.05, 1],
 									}}

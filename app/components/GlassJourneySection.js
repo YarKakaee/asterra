@@ -1,13 +1,30 @@
 'use client';
 
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { useRef, useState, useMemo, useCallback } from 'react';
+import { useRef, useState, useMemo, useCallback, useEffect } from 'react';
 
 const GlassJourneySection = () => {
 	const sectionRef = useRef(null);
 	const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 	const [activeStep, setActiveStep] = useState(0);
 	const [expandedCard, setExpandedCard] = useState(null);
+	const [isMobile, setIsMobile] = useState(false);
+
+	// Detect mobile devices for performance optimization
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(
+				window.innerWidth < 768 ||
+					/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+						navigator.userAgent
+					)
+			);
+		};
+
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
 
 	const { scrollYProgress } = useScroll({
 		target: sectionRef,
@@ -107,25 +124,25 @@ const GlassJourneySection = () => {
 		[expandedCard]
 	);
 
-	// Animation variants following your established patterns
+	// Animation variants with mobile optimization
 	const containerVariants = {
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
 			transition: {
-				duration: 0.8,
-				staggerChildren: 0.15,
+				duration: isMobile ? 0.4 : 0.8,
+				staggerChildren: isMobile ? 0.08 : 0.15,
 			},
 		},
 	};
 
 	const headerVariants = {
-		hidden: { opacity: 0, y: 40 },
+		hidden: { opacity: 0, y: isMobile ? 20 : 40 },
 		visible: {
 			opacity: 1,
 			y: 0,
 			transition: {
-				duration: 0.7,
+				duration: isMobile ? 0.4 : 0.7,
 				ease: 'easeOut',
 			},
 		},
@@ -134,16 +151,16 @@ const GlassJourneySection = () => {
 	const wordVariants = {
 		hidden: {
 			opacity: 0,
-			y: 20,
-			filter: 'blur(8px)',
+			y: isMobile ? 10 : 20,
+			filter: isMobile ? 'blur(0px)' : 'blur(8px)',
 		},
 		visible: {
 			opacity: 1,
 			y: 0,
 			filter: 'blur(0px)',
 			transition: {
-				duration: 0.5,
-				ease: [0.25, 0.46, 0.45, 0.94],
+				duration: isMobile ? 0.3 : 0.5,
+				ease: isMobile ? 'easeOut' : [0.25, 0.46, 0.45, 0.94],
 			},
 		},
 	};
@@ -153,13 +170,13 @@ const GlassJourneySection = () => {
 			scale: 1,
 			rotateX: 0,
 			y: 0,
-			transition: { duration: 0.4, ease: 'easeOut' },
+			transition: { duration: isMobile ? 0.2 : 0.4, ease: 'easeOut' },
 		},
 		hover: {
-			scale: 1.02,
-			rotateX: 2,
-			y: -4,
-			transition: { duration: 0.4, ease: 'easeOut' },
+			scale: isMobile ? 1.005 : 1.02,
+			rotateX: isMobile ? 0 : 2,
+			y: isMobile ? -2 : -4,
+			transition: { duration: isMobile ? 0.2 : 0.4, ease: 'easeOut' },
 		},
 	};
 
@@ -300,21 +317,24 @@ const GlassJourneySection = () => {
 							}}
 						/>
 
-						{/* Animated pulse along the line */}
-						<motion.div
-							className="absolute top-0 w-2 h-2 bg-orange-400 rounded-full -left-0.5"
-							style={{
-								boxShadow: '0 0 10px rgba(255, 107, 71, 0.6)',
-							}}
-							animate={{
-								y: ['0%', '100%'],
-							}}
-							transition={{
-								duration: 8,
-								repeat: Infinity,
-								ease: 'linear',
-							}}
-						/>
+						{/* Animated pulse along the line - disabled on mobile */}
+						{!isMobile && (
+							<motion.div
+								className="absolute top-0 w-2 h-2 bg-orange-400 rounded-full -left-0.5"
+								style={{
+									boxShadow:
+										'0 0 10px rgba(255, 107, 71, 0.6)',
+								}}
+								animate={{
+									y: ['0%', '100%'],
+								}}
+								transition={{
+									duration: 8,
+									repeat: Infinity,
+									ease: 'linear',
+								}}
+							/>
+						)}
 					</div>
 
 					{/* Process Steps */}
@@ -335,22 +355,24 @@ const GlassJourneySection = () => {
 									{/* Glass Node */}
 									<div className="flex-shrink-0 relative mb-4 lg:mb-0">
 										{/* Outer glow ring */}
-										<motion.div
-											className="absolute inset-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full"
-											style={{
-												background: `linear-gradient(135deg, ${themeColors.bg})`,
-												opacity: 0.3,
-											}}
-											animate={{
-												scale: [1, 1.1, 1],
-												opacity: [0.3, 0.5, 0.3],
-											}}
-											transition={{
-												duration: 4,
-												repeat: Infinity,
-												ease: 'easeInOut',
-											}}
-										/>
+										{!isMobile && (
+											<motion.div
+												className="absolute inset-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full"
+												style={{
+													background: `linear-gradient(135deg, ${themeColors.bg})`,
+													opacity: 0.3,
+												}}
+												animate={{
+													scale: [1, 1.1, 1],
+													opacity: [0.3, 0.5, 0.3],
+												}}
+												transition={{
+													duration: 4,
+													repeat: Infinity,
+													ease: 'easeInOut',
+												}}
+											/>
+										)}
 
 										<motion.div
 											className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center cursor-pointer group"
@@ -369,53 +391,77 @@ const GlassJourneySection = () => {
 													inset 0 0 30px rgba(255, 255, 255, 0.1)
 												`,
 											}}
-											whileHover={{
-												scale: 1.08,
-												rotateY: 10,
-												boxShadow: `
+											whileHover={
+												!isMobile
+													? {
+															scale: 1.08,
+															rotateY: 10,
+															boxShadow: `
 													0 16px 50px rgba(0, 0, 0, 0.2),
 													0 6px 20px rgba(0, 0, 0, 0.1),
 													inset 0 2px 0 rgba(255, 255, 255, 1),
 													inset 0 0 40px rgba(255, 255, 255, 0.15)
 												`,
-											}}
-											animate={{
-												scale: [1, 1.02, 1],
-												rotateZ: [0, 2, -2, 0],
-											}}
+													  }
+													: {
+															scale: 1.02,
+													  }
+											}
+											animate={
+												!isMobile
+													? {
+															scale: [1, 1.02, 1],
+															rotateZ: [
+																0, 2, -2, 0,
+															],
+													  }
+													: {}
+											}
 											transition={{
-												duration: 6,
-												repeat: Infinity,
+												duration: isMobile ? 0.2 : 6,
+												repeat: isMobile ? 0 : Infinity,
 												ease: 'easeInOut',
 											}}
 										>
-											{/* Inner shimmer effect */}
-											<motion.div
-												className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
-												style={{
-													background:
-														'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%)',
-												}}
-												animate={{
-													rotate: [0, 360],
-												}}
-												transition={{
-													duration: 2,
-													repeat: Infinity,
-													ease: 'linear',
-												}}
-											/>
+											{/* Inner shimmer effect - disabled on mobile */}
+											{!isMobile && (
+												<motion.div
+													className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
+													style={{
+														background:
+															'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%)',
+													}}
+													animate={{
+														rotate: [0, 360],
+													}}
+													transition={{
+														duration: 2,
+														repeat: Infinity,
+														ease: 'linear',
+													}}
+												/>
+											)}
 
 											<motion.span
 												className="text-xl sm:text-2xl lg:text-3xl relative z-10"
-												animate={{
-													scale: [1, 1.1, 1],
-												}}
+												animate={
+													!isMobile
+														? {
+																scale: [
+																	1, 1.1, 1,
+																],
+														  }
+														: {}
+												}
 												transition={{
-													duration: 4,
-													repeat: Infinity,
+													duration: isMobile ? 0 : 4,
+													repeat: isMobile
+														? 0
+														: Infinity,
 													ease: 'easeInOut',
-													delay: index * 0.5,
+													delay: isMobile
+														? 0
+														: index * 0.5,
 												}}
 											>
 												{step.icon}
@@ -547,7 +593,7 @@ const GlassJourneySection = () => {
 													<p className="text-sm sm:text-base text-gray-700 mb-4 leading-relaxed">
 														{step.details}
 													</p>
-													<div className="grid grid-cols-1 gap-3">
+													<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 														{step.deliverables.map(
 															(item, idx) => (
 																<motion.div
@@ -561,7 +607,9 @@ const GlassJourneySection = () => {
 																	}}
 																	initial={{
 																		opacity: 0,
-																		x: -10,
+																		x: isMobile
+																			? 0
+																			: -10,
 																	}}
 																	animate={
 																		isExpanded
@@ -571,14 +619,20 @@ const GlassJourneySection = () => {
 																			  }
 																			: {
 																					opacity: 0,
-																					x: -10,
+																					x: isMobile
+																						? 0
+																						: -10,
 																			  }
 																	}
 																	transition={{
-																		delay:
-																			idx *
-																			0.1,
-																		duration: 0.3,
+																		delay: isMobile
+																			? 0
+																			: idx *
+																			  0.1,
+																		duration:
+																			isMobile
+																				? 0.2
+																				: 0.3,
 																	}}
 																>
 																	<span className="text-green-500 font-bold text-sm">

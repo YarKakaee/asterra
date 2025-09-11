@@ -290,7 +290,7 @@ const ProblemValidationSection = () => {
 					className="text-center"
 				>
 					<motion.button
-						className="cursor-pointer inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#FF6B47] to-[#FF8A65] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+						className="cursor-pointer inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#FF5633] to-[#ff755a] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
 						whileHover={{
 							scale: 1.05,
 							boxShadow: '0 20px 40px rgba(255, 107, 71, 0.3)',
