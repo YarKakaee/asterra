@@ -122,9 +122,22 @@ const ProblemValidationSection = () => {
 					{/* Eyebrow */}
 					<motion.div
 						variants={headerVariants}
-						className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-orange-100 to-red-100 mb-6"
+						className="inline-flex items-center px-6 py-3 rounded-full mb-8"
+						style={{
+							background:
+								'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 50%, rgba(59, 130, 246, 0.12) 100%)',
+							backdropFilter: 'blur(12px) saturate(180%)',
+							border: '1px solid rgba(59, 130, 246, 0.2)',
+							borderTop: '1px solid rgba(59, 130, 246, 0.3)',
+							borderBottom: '1px solid rgba(59, 130, 246, 0.1)',
+							boxShadow: `
+								0 4px 24px rgba(59, 130, 246, 0.1),
+								0 1px 0 rgba(255, 255, 255, 0.8) inset,
+								0 0 20px rgba(59, 130, 246, 0.05)
+							`,
+						}}
 					>
-						<span className="text-sm font-semibold text-[#FF6B47] tracking-wide">
+						<span className="text-sm font-semibold text-blue-600 tracking-wide">
 							THE REALITY CHECK
 						</span>
 					</motion.div>

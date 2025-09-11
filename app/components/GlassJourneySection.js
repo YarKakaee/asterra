@@ -245,19 +245,19 @@ const GlassJourneySection = () => {
 						className="inline-flex items-center px-6 py-3 rounded-full mb-8"
 						style={{
 							background:
-								'linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.3) 100%)',
+								'linear-gradient(135deg, rgba(255, 107, 71, 0.15) 0%, rgba(255, 107, 71, 0.08) 50%, rgba(255, 107, 71, 0.12) 100%)',
 							backdropFilter: 'blur(12px) saturate(180%)',
-							border: '1px solid rgba(255, 255, 255, 0.3)',
-							borderTop: '1px solid rgba(255, 255, 255, 0.6)',
-							borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+							border: '1px solid rgba(255, 107, 71, 0.2)',
+							borderTop: '1px solid rgba(255, 107, 71, 0.3)',
+							borderBottom: '1px solid rgba(255, 107, 71, 0.1)',
 							boxShadow: `
-								0 4px 24px rgba(0, 0, 0, 0.06),
+								0 4px 24px rgba(255, 107, 71, 0.1),
 								0 1px 0 rgba(255, 255, 255, 0.8) inset,
-								0 0 20px rgba(255, 255, 255, 0.1)
+								0 0 20px rgba(255, 107, 71, 0.05)
 							`,
 						}}
 					>
-						<span className="text-sm font-semibold text-[#FF6B47] tracking-wide">
+						<span className="text-sm font-semibold text-[#FF5633] tracking-wide">
 							OUR PROVEN METHOD
 						</span>
 					</motion.div>

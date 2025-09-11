@@ -11,6 +11,7 @@ const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [activeDropdown, setActiveDropdown] = useState(null);
 	const [isScrolled, setIsScrolled] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 
 	// Handle scroll detection
 	useEffect(() => {
@@ -21,6 +22,22 @@ const Navbar = () => {
 
 		window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
+
+	// Mobile detection for performance optimization
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(
+				window.innerWidth < 768 ||
+					/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+						navigator.userAgent
+					)
+			);
+		};
+
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+		return () => window.removeEventListener('resize', checkMobile);
 	}, []);
 
 	// Navigation menu items
@@ -54,21 +71,32 @@ const Navbar = () => {
 
 	// Animation variants
 	const dropdownVariants = {
-		hidden: { opacity: 0, y: -10, scale: 0.95 },
+		hidden: {
+			opacity: 0,
+			y: -15,
+			scale: 0.92,
+			filter: 'blur(4px)',
+		},
 		visible: {
 			opacity: 1,
 			y: 0,
 			scale: 1,
+			filter: 'blur(0px)',
 			transition: {
-				duration: 0.2,
-				ease: 'easeOut',
+				duration: 0.3,
+				ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for premium feel
+				staggerChildren: 0.05,
 			},
 		},
 		exit: {
 			opacity: 0,
 			y: -10,
 			scale: 0.95,
-			transition: { duration: 0.15 },
+			filter: 'blur(2px)',
+			transition: {
+				duration: 0.2,
+				ease: 'easeIn',
+			},
 		},
 	};
 
@@ -180,7 +208,7 @@ const Navbar = () => {
 									/>
 								</motion.a>
 
-								{/* Dropdown Menu */}
+								{/* Glass Morphism Dropdown Menu */}
 								<AnimatePresence>
 									{item.hasDropdown &&
 										activeDropdown === item.name && (
@@ -189,23 +217,146 @@ const Navbar = () => {
 												initial="hidden"
 												animate="visible"
 												exit="exit"
-												className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2"
+												className="absolute top-full left-0 mt-2 w-56 rounded-2xl py-3 overflow-hidden"
+												style={{
+													background:
+														'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0.9) 100%)',
+													backdropFilter: isMobile
+														? 'blur(12px) saturate(150%)'
+														: 'blur(20px) saturate(180%)',
+													border: '1px solid rgba(255, 255, 255, 0.6)',
+													borderTop:
+														'2px solid rgba(255, 255, 255, 0.8)',
+													borderBottom:
+														'1px solid rgba(255, 255, 255, 0.3)',
+													boxShadow: isMobile
+														? `0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9)`
+														: `
+															0 8px 32px rgba(0, 0, 0, 0.12),
+															0 2px 8px rgba(0, 0, 0, 0.08),
+															inset 0 1px 0 rgba(255, 255, 255, 0.9),
+															inset 0 0 20px rgba(255, 255, 255, 0.1)
+														`,
+												}}
 											>
+												{/* Subtle shimmer effect - disabled on mobile */}
+												{!isMobile && (
+													<motion.div
+														className="absolute inset-0 opacity-0"
+														style={{
+															background:
+																'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%)',
+														}}
+														animate={{
+															x: [
+																'-100%',
+																'100%',
+															],
+															opacity: [
+																0, 0.3, 0,
+															],
+														}}
+														transition={{
+															duration: 3,
+															repeat: Infinity,
+															ease: 'easeInOut',
+														}}
+													/>
+												)}
+
 												{item.dropdownItems.map(
 													(dropdownItem, index) => (
-														<motion.a
+														<motion.div
 															key={dropdownItem}
-															href="#"
-															className="block px-4 py-2 text-sm text-[#151719] hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-150"
-															whileHover={{
-																x: 4,
+															className="relative overflow-hidden"
+															initial={{
+																opacity: 0,
+																y: 10,
+															}}
+															animate={{
+																opacity: 1,
+																y: 0,
 															}}
 															transition={{
-																duration: 0.15,
+																delay:
+																	index *
+																	0.05,
+																duration: 0.2,
+																ease: 'easeOut',
 															}}
 														>
-															{dropdownItem}
-														</motion.a>
+															<motion.a
+																href="#"
+																className="block px-4 py-3 text-sm text-[#151719] font-medium relative group"
+																whileHover={{
+																	backgroundColor:
+																		'rgba(255, 255, 255, 0.5)',
+																}}
+																transition={{
+																	duration: 0.2,
+																	ease: 'easeOut',
+																}}
+															>
+																{/* Hover glass effect */}
+																<motion.div
+																	className="absolute inset-0 opacity-0 group-hover:opacity-100"
+																	style={{
+																		background:
+																			'linear-gradient(135deg, rgba(255, 107, 71, 0.08) 0%, rgba(255, 107, 71, 0.04) 100%)',
+																		backdropFilter:
+																			'blur(8px)',
+																	}}
+																	initial={{
+																		scale: 0.8,
+																		opacity: 0,
+																	}}
+																	whileHover={{
+																		scale: 1,
+																		opacity: 1,
+																		transition:
+																			{
+																				duration: 0.2,
+																				ease: 'easeOut',
+																			},
+																	}}
+																/>
+
+																{/* Text with subtle glow on hover */}
+																<motion.span
+																	className="relative z-10"
+																	whileHover={{
+																		color: '#FF5633',
+																		textShadow:
+																			'0 0 8px rgba(255, 107, 71, 0.3)',
+																	}}
+																	transition={{
+																		duration: 0.2,
+																	}}
+																>
+																	{
+																		dropdownItem
+																	}
+																</motion.span>
+
+																{/* Subtle left accent */}
+																<motion.div
+																	className="absolute left-0 top-1/2 w-0 h-0 bg-gradient-to-r from-[#FF5633] to-transparent opacity-0 group-hover:opacity-100"
+																	style={{
+																		transform:
+																			'translateY(-50%)',
+																	}}
+																	whileHover={{
+																		width: '3px',
+																		height: '60%',
+																		transition:
+																			{
+																				duration: 0.2,
+																				ease: 'easeOut',
+																			},
+																	}}
+																/>
+															</motion.a>
+														</motion.div>
 													)
 												)}
 											</motion.div>
