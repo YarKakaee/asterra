@@ -40,9 +40,9 @@ const ProblemValidationSection = () => {
 			emoji: '🤯',
 			title: 'Stress Multipliers',
 			problems: [
-				'"I&apos;m constantly worried about missing important calls"',
+				'"I constantly worry about missing important calls"',
 				'"Juggling multiple systems is overwhelming"',
-				'"I feel like I&apos;m always one step behind"',
+				'"We are always one step behind"',
 			],
 			gradient: 'from-purple-50 to-indigo-50',
 			borderColor: 'border-purple-100',
