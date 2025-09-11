@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -10,6 +10,18 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [activeDropdown, setActiveDropdown] = useState(null);
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	// Handle scroll detection
+	useEffect(() => {
+		const handleScroll = () => {
+			const scrollTop = window.scrollY;
+			setIsScrolled(scrollTop > 20);
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
 
 	// Navigation menu items
 	const navItems = [
@@ -88,7 +100,25 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="fixed top-0 left-0 right-0 glass-nav border-b border-white/20 z-50">
+		<motion.nav
+			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+				isScrolled
+					? 'glass-nav border-b border-white/20'
+					: 'bg-transparent border-b border-transparent'
+			}`}
+			animate={{
+				backgroundColor: isScrolled
+					? 'rgba(255, 255, 255, 0.9)'
+					: 'rgba(255, 255, 255, 0)',
+				backdropFilter: isScrolled
+					? 'blur(12px) saturate(180%)'
+					: 'blur(0px) saturate(100%)',
+				boxShadow: isScrolled
+					? '0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 1px 3px rgba(0, 0, 0, 0.05)'
+					: '0 0 0 rgba(255, 255, 255, 0) inset, 0 0 0 rgba(0, 0, 0, 0)',
+			}}
+			transition={{ duration: 0.3, ease: 'easeOut' }}
+		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between h-16">
 					{/* Logo */}
@@ -278,7 +308,7 @@ const Navbar = () => {
 					)}
 				</AnimatePresence>
 			</div>
-		</nav>
+		</motion.nav>
 	);
 };
 

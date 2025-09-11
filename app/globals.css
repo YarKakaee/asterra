@@ -76,12 +76,9 @@ body {
 
 /* Glass Navigation Bar - Performance Optimized */
 .glass-nav {
-	background: transparent;
-	backdrop-filter: blur(12px);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+	/* Background and effects are now handled by Framer Motion for smooth transitions */
 	/* Performance hints */
-	will-change: backdrop-filter;
+	will-change: backdrop-filter, background-color, box-shadow;
 	transform: translateZ(0);
 }
 
@@ -149,6 +146,64 @@ body {
 	background-position: 0 0, 16px 16px;
 	pointer-events: none;
 	z-index: 1;
+}
+
+/* Premium section styling */
+.premium-card {
+	background: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.9) 0%,
+		rgba(255, 255, 255, 0.7) 100%
+	);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06),
+		0 1px 0 rgba(255, 255, 255, 0.8) inset;
+	transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	will-change: transform, box-shadow;
+}
+
+.premium-card:hover {
+	transform: translateY(-8px) scale(1.02);
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12),
+		0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+/* Premium gradient text */
+.gradient-text {
+	background: linear-gradient(135deg, #ff6b47 0%, #ff8a65 50%, #ffab40 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-size: 200% 200%;
+	animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+	transition-property: transform, opacity, background-color, border-color,
+		box-shadow;
+	transition-duration: 0.2s;
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Performance optimization for animations */
+.will-change-transform {
+	will-change: transform;
+}
+
+.will-change-opacity {
+	will-change: opacity;
 }
 
 .hero-bg::before {
