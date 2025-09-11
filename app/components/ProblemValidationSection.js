@@ -155,7 +155,7 @@ const ProblemValidationSection = () => {
 						variants={headerVariants}
 						className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
 					>
-						If you nodded to any of these, you're not alone.
+						If you nodded to any of these, you are not alone.
 					</motion.p>
 				</motion.div>
 

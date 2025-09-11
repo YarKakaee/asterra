@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 
 const SolutionPreviewSection = () => {
 	const ref = useRef(null);
@@ -13,80 +13,84 @@ const SolutionPreviewSection = () => {
 		'modern-website': 'before',
 	});
 
-	const solutionCards = [
-		{
-			id: 'ai-receptionist',
-			icon: '🤖',
-			title: 'AI Receptionist',
-			before: {
-				scenario: 'Phone rings → Voicemail → Lost lead',
-				description: 'Missing calls means missing revenue',
-				bgColor: 'from-red-50 to-red-100',
-				iconColor: 'text-red-500',
-				chart: 'declining',
+	const solutionCards = useMemo(
+		() => [
+			{
+				id: 'ai-receptionist',
+				icon: '🤖',
+				title: 'AI Receptionist',
+				before: {
+					scenario: 'Phone rings → Voicemail → Lost lead',
+					description: 'Missing calls means missing revenue',
+					bgColor: 'from-red-50 to-red-100',
+					iconColor: 'text-red-500',
+					chart: 'declining',
+				},
+				after: {
+					scenario:
+						'AI answers → Appointment booked → Revenue captured',
+					description: 'Never miss a customer again',
+					bgColor: 'from-green-50 to-green-100',
+					iconColor: 'text-green-500',
+					chart: 'ascending',
+				},
+				results: '127% increase',
+				metric: 'Lead Conversion',
 			},
-			after: {
-				scenario: 'AI answers → Appointment booked → Revenue captured',
-				description: 'Never miss a customer again',
-				bgColor: 'from-green-50 to-green-100',
-				iconColor: 'text-green-500',
-				chart: 'ascending',
+			{
+				id: 'lead-nurturing',
+				icon: '📈',
+				title: 'Lead Nurturing AI',
+				before: {
+					scenario:
+						'Manual follow-ups → Forgotten leads → Cold prospects',
+					description: 'Leads slip through the cracks',
+					bgColor: 'from-red-50 to-red-100',
+					iconColor: 'text-red-500',
+					chart: 'declining',
+				},
+				after: {
+					scenario:
+						'Automated sequences → Perfect timing → Hot prospects',
+					description: 'Every lead gets VIP treatment',
+					bgColor: 'from-green-50 to-green-100',
+					iconColor: 'text-green-500',
+					chart: 'ascending',
+				},
+				results: '89% increase',
+				metric: 'Follow-up Rate',
 			},
-			results: '127% increase',
-			metric: 'Lead Conversion',
-		},
-		{
-			id: 'lead-nurturing',
-			icon: '📈',
-			title: 'Lead Nurturing AI',
-			before: {
-				scenario:
-					'Manual follow-ups → Forgotten leads → Cold prospects',
-				description: 'Leads slip through the cracks',
-				bgColor: 'from-red-50 to-red-100',
-				iconColor: 'text-red-500',
-				chart: 'declining',
+			{
+				id: 'modern-website',
+				icon: '🚀',
+				title: 'Modern Website',
+				before: {
+					scenario: 'Outdated design → Poor UX → Visitors leave',
+					description: 'Your website is costing you customers',
+					bgColor: 'from-red-50 to-red-100',
+					iconColor: 'text-red-500',
+					chart: 'declining',
+				},
+				after: {
+					scenario: 'Premium design → Smooth UX → Conversions soar',
+					description: 'Your website becomes a sales machine',
+					bgColor: 'from-green-50 to-green-100',
+					iconColor: 'text-green-500',
+					chart: 'ascending',
+				},
+				results: '156% increase',
+				metric: 'Conversion Rate',
 			},
-			after: {
-				scenario:
-					'Automated sequences → Perfect timing → Hot prospects',
-				description: 'Every lead gets VIP treatment',
-				bgColor: 'from-green-50 to-green-100',
-				iconColor: 'text-green-500',
-				chart: 'ascending',
-			},
-			results: '89% increase',
-			metric: 'Follow-up Rate',
-		},
-		{
-			id: 'modern-website',
-			icon: '🚀',
-			title: 'Modern Website',
-			before: {
-				scenario: 'Outdated design → Poor UX → Visitors leave',
-				description: 'Your website is costing you customers',
-				bgColor: 'from-red-50 to-red-100',
-				iconColor: 'text-red-500',
-				chart: 'declining',
-			},
-			after: {
-				scenario: 'Premium design → Smooth UX → Conversions soar',
-				description: 'Your website becomes a sales machine',
-				bgColor: 'from-green-50 to-green-100',
-				iconColor: 'text-green-500',
-				chart: 'ascending',
-			},
-			results: '156% increase',
-			metric: 'Conversion Rate',
-		},
-	];
+		],
+		[]
+	);
 
-	const toggleBeforeAfter = (cardId) => {
+	const toggleBeforeAfter = useCallback((cardId) => {
 		setBeforeAfterStates((prev) => ({
 			...prev,
 			[cardId]: prev[cardId] === 'before' ? 'after' : 'before',
 		}));
-	};
+	}, []);
 
 	// Auto-cycle through cards for demonstration
 	useEffect(() => {
