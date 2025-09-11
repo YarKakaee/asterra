@@ -177,7 +177,7 @@ const FloatingGuaranteePlaque = () => {
 											>
 												<p className="text-xs text-gray-700 leading-relaxed mb-2">
 													We guarantee measurable ROI
-													within 30 days, or we'll
+													within 30 days, or we will
 													work for free until you see
 													results.
 												</p>
