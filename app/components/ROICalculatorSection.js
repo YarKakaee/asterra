@@ -309,7 +309,7 @@ const ROICalculatorSection = () => {
 						variants={headerVariants}
 						className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-inset"
 					>
-						Calculate What You're{' '}
+						Calculate What You&apos;re{' '}
 						<span className="text-[#FF5633]">Losing</span> Right Now
 					</motion.h2>
 
@@ -510,7 +510,7 @@ const ROICalculatorSection = () => {
 										per month
 									</div>
 									<div className="text-sm text-gray-500 mt-2">
-										That's{' '}
+										That&apos;s{' '}
 										<span className="font-bold text-gray-700">
 											{formatCurrency(
 												animatedResults.annualLoss
