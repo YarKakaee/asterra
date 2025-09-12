@@ -7,6 +7,7 @@ const ROICalculatorSection = () => {
 	const sectionRef = useRef(null);
 	const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 	const [isMobile, setIsMobile] = useState(false);
+	const [activeTooltip, setActiveTooltip] = useState(null);
 
 	// Calculator state
 	const [inputs, setInputs] = useState({
@@ -40,7 +41,7 @@ const ROICalculatorSection = () => {
 		return () => window.removeEventListener('resize', checkMobile);
 	}, []);
 
-	// Calculator logic
+	// Calculator logic with tooltip explanations
 	const calculatorConfig = useMemo(
 		() => ({
 			businessSize: {
@@ -50,6 +51,12 @@ const ROICalculatorSection = () => {
 				default: 25,
 				multiplier: 150,
 				unit: 'employees',
+				tooltip: {
+					title: 'Business Inefficiency Cost',
+					explanation:
+						'Each employee loses ~$150/month due to inefficient processes, poor communication, and manual tasks that could be automated.',
+					calculation: 'Employees × $150 × 12 months',
+				},
 			},
 			missedCalls: {
 				label: 'Missed Calls per Week',
@@ -58,6 +65,12 @@ const ROICalculatorSection = () => {
 				default: 15,
 				multiplier: 75,
 				unit: 'calls/week',
+				tooltip: {
+					title: 'Missed Call Revenue Loss',
+					explanation:
+						'Average missed call represents $75 in lost revenue opportunity. This includes potential sales, bookings, and customer inquiries.',
+					calculation: 'Missed calls/week × 52 weeks × $75',
+				},
 			},
 			manualHours: {
 				label: 'Manual Admin Hours per Day',
@@ -66,6 +79,12 @@ const ROICalculatorSection = () => {
 				default: 3,
 				multiplier: 35,
 				unit: 'hours/day',
+				tooltip: {
+					title: 'Manual Labor Cost',
+					explanation:
+						'Time spent on repetitive admin tasks costs $35/hour including wages, benefits, and opportunity cost of higher-value work.',
+					calculation: 'Hours/day × 260 work days × $35/hour',
+				},
 			},
 		}),
 		[]
@@ -209,6 +228,26 @@ const ROICalculatorSection = () => {
 		}));
 	}, []);
 
+	// Close tooltip when clicking outside (mobile)
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (
+				isMobile &&
+				activeTooltip &&
+				!event.target.closest('.tooltip-container')
+			) {
+				setActiveTooltip(null);
+			}
+		};
+
+		document.addEventListener('touchstart', handleClickOutside);
+		document.addEventListener('click', handleClickOutside);
+		return () => {
+			document.removeEventListener('touchstart', handleClickOutside);
+			document.removeEventListener('click', handleClickOutside);
+		};
+	}, [isMobile, activeTooltip]);
+
 	// Animation variants
 	const containerVariants = {
 		hidden: { opacity: 0 },
@@ -322,11 +361,11 @@ const ROICalculatorSection = () => {
 				</motion.div>
 
 				{/* Calculator Container */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pt-20">
 					{/* Interactive Calculator */}
 					<motion.div variants={cardVariants} className="relative">
 						<div
-							className="rounded-2xl p-6 sm:p-8 lg:p-10 relative overflow-hidden"
+							className="rounded-2xl p-6 sm:p-8 lg:p-10 relative overflow-visible"
 							style={{
 								background:
 									'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.8) 100%)',
@@ -366,7 +405,7 @@ const ROICalculatorSection = () => {
 								/>
 							)}
 
-							<h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+							<h3 className="text-2xl font-bold text-gray-900 mb-8 text-center relative z-10">
 								Your Business Details
 							</h3>
 
@@ -375,9 +414,143 @@ const ROICalculatorSection = () => {
 									([key, config]) => (
 										<div key={key} className="relative">
 											<div className="flex items-center justify-between mb-2">
-												<label className="text-sm font-semibold text-gray-700">
-													{config.label}
-												</label>
+												<div className="flex items-center gap-2">
+													<label className="text-sm font-semibold text-gray-700">
+														{config.label}
+													</label>
+													{/* Info Tooltip */}
+													<div className="relative tooltip-container">
+														<motion.button
+															className="w-4 h-4 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-xs text-gray-600 transition-colors"
+															onClick={() =>
+																isMobile
+																	? setActiveTooltip(
+																			activeTooltip ===
+																				key
+																				? null
+																				: key
+																	  )
+																	: null
+															}
+															onMouseEnter={() =>
+																!isMobile &&
+																setActiveTooltip(
+																	key
+																)
+															}
+															onMouseLeave={() =>
+																!isMobile &&
+																setActiveTooltip(
+																	null
+																)
+															}
+															whileHover={
+																!isMobile
+																	? {
+																			scale: 1.1,
+																	  }
+																	: {}
+															}
+															whileTap={{
+																scale: 0.95,
+															}}
+														>
+															<span className="font-bold">
+																i
+															</span>
+														</motion.button>
+
+														{/* Tooltip Popup */}
+														<AnimatePresence>
+															{activeTooltip ===
+																key && (
+																<motion.div
+																	className="absolute right-0 bottom-full mb-4 w-72 sm:w-80 z-50 translate-x-34 sm:translate-x-38"
+																	initial={{
+																		opacity: 0,
+																		y: 10,
+																		scale: 0.9,
+																	}}
+																	animate={{
+																		opacity: 1,
+																		y: 0,
+																		scale: 1,
+																	}}
+																	exit={{
+																		opacity: 0,
+																		y: 10,
+																		scale: 0.9,
+																	}}
+																	transition={{
+																		duration: 0.2,
+																		ease: 'easeOut',
+																	}}
+																>
+																	<div
+																		className="p-4 rounded-xl shadow-lg relative"
+																		style={{
+																			background:
+																				'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%)',
+																			backdropFilter:
+																				'blur(20px) saturate(180%)',
+																			border: '1px solid rgba(255, 255, 255, 0.6)',
+																			borderTop:
+																				'2px solid rgba(255, 255, 255, 0.8)',
+																			boxShadow: `
+																				0 8px 32px rgba(0, 0, 0, 0.15),
+																				0 4px 16px rgba(0, 0, 0, 0.1),
+																				inset 0 1px 0 rgba(255, 255, 255, 0.9)
+																			`,
+																		}}
+																	>
+																		{/* Arrow pointing down */}
+																		<div
+																			className="absolute top-full w-0 h-0"
+																			style={{
+																				left: '50%',
+																				transform:
+																					'translateX(-50%)',
+																				borderLeft:
+																					'8px solid transparent',
+																				borderRight:
+																					'8px solid transparent',
+																				borderTop:
+																					'8px solid rgba(255, 255, 255, 0.9)',
+																			}}
+																		/>
+
+																		<h4 className="font-bold text-gray-900 mb-2 text-sm">
+																			{
+																				config
+																					.tooltip
+																					.title
+																			}
+																		</h4>
+																		<p className="text-xs text-gray-700 mb-3 leading-relaxed">
+																			{
+																				config
+																					.tooltip
+																					.explanation
+																			}
+																		</p>
+																		<div className="bg-gray-50 rounded-lg p-2">
+																			<p className="text-xs font-mono text-gray-800">
+																				<span className="font-semibold">
+																					Formula:{' '}
+																				</span>
+																				{
+																					config
+																						.tooltip
+																						.calculation
+																				}
+																			</p>
+																		</div>
+																	</div>
+																</motion.div>
+															)}
+														</AnimatePresence>
+													</div>
+												</div>
 												<div className="flex items-center gap-2">
 													<span className="text-lg font-bold text-[#FF5633]">
 														{inputs[key]}

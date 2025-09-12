@@ -8,6 +8,7 @@ import SolutionPreviewSection from './components/SolutionPreviewSection';
 import GlassJourneySection from './components/GlassJourneySection';
 import ROICalculatorSection from './components/ROICalculatorSection';
 import IndustryShowcaseSection from './components/IndustryShowcaseSection';
+import TechnologyTransparencySection from './components/TechnologyTransparencySection';
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
 				<SolutionPreviewSection />
 				<GlassJourneySection />
 				<IndustryShowcaseSection />
+				<TechnologyTransparencySection />
 
 				{/* Additional sections will go here */}
 			</main>
