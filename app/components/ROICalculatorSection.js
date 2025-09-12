@@ -318,7 +318,7 @@ const ROICalculatorSection = () => {
 					variants={containerVariants}
 					initial="hidden"
 					animate={isInView ? 'visible' : 'hidden'}
-					className="text-center mb-16 lg:mb-20"
+					className="text-center mb-16"
 				>
 					{/* Glass Badge */}
 					<motion.div
@@ -361,7 +361,7 @@ const ROICalculatorSection = () => {
 				</motion.div>
 
 				{/* Calculator Container */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pt-20">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pt-2">
 					{/* Interactive Calculator */}
 					<motion.div variants={cardVariants} className="relative">
 						<div

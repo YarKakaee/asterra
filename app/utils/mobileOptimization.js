@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 // Mobile optimization utilities for better performance
 export const useMobileDetection = () => {
 	const [isMobile, setIsMobile] = useState(false);
