@@ -11,6 +11,7 @@ import IndustryShowcaseSection from './components/IndustryShowcaseSection';
 import TechnologyTransparencySection from './components/TechnologyTransparencySection';
 import FAQSection from './components/FAQSection';
 import FinalUrgencySection from './components/FinalUrgencySection';
+import Footer from './components/Footer';
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -32,6 +33,8 @@ export default function Home() {
 
 				{/* Additional sections will go here */}
 			</main>
+
+			<Footer />
 		</>
 	);
 }

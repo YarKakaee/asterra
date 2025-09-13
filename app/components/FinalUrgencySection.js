@@ -37,7 +37,7 @@ const FinalUrgencySection = () => {
 	return (
 		<section
 			ref={ref}
-			className="py-24 bg-gradient-to-b from-white to-gray-50/50 relative overflow-hidden"
+			className="py-24 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden"
 		>
 			{/* Background Effects */}
 			<div className="absolute inset-0 opacity-20">

@@ -230,7 +230,7 @@ const IndustryShowcaseSection = () => {
 					/>
 
 					{/* Scrolling container */}
-					<div className="overflow-hidden">
+					<div className="overflow-hidden py-3">
 						<motion.div
 							className="flex gap-6"
 							animate={{
