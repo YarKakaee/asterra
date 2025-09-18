@@ -166,7 +166,8 @@ const RestaurantsPage = () => {
 								className="mb-16"
 							>
 								<h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-									What's Killing Your Restaurant's Potential
+									What&apos;s Killing Your Restaurant&apos;s
+									Potential
 								</h2>
 
 								<div className="grid md:grid-cols-3 gap-8">
@@ -302,7 +303,7 @@ const RestaurantsPage = () => {
 												Our intelligent AI host never
 												sleeps, never gets overwhelmed,
 												and never misses a reservation.
-												It speaks your restaurant's
+												It speaks your restaurant&apos;s
 												language and knows your menu
 												inside and out.
 											</p>
@@ -518,8 +519,9 @@ const RestaurantsPage = () => {
 											<p className="text-gray-700 text-sm">
 												Our AI studies your menu, learns
 												your service style, and adopts
-												your restaurant's personality.
-												It becomes your perfect host.
+												your restaurant&apos;s
+												personality. It becomes your
+												perfect host.
 											</p>
 										</div>
 										<div className="text-center">
