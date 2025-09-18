@@ -19,7 +19,8 @@ export default function CanvasVideoWord({
 	const [ready, setReady] = useState(false);
 
 	// 🔧 overscan guard to kill the right-edge cut at some DPR/zoom levels
-	const OVERSCAN_PX = 8; // you can try 2–4px
+	// Safari needs more overscan due to text rendering differences
+	const OVERSCAN_PX = 16; // Increased for Safari compatibility
 
 	// create a hidden <video> for the active word only
 	useLayoutEffect(() => {
@@ -67,7 +68,14 @@ export default function CanvasVideoWord({
 
 		function layout() {
 			const rect = ghostRef.current.getBoundingClientRect();
-			const cssW = Math.max(2, Math.ceil(rect.width)) + OVERSCAN_PX;
+
+			// Safari-specific width calculation with additional buffer
+			const isSafari = /^((?!chrome|android).)*safari/i.test(
+				navigator.userAgent
+			);
+			const safariBuffer = isSafari ? 8 : 0;
+			const cssW =
+				Math.max(2, Math.ceil(rect.width)) + OVERSCAN_PX + safariBuffer;
 			const cssH = Math.max(2, Math.ceil(rect.height));
 			const dpr = Math.max(
 				1,
@@ -124,7 +132,13 @@ export default function CanvasVideoWord({
 			const ascent = m.actualBoundingBoxAscent || fontSize * 0.8;
 			const baselineY = Math.max(ascent, H * 0.8);
 			ctx.fillStyle = '#000';
-			ctx.fillText(text, 0, baselineY);
+
+			// Safari-specific text positioning adjustment
+			const isSafari = /^((?!chrome|android).)*safari/i.test(
+				navigator.userAgent
+			);
+			const textX = isSafari ? 2 : 0; // Small offset for Safari text rendering
+			ctx.fillText(text, textX, baselineY);
 			ctx.restore();
 
 			rafRef.current = requestAnimationFrame(draw);
@@ -161,11 +175,18 @@ export default function CanvasVideoWord({
 				className,
 			].join(' ')}
 		>
-			{/* Ghost text defines size; add tiny right padding so layout matches overscan */}
+			{/* Ghost text defines size; add right padding so layout matches overscan */}
 			<span
 				ref={ghostRef}
 				className="invisible select-none"
-				style={{ paddingRight: OVERSCAN_PX }} // ➜ reserves space on the right
+				style={{
+					// Safari needs additional padding for text measurement accuracy
+					paddingRight: /^((?!chrome|android).)*safari/i.test(
+						navigator.userAgent
+					)
+						? OVERSCAN_PX + 8
+						: OVERSCAN_PX,
+				}} // ➜ reserves space on the right
 			>
 				{text}
 			</span>
@@ -182,11 +203,18 @@ export default function CanvasVideoWord({
 				/>
 			)}
 
-			{/* Static gray fallback if inactive (match the ghost’s padding) */}
+			{/* Static gray fallback if inactive (match the ghost's padding) */}
 			{!active && (
 				<span
 					className="absolute inset-0 block text-gray-300 select-none"
-					style={{ paddingRight: OVERSCAN_PX }} // ➜ keep alignment perfect
+					style={{
+						// Match the ghost text padding for Safari
+						paddingRight: /^((?!chrome|android).)*safari/i.test(
+							navigator.userAgent
+						)
+							? OVERSCAN_PX + 8
+							: OVERSCAN_PX,
+					}} // ➜ keep alignment perfect
 				>
 					{text}
 				</span>

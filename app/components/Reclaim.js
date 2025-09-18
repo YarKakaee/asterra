@@ -13,8 +13,13 @@ const PROBLEMS = [
 	{ text: 'Everything Else.', src: '/everything.mp4' },
 ];
 
-export default function Reclaim() {
+const Reclaim = () => {
+	const [mounted, setMounted] = useState(false);
 	const [activeIndex, setActiveIndex] = useState(0);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
@@ -39,37 +44,56 @@ export default function Reclaim() {
 				<div className="mb-8 sm:mb-12 flex flex-col gap-3 sm:gap-4">
 					{PROBLEMS.map((p, i) => (
 						<div key={p.text}>
-							<CanvasVideoWord
-								text={p.text}
-								src={p.src}
-								active={i === activeIndex}
-								// you can tune these per your brand
-								activeSize="text-[clamp(1rem,8vw,5.3rem)]"
-								inactiveSize="text-[clamp(1.6rem,6.5vw,3.25rem)]"
-							/>
+							{mounted ? (
+								<CanvasVideoWord
+									text={p.text}
+									src={p.src}
+									active={i === activeIndex}
+									// you can tune these per your brand
+									activeSize="text-[clamp(1rem,8vw,5.3rem)]"
+									inactiveSize="text-[clamp(1.6rem,6.5vw,3.25rem)]"
+								/>
+							) : (
+								<span className="text-[clamp(1.6rem,6.5vw,3.25rem)] font-extrabold leading-[0.95] tracking-tight text-gray-300">
+									{p.text}
+								</span>
+							)}
 						</div>
 					))}
 				</div>
 
-				<motion.div>
-					<motion.a
-						href="#"
-						className="inline-flex items-center sm:px-8 px-5 sm:py-4 py-3 bg-[#FF5633] text-white text-sm sm:text-lg font-semibold rounded-lg shadow-lg"
-						whileHover={{
-							scale: 1.05,
-							boxShadow: '0 20px 40px rgba(255, 86, 51, 0.3)',
-						}}
-						whileTap={{ scale: 0.98 }}
-						transition={{
-							type: 'spring',
-							stiffness: 300,
-							damping: 20,
-						}}
-					>
-						Diagnose My Business Problems
-					</motion.a>
-				</motion.div>
+				{mounted ? (
+					<motion.div>
+						<motion.a
+							href="#"
+							className="inline-flex items-center sm:px-8 px-5 sm:py-4 py-3 bg-[#FF5633] text-white text-sm sm:text-lg font-semibold rounded-lg shadow-lg"
+							whileHover={{
+								scale: 1.05,
+								boxShadow: '0 20px 40px rgba(255, 86, 51, 0.3)',
+							}}
+							whileTap={{ scale: 0.98 }}
+							transition={{
+								type: 'spring',
+								stiffness: 300,
+								damping: 20,
+							}}
+						>
+							Diagnose My Business Problems
+						</motion.a>
+					</motion.div>
+				) : (
+					<div>
+						<a
+							href="#"
+							className="inline-flex items-center sm:px-8 px-5 sm:py-4 py-3 bg-[#FF5633] text-white text-sm sm:text-lg font-semibold rounded-lg shadow-lg"
+						>
+							Diagnose My Business Problems
+						</a>
+					</div>
+				)}
 			</div>
 		</section>
 	);
-}
+};
+
+export default Reclaim;

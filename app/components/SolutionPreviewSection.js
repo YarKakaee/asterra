@@ -320,7 +320,7 @@ const SolutionPreviewSection = () => {
 									scale:
 										selectedCard === card.id ? 1.05 : 1.02,
 									y: -10,
-									rotateY: 5,
+
 									transition: { duration: 0.3 },
 								}}
 								onClick={() =>

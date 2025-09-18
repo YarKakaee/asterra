@@ -35,11 +35,7 @@ import {
 
 const TechnologyTransparencySection = () => {
 	const sectionRef = useRef(null);
-	const isInView = useInView(sectionRef, {
-		once: true,
-		margin: '-50px',
-		amount: 0.3,
-	});
+	const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 	const [isMobile, setIsMobile] = useState(false);
 
 	// Mobile detection

@@ -1,24 +1,5 @@
 @import 'tailwindcss';
 
-/* Safari-specific optimizations */
-@supports (-webkit-backdrop-filter: blur(1px)) {
-	/* Safari-specific fixes for flashing */
-	* {
-		-webkit-transform: translateZ(0);
-		transform: translateZ(0);
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
-		-webkit-perspective: 1000px;
-		perspective: 1000px;
-	}
-
-	/* Prevent Safari from reflowing on scroll */
-	[data-framer-component-type] {
-		-webkit-transform: translateZ(0);
-		transform: translateZ(0);
-	}
-}
-
 /* Mobile Performance Optimizations */
 @media (max-width: 768px) {
 	* {
@@ -152,11 +133,24 @@ body {
 
 /* Removed unused premium card and gradient text styles for better performance */
 
-/* Optimized transitions for better performance */
+/* Prevent flash during initial load */
 * {
+	transition: none !important;
+}
+
+/* Re-enable transitions after load */
+.loaded * {
 	transition-property: transform, opacity, background-color, border-color;
 	transition-duration: 0.15s;
 	transition-timing-function: ease-out;
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+	* {
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
 }
 
 /* Removed unused hero-bg animations and will-change classes for better performance */

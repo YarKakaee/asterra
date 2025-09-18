@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import Reclaim from './components/Reclaim';
@@ -15,6 +16,11 @@ import Footer from './components/Footer';
 // Removed unused motion import for better performance
 
 export default function Home() {
+	useEffect(() => {
+		// Add loaded class after hydration to enable transitions
+		document.documentElement.classList.add('loaded');
+	}, []);
+
 	return (
 		<>
 			<Navbar />
@@ -28,12 +34,10 @@ export default function Home() {
 						height: 'calc(120vh + 4rem)', // Reduced from 300vh for better performance
 						background:
 							'linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 0.8) 30%, rgba(241, 245, 249, 0.6) 70%, rgba(247, 249, 252, 1) 100%)',
-						// Performance optimizations for Safari
-						willChange: 'auto',
-						transform: 'translate3d(0, 0, 0)',
-						contain: 'layout style paint',
-						backfaceVisibility: 'hidden',
-						perspective: '1000px',
+						// Performance optimizations
+						willChange: 'transform',
+						transform: 'translateZ(0)',
+						contain: 'layout style paint', // CSS containment for better performance
 					}}
 				>
 					{/* Optimized texture effect with dot pattern restored */}

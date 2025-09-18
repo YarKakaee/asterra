@@ -1,8 +1,18 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 const HeroSection = () => {
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
+	if (!mounted) {
+		return <section className="h-[770px]"></section>;
+	}
 	// Animation variants
 	const containerVariants = {
 		hidden: { opacity: 0 },
