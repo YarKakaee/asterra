@@ -10,6 +10,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [activeDropdown, setActiveDropdown] = useState(null);
+	const [mobileDropdown, setMobileDropdown] = useState(null);
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 	const [mounted, setMounted] = useState(false);
@@ -146,6 +147,33 @@ const Navbar = () => {
 		},
 	};
 
+	const mobileDropdownVariants = {
+		hidden: {
+			opacity: 0,
+			height: 0,
+			transition: { duration: 0.2, ease: 'easeInOut' },
+		},
+		visible: {
+			opacity: 1,
+			height: 'auto',
+			transition: { duration: 0.3, ease: 'easeInOut' },
+		},
+		exit: {
+			opacity: 0,
+			height: 0,
+			transition: { duration: 0.2, ease: 'easeInOut' },
+		},
+	};
+
+	const mobileDropdownItemVariants = {
+		hidden: { opacity: 0, x: -10 },
+		visible: {
+			opacity: 1,
+			x: 0,
+			transition: { duration: 0.2, ease: 'easeOut' },
+		},
+	};
+
 	// Prevent hydration mismatch by using consistent initial state
 	if (!mounted) {
 		return (
@@ -181,20 +209,23 @@ const Navbar = () => {
 	return (
 		<motion.nav
 			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-				isScrolled
+				isScrolled || isMobile
 					? 'glass-nav border-b border-white/20'
 					: 'bg-transparent border-b border-transparent'
 			}`}
 			animate={{
-				backgroundColor: isScrolled
-					? 'rgba(255, 255, 255, 0.9)'
-					: 'rgba(255, 255, 255, 0)',
-				backdropFilter: isScrolled
-					? 'blur(12px) saturate(180%)'
-					: 'blur(0px) saturate(100%)',
-				boxShadow: isScrolled
-					? '0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 1px 3px rgba(0, 0, 0, 0.05)'
-					: '0 0 0 rgba(255, 255, 255, 0) inset, 0 0 0 rgba(0, 0, 0, 0)',
+				backgroundColor:
+					isScrolled || isMobile
+						? 'rgba(255, 255, 255, 0.9)'
+						: 'rgba(255, 255, 255, 0)',
+				backdropFilter:
+					isScrolled || isMobile
+						? 'blur(12px) saturate(180%)'
+						: 'blur(0px) saturate(100%)',
+				boxShadow:
+					isScrolled || isMobile
+						? '0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 1px 3px rgba(0, 0, 0, 0.05)'
+						: '0 0 0 rgba(255, 255, 255, 0) inset, 0 0 0 rgba(0, 0, 0, 0)',
 			}}
 			transition={{ duration: 0.3, ease: 'easeOut' }}
 		>
@@ -340,7 +371,7 @@ const Navbar = () => {
 
 					{/* CTA Button */}
 					<div className="hidden md:flex">
-						<Link href="/contact">
+						<Link href="/contact-sales">
 							<motion.div
 								className="bg-[#FF5633] text-white/95 px-6 py-2 rounded-lg text-sm cursor-pointer"
 								whileHover={{
@@ -364,7 +395,7 @@ const Navbar = () => {
 					<div className="md:hidden">
 						<motion.button
 							onClick={() => setIsMenuOpen(!isMenuOpen)}
-							className="text-[#151719] hover:text-[#FF5633] p-2"
+							className="text-[#151719] hover:text-[#FF5633] p-2 cursor-pointer"
 							whileTap={{ scale: 0.95 }}
 						>
 							<svg
@@ -401,39 +432,139 @@ const Navbar = () => {
 							initial="hidden"
 							animate="visible"
 							exit="exit"
-							className="md:hidden border-t border-gray-300"
+							className="md:hidden border-t border-gray-300 "
 						>
-							<div className="py-4 space-y-2">
+							<div className="py-4 space-y-1">
 								{navItems.map((item) => (
 									<motion.div
 										key={item.name}
 										variants={mobileItemVariants}
 									>
 										{item.hasDropdown ? (
-											<div className="block px-4 py-2 text-[#151719] hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
-												{item.name}
+											<div>
+												{/* Mobile Dropdown Trigger */}
+												<motion.button
+													onClick={() =>
+														setMobileDropdown(
+															mobileDropdown ===
+																item.name
+																? null
+																: item.name
+														)
+													}
+													className="cursor-pointer w-full flex items-center justify-between px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200"
+													whileTap={{ scale: 0.98 }}
+												>
+													<span className="font-medium">
+														{item.name}
+													</span>
+													<motion.div
+														animate={{
+															rotate:
+																mobileDropdown ===
+																item.name
+																	? 180
+																	: 0,
+														}}
+														transition={{
+															duration: 0.2,
+														}}
+														className="text-gray-400"
+													>
+														<FontAwesomeIcon
+															icon={faChevronDown}
+															className="w-4 h-4"
+														/>
+													</motion.div>
+												</motion.button>
+
+												{/* Mobile Dropdown Content */}
+												<AnimatePresence>
+													{mobileDropdown ===
+														item.name && (
+														<motion.div
+															variants={
+																mobileDropdownVariants
+															}
+															initial="hidden"
+															animate="visible"
+															exit="exit"
+															className=" border-l-2 border-[#FF5633] ml-4"
+														>
+															<div className="py-2">
+																{item.dropdownItems.map(
+																	(
+																		dropdownItem,
+																		index
+																	) => (
+																		<motion.div
+																			key={
+																				dropdownItem.name
+																			}
+																			variants={
+																				mobileDropdownItemVariants
+																			}
+																			initial="hidden"
+																			animate="visible"
+																			transition={{
+																				delay:
+																					index *
+																					0.05,
+																			}}
+																		>
+																			<Link
+																				href={
+																					dropdownItem.href
+																				}
+																				className="block px-6 py-3 text-sm text-gray-700 hover:text-[#FF5633] transition-colors duration-200 border-l-2 border-transparent hover:border-[#FF5633]"
+																				onClick={() => {
+																					setIsMenuOpen(
+																						false
+																					);
+																					setMobileDropdown(
+																						null
+																					);
+																				}}
+																			>
+																				{
+																					dropdownItem.name
+																				}
+																			</Link>
+																		</motion.div>
+																	)
+																)}
+															</div>
+														</motion.div>
+													)}
+												</AnimatePresence>
 											</div>
 										) : (
 											<Link
 												href={item.href}
-												className="block px-4 py-2 text-[#151719] hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-200"
-												onClick={() =>
-													setIsMenuOpen(false)
-												}
+												className="block px-4 py-3 text-[#151719] hover:text-[#FF5633]  transition-colors duration-200 font-medium"
+												onClick={() => {
+													setIsMenuOpen(false);
+													setMobileDropdown(null);
+												}}
 											>
 												{item.name}
 											</Link>
 										)}
 									</motion.div>
 								))}
+
+								{/* Mobile CTA Button */}
 								<motion.div
 									variants={mobileItemVariants}
-									className="px-4 pt-4"
+									className="px-4 pt-4 border-t border-gray-200 mt-4"
 								>
 									<Link
-										href="/contact"
-										className="block w-full text-center bg-[#FF5633] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#E04A2B] transition-colors duration-200"
-										onClick={() => setIsMenuOpen(false)}
+										href="/contact-sales"
+										className="block w-full text-center bg-[#FF5633] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#E04A2B] transition-colors duration-200 shadow-lg"
+										onClick={() => {
+											setIsMenuOpen(false);
+											setMobileDropdown(null);
+										}}
 									>
 										Contact Sales
 									</Link>

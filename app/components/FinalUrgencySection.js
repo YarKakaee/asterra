@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useMobileDetection } from '../utils/mobileOptimization';
+import Link from 'next/link';
 
 const FinalUrgencySection = () => {
 	const { isMobile } = useMobileDetection();
@@ -130,70 +131,73 @@ const FinalUrgencySection = () => {
 							to missed opportunities.
 						</p>
 
-						<motion.button
-							className="cursor-pointer inline-flex items-center px-10 py-5 rounded-2xl font-bold text-white text-lg relative overflow-hidden shadow-2xl mb-4"
-							style={{
-								background:
-									'linear-gradient(135deg, #EA580C 0%, #F97316 100%)',
-							}}
-							whileHover={{
-								scale: 1.05,
-								y: -3,
-								boxShadow: '0 20px 48px rgba(234, 88, 12, 0.4)',
-							}}
-							whileTap={{ scale: 0.98 }}
-							transition={{
-								type: 'spring',
-								stiffness: 300,
-								damping: 20,
-							}}
-						>
-							<span>Get My Free Revenue Analysis</span>
-							<motion.div
-								className="ml-3"
-								animate={{
-									x: [0, 4, 0],
+						<Link href="/book-demo">
+							<motion.button
+								className="cursor-pointer inline-flex items-center px-10 py-5 rounded-2xl font-bold text-white text-lg relative overflow-hidden shadow-2xl mb-4"
+								style={{
+									background:
+										'linear-gradient(135deg, #EA580C 0%, #F97316 100%)',
 								}}
+								whileHover={{
+									scale: 1.05,
+									y: -3,
+									boxShadow:
+										'0 20px 48px rgba(234, 88, 12, 0.4)',
+								}}
+								whileTap={{ scale: 0.98 }}
 								transition={{
-									duration: 2,
-									repeat: Infinity,
-									ease: 'easeInOut',
+									type: 'spring',
+									stiffness: 300,
+									damping: 20,
 								}}
 							>
-								<svg
-									width="20"
-									height="20"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								>
-									<path d="M5 12h14M12 5l7 7-7 7" />
-								</svg>
-							</motion.div>
-
-							{/* Shimmer effect */}
-							{!isMobile && (
+								<span>Get My Free Revenue Analysis</span>
 								<motion.div
-									className="absolute inset-0 opacity-0 rounded-2xl"
-									style={{
-										background:
-											'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%)',
-									}}
+									className="ml-3"
 									animate={{
-										x: ['-100%', '100%'],
-										opacity: [0, 0.3, 0],
+										x: [0, 4, 0],
 									}}
 									transition={{
-										duration: 3,
+										duration: 2,
 										repeat: Infinity,
-										ease: 'linear',
+										ease: 'easeInOut',
 									}}
-								/>
-							)}
-						</motion.button>
+								>
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									>
+										<path d="M5 12h14M12 5l7 7-7 7" />
+									</svg>
+								</motion.div>
+
+								{/* Shimmer effect */}
+								{!isMobile && (
+									<motion.div
+										className="absolute inset-0 opacity-0 rounded-2xl"
+										style={{
+											background:
+												'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%)',
+										}}
+										animate={{
+											x: ['-100%', '100%'],
+											opacity: [0, 0.3, 0],
+										}}
+										transition={{
+											duration: 3,
+											repeat: Infinity,
+											ease: 'linear',
+										}}
+									/>
+								)}
+							</motion.button>
+						</Link>
 
 						<div className="text-gray-500 text-sm font-medium">
 							Free 30-minute call • No commitment required

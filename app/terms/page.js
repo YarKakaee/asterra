@@ -748,7 +748,7 @@ const TermsAndConditionsPage = () => {
 									<p className="text-gray-700">
 										For questions about these Terms and
 										Conditions, please contact us at{' '}
-										<strong>support@asterra.ca</strong>
+										<strong>legal@asterra.ca</strong>
 									</p>
 								</div>
 							</motion.div>

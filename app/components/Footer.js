@@ -8,6 +8,7 @@ import {
 	faXTwitter,
 	faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 const Footer = () => {
@@ -40,19 +41,31 @@ const Footer = () => {
 			{/* Footer Bottom Line */}
 			<div className="relative z-10 border-t border-gray-200 py-8">
 				<div className="max-w-6xl mx-auto px-6">
-					<div className="flex flex-col md:flex-row justify-between items-center gap-4">
+					<div className="flex flex-col md:flex-row justify-between items-center gap-6">
 						{/* Left side - Copyright */}
-						<div className="text-gray-500 text-sm">
+						<div className="text-gray-500 text-sm text-center md:text-left">
 							© 2025 Asterra™ is a brand of Asterra Solutions Inc.
 							All rights reserved.
 						</div>
 
 						{/* Right side - Social Icons and Legal Links */}
-						<div className="flex items-center gap-6">
+						<div className="flex flex-col md:flex-row items-center gap-6">
 							{/* Social Icons */}
-							<div className="flex gap-3">
+							<div className="flex gap-4 justify-center">
 								<motion.a
-									href="https://www.linkedin.com/company/asterra-ai"
+									href="mailto:support@asterra.ca"
+									aria-label="Email Support"
+									whileHover={{ scale: 1.1 }}
+									whileTap={{ scale: 0.9 }}
+									className="text-gray-600 hover:text-orange-500 transition-colors duration-300"
+								>
+									<FontAwesomeIcon
+										icon={faEnvelope}
+										className="w-5 h-5"
+									/>
+								</motion.a>
+								<motion.a
+									href="https://www.linkedin.com/company/teamasterra/"
 									target="_blank"
 									aria-label="LinkedIn"
 									whileHover={{ scale: 1.1 }}
@@ -65,7 +78,7 @@ const Footer = () => {
 									/>
 								</motion.a>
 								<motion.a
-									href="https://www.twitter.com/asterra_ai"
+									href="https://x.com/AsterraTeam"
 									target="_blank"
 									aria-label="X"
 									whileHover={{ scale: 1.1 }}
@@ -78,7 +91,7 @@ const Footer = () => {
 									/>
 								</motion.a>
 								<motion.a
-									href="https://www.youtube.com/@asterra_ai"
+									href="https://www.instagram.com/asterraai/"
 									target="_blank"
 									aria-label="Instagram"
 									whileHover={{ scale: 1.1 }}
@@ -93,7 +106,7 @@ const Footer = () => {
 							</div>
 
 							{/* Legal Links */}
-							<div className="flex gap-4 text-sm">
+							<div className="flex gap-6 text-sm justify-center">
 								<a
 									href="/privacy"
 									className="text-gray-500 hover:text-gray-700 transition-colors duration-300"

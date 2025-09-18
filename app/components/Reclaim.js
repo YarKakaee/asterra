@@ -84,7 +84,7 @@ const Reclaim = () => {
 				) : (
 					<div>
 						<a
-							href="#"
+							href="/book-demo"
 							className="inline-flex items-center sm:px-8 px-5 sm:py-4 py-3 bg-[#FF5633] text-white text-sm sm:text-lg font-semibold rounded-lg shadow-lg"
 						>
 							Diagnose My Business Problems

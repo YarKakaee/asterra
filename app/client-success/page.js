@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useMobileDetection } from '../utils/mobileOptimization';
@@ -604,31 +605,33 @@ const CaseStudiesPage = () => {
 										achieve similar results.
 									</p>
 									<div className="flex flex-col sm:flex-row gap-4 justify-center">
-										<motion.a
-											href="#"
-											className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg"
-											whileHover={{
-												scale: 1.05,
-												boxShadow:
-													'0 20px 40px rgba(255, 86, 51, 0.3)',
-											}}
-											whileTap={{ scale: 0.98 }}
-											transition={{
-												type: 'spring',
-												stiffness: 300,
-												damping: 20,
-											}}
-										>
-											Book a Free Consultation
-										</motion.a>
-										<motion.a
-											href="/guarantee"
-											className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
-											whileHover={{ scale: 1.05 }}
-											whileTap={{ scale: 0.98 }}
-										>
-											View Our Guarantee
-										</motion.a>
+										<Link href="/book-demo">
+											<motion.div
+												className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg cursor-pointer"
+												whileHover={{
+													scale: 1.05,
+													boxShadow:
+														'0 20px 40px rgba(255, 86, 51, 0.3)',
+												}}
+												whileTap={{ scale: 0.98 }}
+												transition={{
+													type: 'spring',
+													stiffness: 300,
+													damping: 20,
+												}}
+											>
+												Book a Free Consultation
+											</motion.div>
+										</Link>
+										<Link href="/book-demo">
+											<motion.div
+												className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
+												whileHover={{ scale: 1.05 }}
+												whileTap={{ scale: 0.98 }}
+											>
+												View Our Guarantee
+											</motion.div>
+										</Link>
 									</div>
 								</div>
 							</motion.div>

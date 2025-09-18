@@ -2,6 +2,7 @@
 
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
+import Link from 'next/link';
 
 const ROICalculatorSection = () => {
 	const sectionRef = useRef(null);
@@ -728,53 +729,55 @@ const ROICalculatorSection = () => {
 								</div>
 
 								{/* CTA Button */}
-								<motion.button
-									className="w-full mt-8 px-8 py-4 rounded-xl font-semibold text-white relative overflow-hidden"
-									style={{
-										background:
-											'linear-gradient(135deg, #FF5633 0%, #E04A2B 100%)',
-										boxShadow:
-											'0 4px 16px rgba(255, 86, 51, 0.3)',
-										willChange: isMobile
-											? 'auto'
-											: 'transform, box-shadow',
-									}}
-									whileHover={
-										!isMobile
-											? {
-													scale: 1.02,
-													boxShadow:
-														'0 8px 24px rgba(255, 86, 51, 0.4)',
-											  }
-											: {
-													scale: 1.01,
-											  }
-									}
-									whileTap={{ scale: 0.98 }}
-									transition={{
-										type: 'spring',
-										stiffness: 300,
-										damping: 20,
-									}}
-								>
-									<span className="relative z-10">
-										Get My Custom ROI Report
-									</span>
-									{/* Shimmer effect - disabled on mobile */}
-									{!isMobile && (
-										<motion.div
-											className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-											animate={{
-												x: ['-100%', '100%'],
-											}}
-											transition={{
-												duration: 3,
-												repeat: Infinity,
-												ease: 'linear',
-											}}
-										/>
-									)}
-								</motion.button>
+								<Link href="/book-demo">
+									<motion.button
+										className="cursor-pointer w-full mt-8 px-8 py-4 rounded-xl font-semibold text-white relative overflow-hidden"
+										style={{
+											background:
+												'linear-gradient(135deg, #FF5633 0%, #E04A2B 100%)',
+											boxShadow:
+												'0 4px 16px rgba(255, 86, 51, 0.3)',
+											willChange: isMobile
+												? 'auto'
+												: 'transform, box-shadow',
+										}}
+										whileHover={
+											!isMobile
+												? {
+														scale: 1.02,
+														boxShadow:
+															'0 8px 24px rgba(255, 86, 51, 0.4)',
+												  }
+												: {
+														scale: 1.01,
+												  }
+										}
+										whileTap={{ scale: 0.98 }}
+										transition={{
+											type: 'spring',
+											stiffness: 300,
+											damping: 20,
+										}}
+									>
+										<span className="relative z-10">
+											Get My Custom ROI Report
+										</span>
+										{/* Shimmer effect - disabled on mobile */}
+										{!isMobile && (
+											<motion.div
+												className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+												animate={{
+													x: ['-100%', '100%'],
+												}}
+												transition={{
+													duration: 3,
+													repeat: Infinity,
+													ease: 'linear',
+												}}
+											/>
+										)}
+									</motion.button>
+								</Link>
 							</div>
 						</div>
 					</motion.div>

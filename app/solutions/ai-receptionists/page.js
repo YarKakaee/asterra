@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useMobileDetection } from '../../utils/mobileOptimization';
@@ -192,11 +193,17 @@ const AIReceptionistPage = () => {
 
 							<motion.div
 								variants={headerVariants}
-								className="flex flex-col sm:flex-row gap-4 justify-center"
+								className="flex flex-col sm:flex-row gap-4 justify-center items-center"
 							>
-								<motion.a
-									href="#how-it-works"
-									className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg"
+								<motion.div
+									onClick={() =>
+										document
+											.getElementById('how-it-works')
+											?.scrollIntoView({
+												behavior: 'smooth',
+											})
+									}
+									className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg cursor-pointer"
 									whileHover={{
 										scale: 1.05,
 										boxShadow:
@@ -210,15 +217,16 @@ const AIReceptionistPage = () => {
 									}}
 								>
 									See How It Works
-								</motion.a>
-								<motion.a
-									href="#contact"
-									className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
-									whileHover={{ scale: 1.02 }}
-									whileTap={{ scale: 0.98 }}
-								>
-									Get Started Today
-								</motion.a>
+								</motion.div>
+								<Link href="/book-demo">
+									<motion.div
+										className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200 cursor-pointer"
+										whileHover={{ scale: 1.02 }}
+										whileTap={{ scale: 0.98 }}
+									>
+										Get Started Today
+									</motion.div>
+								</Link>
 							</motion.div>
 						</motion.div>
 					</div>
@@ -643,31 +651,24 @@ const AIReceptionistPage = () => {
 								customer service.
 							</p>
 							<div className="flex flex-col sm:flex-row gap-4 justify-center">
-								<motion.a
-									href="#contact"
-									className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg"
-									whileHover={{
-										scale: 1.05,
-										boxShadow:
-											'0 20px 40px rgba(255, 86, 51, 0.3)',
-									}}
-									whileTap={{ scale: 0.98 }}
-									transition={{
-										type: 'spring',
-										stiffness: 300,
-										damping: 20,
-									}}
-								>
-									Get Started Today
-								</motion.a>
-								<motion.a
-									href="#how-it-works"
-									className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
-									whileHover={{ scale: 1.02 }}
-									whileTap={{ scale: 0.98 }}
-								>
-									Learn More
-								</motion.a>
+								<Link href="/book-demo">
+									<motion.div
+										className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg cursor-pointer"
+										whileHover={{
+											scale: 1.05,
+											boxShadow:
+												'0 20px 40px rgba(255, 86, 51, 0.3)',
+										}}
+										whileTap={{ scale: 0.98 }}
+										transition={{
+											type: 'spring',
+											stiffness: 300,
+											damping: 20,
+										}}
+									>
+										Get Started Today
+									</motion.div>
+								</Link>
 							</div>
 						</motion.div>
 					</div>

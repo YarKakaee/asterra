@@ -716,7 +716,7 @@ const PrivacyPolicyPage = () => {
 										If you have questions, concerns, or
 										requests regarding this Privacy Policy
 										or our data practices, please contact us
-										at <strong>support@asterra.ca</strong>
+										at <strong>legal@asterra.ca</strong>
 									</p>
 								</div>
 							</motion.div>

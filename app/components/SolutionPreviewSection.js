@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
+import Link from 'next/link';
 
 const SolutionPreviewSection = () => {
 	const ref = useRef(null);
@@ -19,6 +20,7 @@ const SolutionPreviewSection = () => {
 				id: 'ai-receptionist',
 				icon: '🤖',
 				title: 'AI Receptionist',
+				href: '/solutions/ai-receptionists',
 				before: {
 					scenario: 'Phone rings → Voicemail → Lost lead',
 					description: 'Missing calls means missing revenue',
@@ -41,6 +43,7 @@ const SolutionPreviewSection = () => {
 				id: 'lead-nurturing',
 				icon: '📈',
 				title: 'Lead Nurturing AI',
+				href: '/solutions/lead-nurturing',
 				before: {
 					scenario:
 						'Manual follow-ups → Forgotten leads → Cold prospects',
@@ -64,6 +67,7 @@ const SolutionPreviewSection = () => {
 				id: 'modern-website',
 				icon: '🚀',
 				title: 'Modern Website',
+				href: '/solutions/website-development',
 				before: {
 					scenario: 'Outdated design → Poor UX → Visitors leave',
 					description: 'Your website is costing you customers',
@@ -313,192 +317,201 @@ const SolutionPreviewSection = () => {
 						const stateData = card[currentState];
 
 						return (
-							<motion.div
-								key={card.id}
-								variants={cardVariants}
-								whileHover={{
-									scale:
-										selectedCard === card.id ? 1.05 : 1.02,
-									y: -10,
-
-									transition: { duration: 0.3 },
-								}}
-								onClick={() =>
-									setSelectedCard(
-										selectedCard === card.id
-											? null
-											: card.id
-									)
-								}
-								className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl cursor-pointer group"
-								style={{
-									transformStyle: 'preserve-3d',
-									willChange: 'transform',
-								}}
-							>
-								{/* Before/After Toggle */}
-								<div className="absolute top-6 right-6 z-20">
-									<motion.button
-										onClick={(e) => {
-											e.stopPropagation();
-											toggleBeforeAfter(card.id);
-										}}
-										className="relative w-16 h-8 rounded-full p-1 transition-colors duration-300"
-										style={{
-											background:
-												currentState === 'before'
-													? 'linear-gradient(135deg, #fee2e2, #fecaca)'
-													: 'linear-gradient(135deg, #dcfce7, #bbf7d0)',
-										}}
-										whileHover={{ scale: 1.05 }}
-										whileTap={{ scale: 0.95 }}
-									>
-										<motion.div
-											className="w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center"
-											animate={{
-												x:
-													currentState === 'before'
-														? 0
-														: 32,
-											}}
-											transition={{
-												type: 'spring',
-												stiffness: 300,
-												damping: 20,
-											}}
-										>
-											<span className="text-xs">
-												{currentState === 'before'
-													? '😰'
-													: '😊'}
-											</span>
-										</motion.div>
-									</motion.button>
-									{/* Toggle Labels */}
-									<div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-black/80">
-										{currentState === 'before'
-											? 'Before'
-											: 'After'}
-									</div>
-								</div>
-
-								{/* Results Badge */}
+							<Link key={card.id} href={card.href}>
 								<motion.div
-									className="absolute top-6 left-6 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF5633] to-[#ff7a59] text-white font-bold text-sm shadow-lg"
-									animate={{
-										scale: [1, 1.05, 1],
+									variants={cardVariants}
+									whileHover={{
+										scale:
+											selectedCard === card.id
+												? 1.05
+												: 1.02,
+										y: -10,
+
+										transition: { duration: 0.3 },
 									}}
-									transition={{
-										duration: 5,
-										repeat: Infinity,
-										delay: index * 1.5,
+									onClick={() =>
+										setSelectedCard(
+											selectedCard === card.id
+												? null
+												: card.id
+										)
+									}
+									className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl cursor-pointer group"
+									style={{
+										transformStyle: 'preserve-3d',
+										willChange: 'transform',
 									}}
 								>
-									{card.results}
-								</motion.div>
-
-								{/* Card Content */}
-								<div className="pt-16">
-									{/* Icon with animation */}
-									<motion.div
-										className="text-6xl mb-6 text-center"
-										animate={{
-											rotateY: [0, 10, 0, -10, 0],
-										}}
-										transition={{
-											duration: 4,
-											repeat: Infinity,
-											ease: 'easeInOut',
-										}}
-									>
-										{card.icon}
-									</motion.div>
-
-									{/* Title */}
-									<h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-										{card.title}
-									</h3>
-
-									{/* Content with state transition */}
-									<AnimatePresence mode="wait">
-										<motion.div
-											key={`${card.id}-${currentState}`}
-											initial={{
-												opacity: 0,
-												y: 20,
-												rotateX: -10,
+									{/* Before/After Toggle */}
+									<div className="absolute top-6 right-6 z-20">
+										<motion.button
+											onClick={(e) => {
+												e.preventDefault();
+												e.stopPropagation();
+												toggleBeforeAfter(card.id);
 											}}
-											animate={{
-												opacity: 1,
-												y: 0,
-												rotateX: 0,
+											className="relative w-16 h-8 rounded-full p-1 transition-colors duration-300"
+											style={{
+												background:
+													currentState === 'before'
+														? 'linear-gradient(135deg, #fee2e2, #fecaca)'
+														: 'linear-gradient(135deg, #dcfce7, #bbf7d0)',
 											}}
-											exit={{
-												opacity: 0,
-												y: -20,
-												rotateX: 10,
-											}}
-											transition={{
-												duration: 0.4,
-												ease: 'easeInOut',
-											}}
-											className={`p-6 rounded-2xl bg-gradient-to-br ${
-												stateData.bgColor
-											} border-2 ${
-												currentState === 'before'
-													? 'border-red-200'
-													: 'border-green-200'
-											}`}
-											style={{ minHeight: '180px' }}
+											whileHover={{ scale: 1.05 }}
+											whileTap={{ scale: 0.95 }}
 										>
-											{/* Scenario */}
-											<div className="text-center mb-4 flex flex-col justify-between h-full">
-												<div>
-													<p className="text-lg font-semibold text-gray-800 mb-2 leading-tight">
-														{stateData.scenario}
-													</p>
-													<p
-														className={`text-sm ${stateData.iconColor}`}
-													>
-														{stateData.description}
-													</p>
-												</div>
-
-												{/* Chart */}
-												<div className="flex justify-center mt-4">
-													<ChartIcon
-														type={stateData.chart}
-														className={
-															stateData.iconColor
-														}
-													/>
-												</div>
-											</div>
-										</motion.div>
-									</AnimatePresence>
-
-									{/* Metric Label */}
-									<div className="text-center mt-4">
-										<span className="text-sm text-gray-600 font-medium">
-											{card.metric}
-										</span>
+											<motion.div
+												className="w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center"
+												animate={{
+													x:
+														currentState ===
+														'before'
+															? 0
+															: 32,
+												}}
+												transition={{
+													type: 'spring',
+													stiffness: 300,
+													damping: 20,
+												}}
+											>
+												<span className="text-xs">
+													{currentState === 'before'
+														? '😰'
+														: '😊'}
+												</span>
+											</motion.div>
+										</motion.button>
+										{/* Toggle Labels */}
+										<div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-black/80">
+											{currentState === 'before'
+												? 'Before'
+												: 'After'}
+										</div>
 									</div>
 
-									{/* Interaction Cue */}
+									{/* Results Badge */}
 									<motion.div
-										className="text-center mt-4 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+										className="absolute top-6 left-6 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF5633] to-[#ff7a59] text-white font-bold text-sm shadow-lg"
 										animate={{
-											y: [0, -2, 0],
+											scale: [1, 1.05, 1],
 										}}
 										transition={{
-											duration: 2,
+											duration: 5,
 											repeat: Infinity,
+											delay: index * 1.5,
 										}}
 									>
-										Click to explore →
+										{card.results}
 									</motion.div>
-								</div>
-							</motion.div>
+
+									{/* Card Content */}
+									<div className="pt-16">
+										{/* Icon with animation */}
+										<motion.div
+											className="text-6xl mb-6 text-center"
+											animate={{
+												rotateY: [0, 10, 0, -10, 0],
+											}}
+											transition={{
+												duration: 4,
+												repeat: Infinity,
+												ease: 'easeInOut',
+											}}
+										>
+											{card.icon}
+										</motion.div>
+
+										{/* Title */}
+										<h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+											{card.title}
+										</h3>
+
+										{/* Content with state transition */}
+										<AnimatePresence mode="wait">
+											<motion.div
+												key={`${card.id}-${currentState}`}
+												initial={{
+													opacity: 0,
+													y: 20,
+													rotateX: -10,
+												}}
+												animate={{
+													opacity: 1,
+													y: 0,
+													rotateX: 0,
+												}}
+												exit={{
+													opacity: 0,
+													y: -20,
+													rotateX: 10,
+												}}
+												transition={{
+													duration: 0.4,
+													ease: 'easeInOut',
+												}}
+												className={`p-6 rounded-2xl bg-gradient-to-br ${
+													stateData.bgColor
+												} border-2 ${
+													currentState === 'before'
+														? 'border-red-200'
+														: 'border-green-200'
+												}`}
+												style={{ minHeight: '180px' }}
+											>
+												{/* Scenario */}
+												<div className="text-center mb-4 flex flex-col justify-between h-full">
+													<div>
+														<p className="text-lg font-semibold text-gray-800 mb-2 leading-tight">
+															{stateData.scenario}
+														</p>
+														<p
+															className={`text-sm ${stateData.iconColor}`}
+														>
+															{
+																stateData.description
+															}
+														</p>
+													</div>
+
+													{/* Chart */}
+													<div className="flex justify-center mt-4">
+														<ChartIcon
+															type={
+																stateData.chart
+															}
+															className={
+																stateData.iconColor
+															}
+														/>
+													</div>
+												</div>
+											</motion.div>
+										</AnimatePresence>
+
+										{/* Metric Label */}
+										<div className="text-center mt-4">
+											<span className="text-sm text-gray-600 font-medium">
+												{card.metric}
+											</span>
+										</div>
+
+										{/* Interaction Cue */}
+										<motion.div
+											className="text-center mt-4 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+											animate={{
+												y: [0, -2, 0],
+											}}
+											transition={{
+												duration: 2,
+												repeat: Infinity,
+											}}
+										>
+											Click to explore →
+										</motion.div>
+									</div>
+								</motion.div>
+							</Link>
 						);
 					})}
 				</motion.div>
@@ -512,66 +525,69 @@ const SolutionPreviewSection = () => {
 					transition={{ delay: 1.5, duration: 0.8 }}
 					className="text-center"
 				>
-					<motion.button
-						className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
-						style={{
-							background:
-								'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
-							backdropFilter: 'blur(16px) saturate(180%)',
-							border: '1px solid rgba(255, 255, 255, 0.3)',
-							borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-							borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-							boxShadow: `
-								0 8px 32px rgba(0, 0, 0, 0.2),
-								0 2px 8px rgba(0, 0, 0, 0.1),
-								inset 0 1px 0 rgba(255, 255, 255, 0.6),
-								inset 0 0 20px rgba(255, 255, 255, 0.05)
-							`,
-						}}
-						whileHover={{
-							scale: 1.05,
-							boxShadow: `
-								0 12px 40px rgba(0, 0, 0, 0.3),
-								0 4px 12px rgba(0, 0, 0, 0.15),
-								inset 0 1px 0 rgba(255, 255, 255, 0.7),
-								inset 0 0 25px rgba(255, 255, 255, 0.1)
-							`,
-						}}
-						whileTap={{ scale: 0.98 }}
-						transition={{
-							type: 'spring',
-							stiffness: 300,
-							damping: 20,
-						}}
-					>
-						<span>
-							Join businesses already winning with automation
-						</span>
-						<motion.div
-							className="ml-3"
-							animate={{
-								x: [0, 4, 0],
+					<Link href="/book-demo">
+						<motion.button
+							className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
+							style={{
+								background:
+									'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
+								backdropFilter: 'blur(16px) saturate(180%)',
+								border: '1px solid rgba(255, 255, 255, 0.3)',
+								borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+								borderBottom:
+									'1px solid rgba(255, 255, 255, 0.1)',
+								boxShadow: `
+									0 8px 32px rgba(0, 0, 0, 0.2),
+									0 2px 8px rgba(0, 0, 0, 0.1),
+									inset 0 1px 0 rgba(255, 255, 255, 0.6),
+									inset 0 0 20px rgba(255, 255, 255, 0.05)
+								`,
 							}}
+							whileHover={{
+								scale: 1.05,
+								boxShadow: `
+									0 12px 40px rgba(0, 0, 0, 0.3),
+									0 4px 12px rgba(0, 0, 0, 0.15),
+									inset 0 1px 0 rgba(255, 255, 255, 0.7),
+									inset 0 0 25px rgba(255, 255, 255, 0.1)
+								`,
+							}}
+							whileTap={{ scale: 0.98 }}
 							transition={{
-								duration: 2,
-								repeat: Infinity,
-								ease: 'easeInOut',
+								type: 'spring',
+								stiffness: 300,
+								damping: 20,
 							}}
 						>
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
+							<span>
+								Join businesses already winning with automation
+							</span>
+							<motion.div
+								className="ml-3"
+								animate={{
+									x: [0, 4, 0],
+								}}
+								transition={{
+									duration: 2,
+									repeat: Infinity,
+									ease: 'easeInOut',
+								}}
 							>
-								<path d="M5 12h14M12 5l7 7-7 7" />
-							</svg>
-						</motion.div>
-					</motion.button>
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<path d="M5 12h14M12 5l7 7-7 7" />
+								</svg>
+							</motion.div>
+						</motion.button>
+					</Link>
 				</motion.div>
 			</div>
 		</section>

@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -199,9 +200,15 @@ const WebsiteDevelopmentPage = () => {
 								variants={headerVariants}
 								className="flex flex-col sm:flex-row gap-4 justify-center items-center"
 							>
-								<motion.a
-									href="#how-it-works"
-									className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+								<motion.div
+									onClick={() =>
+										document
+											.getElementById('how-it-works')
+											?.scrollIntoView({
+												behavior: 'smooth',
+											})
+									}
+									className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
 									whileHover={{
 										scale: 1.05,
 										boxShadow:
@@ -215,15 +222,16 @@ const WebsiteDevelopmentPage = () => {
 									}}
 								>
 									See How It Works
-								</motion.a>
-								<motion.a
-									href="#contact"
-									className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
-									whileHover={{ scale: 1.02 }}
-									whileTap={{ scale: 0.98 }}
-								>
-									Get Started Today
-								</motion.a>
+								</motion.div>
+								<Link href="/book-demo">
+									<motion.div
+										className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200 cursor-pointer"
+										whileHover={{ scale: 1.02 }}
+										whileTap={{ scale: 0.98 }}
+									>
+										Get Started Today
+									</motion.div>
+								</Link>
 							</motion.div>
 						</motion.div>
 					</div>
@@ -700,66 +708,69 @@ const WebsiteDevelopmentPage = () => {
 							transition={{ delay: 1.5, duration: 0.8 }}
 							className="text-center mt-12"
 						>
-							<motion.button
-								className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
-								style={{
-									background:
-										'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
-									backdropFilter: 'blur(16px) saturate(180%)',
-									border: '1px solid rgba(255, 255, 255, 0.3)',
-									borderTop:
-										'1px solid rgba(255, 255, 255, 0.5)',
-									borderBottom:
-										'1px solid rgba(255, 255, 255, 0.1)',
-									boxShadow: `
-										0 8px 32px rgba(0, 0, 0, 0.2),
-										0 2px 8px rgba(0, 0, 0, 0.1),
-										inset 0 1px 0 rgba(255, 255, 255, 0.6),
-										inset 0 0 20px rgba(255, 255, 255, 0.05)
-									`,
-								}}
-								whileHover={{
-									scale: 1.05,
-									boxShadow: `
-										0 12px 40px rgba(0, 0, 0, 0.3),
-										0 4px 12px rgba(0, 0, 0, 0.15),
-										inset 0 1px 0 rgba(255, 255, 255, 0.7),
-										inset 0 0 25px rgba(255, 255, 255, 0.1)
-									`,
-								}}
-								whileTap={{ scale: 0.98 }}
-								transition={{
-									type: 'spring',
-									stiffness: 300,
-									damping: 20,
-								}}
-							>
-								<span>Get Your Custom Website Built </span>
+							<Link href="/book-demo">
 								<motion.div
-									className="ml-3"
-									animate={{
-										x: [0, 4, 0],
+									className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
+									style={{
+										background:
+											'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
+										backdropFilter:
+											'blur(16px) saturate(180%)',
+										border: '1px solid rgba(255, 255, 255, 0.3)',
+										borderTop:
+											'1px solid rgba(255, 255, 255, 0.5)',
+										borderBottom:
+											'1px solid rgba(255, 255, 255, 0.1)',
+										boxShadow: `
+											0 8px 32px rgba(0, 0, 0, 0.2),
+											0 2px 8px rgba(0, 0, 0, 0.1),
+											inset 0 1px 0 rgba(255, 255, 255, 0.6),
+											inset 0 0 20px rgba(255, 255, 255, 0.05)
+										`,
 									}}
+									whileHover={{
+										scale: 1.05,
+										boxShadow: `
+											0 12px 40px rgba(0, 0, 0, 0.3),
+											0 4px 12px rgba(0, 0, 0, 0.15),
+											inset 0 1px 0 rgba(255, 255, 255, 0.7),
+											inset 0 0 25px rgba(255, 255, 255, 0.1)
+										`,
+									}}
+									whileTap={{ scale: 0.98 }}
 									transition={{
-										duration: 2,
-										repeat: Infinity,
-										ease: 'easeInOut',
+										type: 'spring',
+										stiffness: 300,
+										damping: 20,
 									}}
 								>
-									<svg
-										width="20"
-										height="20"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
+									<span>Get Your Custom Website Built </span>
+									<motion.div
+										className="ml-3"
+										animate={{
+											x: [0, 4, 0],
+										}}
+										transition={{
+											duration: 2,
+											repeat: Infinity,
+											ease: 'easeInOut',
+										}}
 									>
-										<path d="M5 12h14M12 5l7 7-7 7" />
-									</svg>
+										<svg
+											width="20"
+											height="20"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										>
+											<path d="M5 12h14M12 5l7 7-7 7" />
+										</svg>
+									</motion.div>
 								</motion.div>
-							</motion.button>
+							</Link>
 						</motion.div>
 					</div>
 				</section>
@@ -785,31 +796,24 @@ const WebsiteDevelopmentPage = () => {
 								started with a free consultation today.
 							</p>
 							<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-								<motion.a
-									href="#contact"
-									className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
-									whileHover={{
-										scale: 1.05,
-										boxShadow:
-											'0 20px 40px rgba(255, 86, 51, 0.3)',
-									}}
-									whileTap={{ scale: 0.98 }}
-									transition={{
-										type: 'spring',
-										stiffness: 300,
-										damping: 20,
-									}}
-								>
-									Start Your Project
-								</motion.a>
-								<motion.a
-									href="#portfolio"
-									className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
-									whileHover={{ scale: 1.02 }}
-									whileTap={{ scale: 0.98 }}
-								>
-									View Our Work
-								</motion.a>
+								<Link href="/book-demo">
+									<motion.div
+										className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
+										whileHover={{
+											scale: 1.05,
+											boxShadow:
+												'0 20px 40px rgba(255, 86, 51, 0.3)',
+										}}
+										whileTap={{ scale: 0.98 }}
+										transition={{
+											type: 'spring',
+											stiffness: 300,
+											damping: 20,
+										}}
+									>
+										Start Your Project
+									</motion.div>
+								</Link>
 							</div>
 						</motion.div>
 					</div>

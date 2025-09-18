@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import Link from 'next/link';
 
 const ProblemValidationSection = () => {
 	const ref = useRef(null);
@@ -302,28 +303,31 @@ const ProblemValidationSection = () => {
 					transition={{ delay: 1.2, duration: 0.6 }}
 					className="text-center"
 				>
-					<motion.button
-						className="cursor-pointer inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#FF5633] to-[#ff755a] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
-						whileHover={{
-							scale: 1.05,
-							boxShadow: '0 20px 40px rgba(255, 107, 71, 0.3)',
-						}}
-						whileTap={{ scale: 0.98 }}
-						transition={{
-							type: 'spring',
-							stiffness: 300,
-							damping: 20,
-						}}
-					>
-						Stop the Bleeding
-						<motion.span
-							className="ml-2"
-							animate={{ x: [0, 5, 0] }}
-							transition={{ duration: 1.5, repeat: Infinity }}
+					<Link href="/book-demo">
+						<motion.button
+							className="cursor-pointer inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#FF5633] to-[#ff755a] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+							whileHover={{
+								scale: 1.05,
+								boxShadow:
+									'0 20px 40px rgba(255, 107, 71, 0.3)',
+							}}
+							whileTap={{ scale: 0.98 }}
+							transition={{
+								type: 'spring',
+								stiffness: 300,
+								damping: 20,
+							}}
 						>
-							→
-						</motion.span>
-					</motion.button>
+							Stop the Bleeding
+							<motion.span
+								className="ml-2"
+								animate={{ x: [0, 5, 0] }}
+								transition={{ duration: 1.5, repeat: Infinity }}
+							>
+								→
+							</motion.span>
+						</motion.button>
+					</Link>
 				</motion.div>
 			</div>
 		</section>

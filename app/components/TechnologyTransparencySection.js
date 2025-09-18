@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 const TechnologyTransparencySection = () => {
 	const sectionRef = useRef(null);
@@ -288,64 +289,67 @@ const TechnologyTransparencySection = () => {
 					transition={{ delay: 1.5, duration: 0.8 }}
 					className="text-center"
 				>
-					<motion.button
-						className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
-						style={{
-							background:
-								'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
-							backdropFilter: 'blur(16px) saturate(180%)',
-							border: '1px solid rgba(255, 255, 255, 0.3)',
-							borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-							borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-							boxShadow: `
-								0 8px 32px rgba(0, 0, 0, 0.2),
-								0 2px 8px rgba(0, 0, 0, 0.1),
-								inset 0 1px 0 rgba(255, 255, 255, 0.6),
-								inset 0 0 20px rgba(255, 255, 255, 0.05)
-							`,
-						}}
-						whileHover={{
-							scale: 1.05,
-							boxShadow: `
-								0 12px 40px rgba(0, 0, 0, 0.3),
-								0 4px 12px rgba(0, 0, 0, 0.15),
-								inset 0 1px 0 rgba(255, 255, 255, 0.7),
-								inset 0 0 25px rgba(255, 255, 255, 0.1)
-							`,
-						}}
-						whileTap={{ scale: 0.98 }}
-						transition={{
-							type: 'spring',
-							stiffness: 300,
-							damping: 20,
-						}}
-					>
-						<span>Get Your Custom Workflow </span>
-						<motion.div
-							className="ml-3"
-							animate={{
-								x: [0, 4, 0],
+					<Link href="/book-demo">
+						<motion.button
+							className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
+							style={{
+								background:
+									'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
+								backdropFilter: 'blur(16px) saturate(180%)',
+								border: '1px solid rgba(255, 255, 255, 0.3)',
+								borderTop: '1px solid rgba(255, 255, 255, 0.5)',
+								borderBottom:
+									'1px solid rgba(255, 255, 255, 0.1)',
+								boxShadow: `
+									0 8px 32px rgba(0, 0, 0, 0.2),
+									0 2px 8px rgba(0, 0, 0, 0.1),
+									inset 0 1px 0 rgba(255, 255, 255, 0.6),
+									inset 0 0 20px rgba(255, 255, 255, 0.05)
+								`,
 							}}
+							whileHover={{
+								scale: 1.05,
+								boxShadow: `
+									0 12px 40px rgba(0, 0, 0, 0.3),
+									0 4px 12px rgba(0, 0, 0, 0.15),
+									inset 0 1px 0 rgba(255, 255, 255, 0.7),
+									inset 0 0 25px rgba(255, 255, 255, 0.1)
+								`,
+							}}
+							whileTap={{ scale: 0.98 }}
 							transition={{
-								duration: 2,
-								repeat: Infinity,
-								ease: 'easeInOut',
+								type: 'spring',
+								stiffness: 300,
+								damping: 20,
 							}}
 						>
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
+							<span>Get Your Custom Workflow </span>
+							<motion.div
+								className="ml-3"
+								animate={{
+									x: [0, 4, 0],
+								}}
+								transition={{
+									duration: 2,
+									repeat: Infinity,
+									ease: 'easeInOut',
+								}}
 							>
-								<path d="M5 12h14M12 5l7 7-7 7" />
-							</svg>
-						</motion.div>
-					</motion.button>
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<path d="M5 12h14M12 5l7 7-7 7" />
+								</svg>
+							</motion.div>
+						</motion.button>
+					</Link>
 				</motion.div>
 			</div>
 		</section>

@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -126,23 +127,24 @@ const BarbershopsSalonsPage = () => {
 							</motion.p>
 
 							<motion.div>
-								<motion.a
-									href="#"
-									className="inline-flex items-center px-7 py-3.5 bg-[#FF5633] text-white text-md font-medium rounded-lg shadow-lg"
-									whileHover={{
-										scale: 1.05,
-										boxShadow:
-											'0 20px 40px rgba(0, 0, 0, 0.2)',
-									}}
-									whileTap={{ scale: 0.98 }}
-									transition={{
-										type: 'spring',
-										stiffness: 300,
-										damping: 20,
-									}}
-								>
-									Book a Free Demo
-								</motion.a>
+								<Link href="/book-demo">
+									<motion.div
+										className="inline-flex items-center px-7 py-3.5 bg-[#FF5633] text-white text-md font-medium rounded-lg shadow-lg cursor-pointer"
+										whileHover={{
+											scale: 1.05,
+											boxShadow:
+												'0 20px 40px rgba(0, 0, 0, 0.2)',
+										}}
+										whileTap={{ scale: 0.98 }}
+										transition={{
+											type: 'spring',
+											stiffness: 300,
+											damping: 20,
+										}}
+									>
+										Book a Free Demo
+									</motion.div>
+								</Link>
 							</motion.div>
 						</motion.div>
 					</div>
@@ -562,31 +564,33 @@ const BarbershopsSalonsPage = () => {
 										receptionist.
 									</p>
 									<div className="flex flex-col sm:flex-row gap-4 justify-center">
-										<motion.a
-											href="#"
-											className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg"
-											whileHover={{
-												scale: 1.05,
-												boxShadow:
-													'0 20px 40px rgba(255, 86, 51, 0.3)',
-											}}
-											whileTap={{ scale: 0.98 }}
-											transition={{
-												type: 'spring',
-												stiffness: 300,
-												damping: 20,
-											}}
-										>
-											Get Started Today
-										</motion.a>
-										<motion.a
-											href="/guarantee"
-											className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
-											whileHover={{ scale: 1.05 }}
-											whileTap={{ scale: 0.98 }}
-										>
-											View Our Guarantee
-										</motion.a>
+										<Link href="/book-demo">
+											<motion.div
+												className="inline-flex items-center px-8 py-4 bg-[#FF5633] text-white text-lg font-semibold rounded-lg shadow-lg cursor-pointer"
+												whileHover={{
+													scale: 1.05,
+													boxShadow:
+														'0 20px 40px rgba(255, 86, 51, 0.3)',
+												}}
+												whileTap={{ scale: 0.98 }}
+												transition={{
+													type: 'spring',
+													stiffness: 300,
+													damping: 20,
+												}}
+											>
+												Get Started Today
+											</motion.div>
+										</Link>
+										<Link href="/guarantee">
+											<motion.div
+												className="inline-flex items-center px-8 py-4 border-2 border-[#FF5633] text-[#FF5633] text-lg font-semibold rounded-lg hover:bg-[#FF5633] hover:text-white transition-colors duration-200"
+												whileHover={{ scale: 1.05 }}
+												whileTap={{ scale: 0.98 }}
+											>
+												View Our Guarantee
+											</motion.div>
+										</Link>
 									</div>
 								</div>
 							</motion.div>
