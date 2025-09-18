@@ -61,7 +61,6 @@ const Navbar = () => {
 					name: 'Website Development',
 					href: '/solutions/website-development',
 				},
-				{ name: 'See All Solutions', href: '/solutions' },
 			],
 		},
 		{
@@ -74,15 +73,11 @@ const Navbar = () => {
 					href: '/industries/barbershops-salons',
 				},
 				{ name: 'Restaurants', href: '/industries/restaurants' },
-				{
-					name: 'Clinics & Healthcare',
-					href: '/industries/clinics-healthcare',
-				},
-				{ name: 'Law Firms', href: '/industries/law-firms' },
+				{ name: 'Clinics & Healthcare', href: '/industries/clinics' },
 				{ name: 'Real Estate', href: '/industries/real-estate' },
 				{
 					name: 'Contractors',
-					href: '/industries/contractors-home-services',
+					href: '/industries/contractors',
 				},
 				{
 					name: 'Small Businesses',

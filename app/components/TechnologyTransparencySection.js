@@ -1,37 +1,7 @@
 'use client';
 
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import {
-	Phone,
-	MessageSquare,
-	Brain,
-	Calendar,
-	DollarSign,
-	Clock,
-	User,
-	CheckCircle,
-	Smartphone,
-	UserPlus,
-	Target,
-	Filter,
-	Zap,
-	Mail,
-	Repeat,
-	PhoneCall,
-	Database,
-	MessageCircle,
-	Tags,
-	GitBranch,
-	Search,
-	Package,
-	RotateCcw,
-	AlertTriangle,
-	ThumbsUp,
-	HelpCircle,
-	Users,
-	CheckCircle2,
-} from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 const TechnologyTransparencySection = () => {
 	const sectionRef = useRef(null);
