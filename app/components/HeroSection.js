@@ -85,7 +85,64 @@ const HeroSection = () => {
 	};
 
 	return (
-		<section className="py-18 lg:py-50 relative dot-pattern-light mb-26 lg:mb-0">
+		<section className="py-18 lg:py-50 relative mb-26 lg:mb-0 overflow-hidden">
+			{/* Background with gradient and texture */}
+			<div
+				className="absolute inset-0"
+				style={{
+					background:
+						'linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 0.8) 30%, rgba(241, 245, 249, 0.6) 70%, rgba(255, 255, 255, 1) 100%)',
+				}}
+			>
+				{/* Full textured blur effect */}
+				<div className="absolute inset-0">
+					{/* Base texture pattern */}
+					<div
+						className="absolute inset-0 opacity-25"
+						style={{
+							backgroundImage:
+								'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 3px, transparent 0)',
+							backgroundSize: '20px 20px',
+						}}
+					/>
+					{/* Blurred texture transition layers */}
+					<div
+						className="absolute inset-0 opacity-20"
+						style={{
+							backgroundImage:
+								'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.1) 2px, transparent 0)',
+							backgroundSize: '20px 20px',
+							filter: 'blur(1px)',
+							maskImage:
+								'linear-gradient(180deg, black 0%, black 60%, transparent 85%)',
+							WebkitMaskImage:
+								'linear-gradient(180deg, black 0%, black 60%, transparent 85%)',
+						}}
+					/>
+					<div
+						className="absolute inset-0 opacity-15"
+						style={{
+							backgroundImage:
+								'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0)',
+							backgroundSize: '20px 20px',
+							filter: 'blur(2px)',
+							maskImage:
+								'linear-gradient(180deg, black 20%, black 70%, transparent 90%)',
+							WebkitMaskImage:
+								'linear-gradient(180deg, black 20%, black 70%, transparent 90%)',
+						}}
+					/>
+					{/* Final gradient overlay for smooth color transition */}
+					<div
+						className="absolute inset-0"
+						style={{
+							background:
+								'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.6) 70%, rgba(255,255,255,0.9) 100%)',
+						}}
+					/>
+				</div>
+			</div>
+
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 				<motion.div
 					variants={containerVariants}

@@ -12,6 +12,7 @@ const Navbar = () => {
 	const [activeDropdown, setActiveDropdown] = useState(null);
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
+	const [mounted, setMounted] = useState(false);
 
 	// Handle scroll detection
 	useEffect(() => {
@@ -40,61 +41,74 @@ const Navbar = () => {
 		return () => window.removeEventListener('resize', checkMobile);
 	}, []);
 
+	// Handle hydration
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
 	// Navigation menu items
 	const navItems = [
 		{
 			name: 'Solutions',
 			hasDropdown: true,
+			href: '/solutions',
 			dropdownItems: [
-				'AI Receptionists',
-				'Customer Support',
-				'Lead Nurturing',
-				'Website Development',
-				'See All Solutions',
+				{
+					name: 'AI Receptionists',
+					href: '/solutions/ai-receptionists',
+				},
+				{
+					name: 'Customer Support',
+					href: '/solutions/customer-support',
+				},
+				{ name: 'Lead Nurturing', href: '/solutions/lead-nurturing' },
+				{
+					name: 'Website Development',
+					href: '/solutions/website-development',
+				},
+				{ name: 'See All Solutions', href: '/solutions' },
 			],
 		},
 		{
 			name: 'Industries',
 			hasDropdown: true,
+			href: '/industries',
 			dropdownItems: [
-				'Restaurants',
-				'Real Estate',
-				'Medical',
-				'Law Firms',
-				'Small Business',
+				{ name: 'Restaurants', href: '/industries/restaurants' },
+				{ name: 'Real Estate', href: '/industries/real-estate' },
+				{ name: 'Medical', href: '/industries/medical' },
+				{ name: 'Law Firms', href: '/industries/law-firms' },
+				{ name: 'Small Business', href: '/industries/small-business' },
 			],
 		},
-		{ name: 'Case Studies', hasDropdown: false },
-		{ name: 'About', hasDropdown: false },
-		{ name: 'Contact', hasDropdown: false },
+		{ name: 'Case Studies', hasDropdown: false, href: '/case-studies' },
+		{ name: 'About', hasDropdown: false, href: '/about' },
+		{ name: 'Contact', hasDropdown: false, href: '/contact' },
 	];
 
 	// Animation variants
 	const dropdownVariants = {
 		hidden: {
 			opacity: 0,
-			y: -15,
-			scale: 0.92,
-			filter: 'blur(4px)',
+			y: -8,
+			scale: 0.96,
 		},
 		visible: {
 			opacity: 1,
 			y: 0,
 			scale: 1,
-			filter: 'blur(0px)',
 			transition: {
-				duration: 0.3,
-				ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for premium feel
-				staggerChildren: 0.05,
+				duration: 0.2,
+				ease: 'easeOut',
+				staggerChildren: 0.03,
 			},
 		},
 		exit: {
 			opacity: 0,
-			y: -10,
-			scale: 0.95,
-			filter: 'blur(2px)',
+			y: -4,
+			scale: 0.98,
 			transition: {
-				duration: 0.2,
+				duration: 0.15,
 				ease: 'easeIn',
 			},
 		},
@@ -126,6 +140,38 @@ const Navbar = () => {
 			transition: { duration: 0.2 },
 		},
 	};
+
+	// Prevent hydration mismatch by using consistent initial state
+	if (!mounted) {
+		return (
+			<nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent border-b border-transparent">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="flex items-center justify-between h-16">
+						{/* Logo */}
+						<div className="flex-shrink-0">
+							<Link href="/">
+								<Image
+									src="/navlogo.png"
+									alt="Asterra"
+									width={272}
+									height={72}
+									className="h-8 w-auto"
+									priority
+								/>
+							</Link>
+						</div>
+						{/* Placeholder for content during hydration */}
+						<div className="hidden md:flex items-center space-x-4">
+							<div className="w-80 h-8"></div>
+						</div>
+						<div className="hidden md:flex">
+							<div className="w-32 h-8"></div>
+						</div>
+					</div>
+				</div>
+			</nav>
+		);
+	}
 
 	return (
 		<motion.nav
@@ -177,28 +223,33 @@ const Navbar = () => {
 									item.hasDropdown && setActiveDropdown(null)
 								}
 							>
-								<motion.a
-									href="#"
+								<Link
+									href={item.href}
 									className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
-									whileHover={{ scale: 1.02 }}
 								>
-									{item.name}
-									{item.hasDropdown && (
-										<motion.div
-											className="ml-1"
-											animate={{
-												rotate:
-													activeDropdown === item.name
-														? 180
-														: 0,
-											}}
-											transition={{ duration: 0.2 }}
-										>
-											<FontAwesomeIcon
-												icon={faChevronDown}
-											/>
-										</motion.div>
-									)}
+									<motion.div
+										whileHover={{ scale: 1.02 }}
+										className="flex items-center"
+									>
+										{item.name}
+										{item.hasDropdown && (
+											<motion.div
+												className="ml-1"
+												animate={{
+													rotate:
+														activeDropdown ===
+														item.name
+															? 180
+															: 0,
+												}}
+												transition={{ duration: 0.2 }}
+											>
+												<FontAwesomeIcon
+													icon={faChevronDown}
+												/>
+											</motion.div>
+										)}
+									</motion.div>
 									{/* Hover underline animation */}
 									<motion.div
 										className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
@@ -206,9 +257,9 @@ const Navbar = () => {
 										whileHover={{ scaleX: 1 }}
 										transition={{ duration: 0.2 }}
 									/>
-								</motion.a>
+								</Link>
 
-								{/* Glass Morphism Dropdown Menu */}
+								{/* Clean Dropdown Menu */}
 								<AnimatePresence>
 									{item.hasDropdown &&
 										activeDropdown === item.name && (
@@ -217,145 +268,45 @@ const Navbar = () => {
 												initial="hidden"
 												animate="visible"
 												exit="exit"
-												className="absolute top-full left-0 mt-2 w-56 rounded-2xl py-3 overflow-hidden"
-												style={{
-													background:
-														'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0.9) 100%)',
-													backdropFilter: isMobile
-														? 'blur(12px) saturate(150%)'
-														: 'blur(20px) saturate(180%)',
-													border: '1px solid rgba(255, 255, 255, 0.6)',
-													borderTop:
-														'2px solid rgba(255, 255, 255, 0.8)',
-													borderBottom:
-														'1px solid rgba(255, 255, 255, 0.3)',
-													boxShadow: isMobile
-														? `0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9)`
-														: `
-															0 8px 32px rgba(0, 0, 0, 0.12),
-															0 2px 8px rgba(0, 0, 0, 0.08),
-															inset 0 1px 0 rgba(255, 255, 255, 0.9),
-															inset 0 0 20px rgba(255, 255, 255, 0.1)
-														`,
-												}}
+												className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl py-2 shadow-lg border border-gray-200 overflow-hidden"
 											>
-												{/* Subtle shimmer effect - disabled on mobile */}
-												{!isMobile && (
-													<motion.div
-														className="absolute inset-0 opacity-0"
-														style={{
-															background:
-																'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%)',
-														}}
-														animate={{
-															x: [
-																'-100%',
-																'100%',
-															],
-															opacity: [
-																0, 0.3, 0,
-															],
-														}}
-														transition={{
-															duration: 3,
-															repeat: Infinity,
-															ease: 'easeInOut',
-														}}
-													/>
-												)}
-
 												{item.dropdownItems.map(
 													(dropdownItem, index) => (
 														<motion.div
-															key={dropdownItem}
-															className="relative overflow-hidden"
-															initial={{
-																opacity: 0,
-																y: 10,
-															}}
-															animate={{
-																opacity: 1,
-																y: 0,
+															key={
+																dropdownItem.name
+															}
+															variants={{
+																hidden: {
+																	opacity: 0,
+																	x: -10,
+																},
+																visible: {
+																	opacity: 1,
+																	x: 0,
+																},
 															}}
 															transition={{
 																delay:
 																	index *
-																	0.05,
-																duration: 0.2,
-																ease: 'easeOut',
+																	0.03,
+																duration: 0.15,
 															}}
 														>
-															<motion.a
-																href="#"
-																className="block px-4 py-3 text-sm text-[#151719] font-medium relative group"
-																whileHover={{
-																	backgroundColor:
-																		'rgba(255, 255, 255, 0.5)',
-																}}
-																transition={{
-																	duration: 0.2,
-																	ease: 'easeOut',
-																}}
+															<Link
+																href={
+																	dropdownItem.href
+																}
+																className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-150 relative group"
 															>
-																{/* Hover glass effect */}
-																<motion.div
-																	className="absolute inset-0 opacity-0 group-hover:opacity-100"
-																	style={{
-																		background:
-																			'linear-gradient(135deg, rgba(255, 107, 71, 0.08) 0%, rgba(255, 107, 71, 0.04) 100%)',
-																		backdropFilter:
-																			'blur(8px)',
-																	}}
-																	initial={{
-																		scale: 0.8,
-																		opacity: 0,
-																	}}
-																	whileHover={{
-																		scale: 1,
-																		opacity: 1,
-																		transition:
-																			{
-																				duration: 0.2,
-																				ease: 'easeOut',
-																			},
-																	}}
-																/>
-
-																{/* Text with subtle glow on hover */}
-																<motion.span
-																	className="relative z-10"
-																	whileHover={{
-																		color: '#FF5633',
-																		textShadow:
-																			'0 0 8px rgba(255, 107, 71, 0.3)',
-																	}}
-																	transition={{
-																		duration: 0.2,
-																	}}
-																>
+																<span className="relative z-10">
 																	{
-																		dropdownItem
+																		dropdownItem.name
 																	}
-																</motion.span>
-
-																{/* Subtle left accent */}
-																<motion.div
-																	className="absolute left-0 top-1/2 w-0 h-0 bg-gradient-to-r from-[#FF5633] to-transparent opacity-0 group-hover:opacity-100"
-																	style={{
-																		transform:
-																			'translateY(-50%)',
-																	}}
-																	whileHover={{
-																		width: '3px',
-																		height: '60%',
-																		transition:
-																			{
-																				duration: 0.2,
-																				ease: 'easeOut',
-																			},
-																	}}
-																/>
-															</motion.a>
+																</span>
+																{/* Simple hover accent */}
+																<div className="absolute left-0 top-0 bottom-0 w-0 bg-[#FF5633] group-hover:w-1 transition-all duration-150"></div>
+															</Link>
 														</motion.div>
 													)
 												)}
@@ -368,22 +319,24 @@ const Navbar = () => {
 
 					{/* CTA Button */}
 					<div className="hidden md:flex">
-						<motion.a
-							href="#"
-							className="bg-[#FF5633] text-white/95 px-6 py-2 rounded-lg text-sm"
-							whileHover={{
-								scale: 1.05,
-								boxShadow: '0 5px 40px rgba(255, 86, 51, 0.3)',
-							}}
-							whileTap={{ scale: 0.98 }}
-							transition={{
-								type: 'spring',
-								stiffness: 300,
-								damping: 20,
-							}}
-						>
-							Contact Sales
-						</motion.a>
+						<Link href="/contact">
+							<motion.div
+								className="bg-[#FF5633] text-white/95 px-6 py-2 rounded-lg text-sm cursor-pointer"
+								whileHover={{
+									scale: 1.05,
+									boxShadow:
+										'0 5px 40px rgba(255, 86, 51, 0.3)',
+								}}
+								whileTap={{ scale: 0.98 }}
+								transition={{
+									type: 'spring',
+									stiffness: 300,
+									damping: 20,
+								}}
+							>
+								Contact Sales
+							</motion.div>
+						</Link>
 					</div>
 
 					{/* Mobile menu button */}
@@ -435,24 +388,26 @@ const Navbar = () => {
 										key={item.name}
 										variants={mobileItemVariants}
 									>
-										<a
-											href="#"
+										<Link
+											href={item.href}
 											className="block px-4 py-2 text-[#151719] hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-200"
+											onClick={() => setIsMenuOpen(false)}
 										>
 											{item.name}
-										</a>
+										</Link>
 									</motion.div>
 								))}
 								<motion.div
 									variants={mobileItemVariants}
 									className="px-4 pt-4"
 								>
-									<a
-										href="#"
+									<Link
+										href="/contact"
 										className="block w-full text-center bg-[#FF5633] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#E04A2B] transition-colors duration-200"
+										onClick={() => setIsMenuOpen(false)}
 									>
 										Contact Sales
-									</a>
+									</Link>
 								</motion.div>
 							</div>
 						</motion.div>
