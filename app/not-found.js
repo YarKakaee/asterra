@@ -89,9 +89,9 @@ const NotFoundPage = () => {
 						</h2>
 
 						<p className="text-lg sm:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-							Don't worry, even our AI automation couldn't prevent
-							this one. Let's get you back on track to
-							streamlining your business.
+							Don&apos;t worry, even our AI automation
+							couldn&apos;t prevent this one. Let&apos;s get you
+							back on track to streamlining your business.
 						</p>
 
 						{/* Action Button */}

@@ -208,11 +208,13 @@ const TermsAndConditionsPage = () => {
 										By accessing our website at asterra.ca,
 										engaging our services, or entering into
 										a service agreement with Asterra
-										("Company," "we," "us," or "our"), you
-										("Client," "you," or "your") agree to be
-										bound by these Terms and Conditions. If
-										you do not agree to these terms, you may
-										not use our services or website.
+										(&quot;Company,&quot; &quot;we,&quot;
+										&quot;us,&quot; or &quot;our&quot;), you
+										(&quot;Client,&quot; &quot;you,&quot; or
+										&quot;your&quot;) agree to be bound by
+										these Terms and Conditions. If you do
+										not agree to these terms, you may not
+										use our services or website.
 									</p>
 								</div>
 							</motion.div>
@@ -429,8 +431,8 @@ const TermsAndConditionsPage = () => {
 											Your success depends on
 											collaboration.
 										</strong>{' '}
-										Here's what we need from you to deliver
-										exceptional results:
+										Here&apos;s what we need from you to
+										deliver exceptional results:
 									</p>
 								</div>
 
@@ -603,11 +605,12 @@ const TermsAndConditionsPage = () => {
 											<strong>
 												Warranty Disclaimer:
 											</strong>{' '}
-											Our services are provided "AS IS"
-											without warranties of any kind,
-											either express or implied, including
-											warranties of merchantability,
-											fitness for a particular purpose, or
+											Our services are provided &quot;AS
+											IS&quot; without warranties of any
+											kind, either express or implied,
+											including warranties of
+											merchantability, fitness for a
+											particular purpose, or
 											non-infringement.
 										</p>
 										<p>

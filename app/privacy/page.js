@@ -206,14 +206,15 @@ const PrivacyPolicyPage = () => {
 								</h2>
 								<div className="bg-gradient-to-r from-gray-50 to-blue-50/30 rounded-2xl p-6 border border-gray-100">
 									<p className="text-gray-700 leading-relaxed mb-0">
-										Asterra ("we," "us," or "our") is
-										committed to protecting your privacy and
-										personal information. This Privacy
-										Policy explains how we collect, use,
-										disclose, and safeguard your information
-										when you visit our website asterra.ca,
-										use our services, or interact with our
-										business automation solutions.
+										Asterra (&quot;we,&quot; &quot;us,&quot;
+										or &quot;our&quot;) is committed to
+										protecting your privacy and personal
+										information. This Privacy Policy
+										explains how we collect, use, disclose,
+										and safeguard your information when you
+										visit our website asterra.ca, use our
+										services, or interact with our business
+										automation solutions.
 									</p>
 								</div>
 							</motion.div>
