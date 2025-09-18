@@ -25,15 +25,10 @@ const Navbar = () => {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
-	// Mobile detection for performance optimization
+	// Simplified mobile detection for performance optimization
 	useEffect(() => {
 		const checkMobile = () => {
-			setIsMobile(
-				window.innerWidth < 768 ||
-					/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-						navigator.userAgent
-					)
-			);
+			setIsMobile(window.innerWidth < 768);
 		};
 
 		checkMobile();
@@ -82,33 +77,28 @@ const Navbar = () => {
 			],
 		},
 		{ name: 'Case Studies', hasDropdown: false, href: '/case-studies' },
-		{ name: 'About', hasDropdown: false, href: '/about' },
-		{ name: 'Contact', hasDropdown: false, href: '/contact' },
+		{ name: 'The Asterra Way', hasDropdown: false, href: '/about' },
 	];
 
-	// Animation variants
+	// Simplified animation variants for better performance
 	const dropdownVariants = {
 		hidden: {
 			opacity: 0,
-			y: -8,
-			scale: 0.96,
+			y: -4,
 		},
 		visible: {
 			opacity: 1,
 			y: 0,
-			scale: 1,
 			transition: {
-				duration: 0.2,
+				duration: 0.15,
 				ease: 'easeOut',
-				staggerChildren: 0.03,
 			},
 		},
 		exit: {
 			opacity: 0,
-			y: -4,
-			scale: 0.98,
+			y: -2,
 			transition: {
-				duration: 0.15,
+				duration: 0.1,
 				ease: 'easeIn',
 			},
 		},
@@ -120,24 +110,22 @@ const Navbar = () => {
 			opacity: 1,
 			height: 'auto',
 			transition: {
-				duration: 0.3,
+				duration: 0.2,
 				ease: 'easeOut',
-				staggerChildren: 0.1,
 			},
 		},
 		exit: {
 			opacity: 0,
 			height: 0,
-			transition: { duration: 0.2 },
+			transition: { duration: 0.15 },
 		},
 	};
 
 	const mobileItemVariants = {
-		hidden: { opacity: 0, x: -20 },
+		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
-			x: 0,
-			transition: { duration: 0.2 },
+			transition: { duration: 0.15 },
 		},
 	};
 

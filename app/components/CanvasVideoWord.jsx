@@ -53,7 +53,7 @@ export default function CanvasVideoWord({
 		else v.pause();
 	}, [active]);
 
-	// render loop
+	// Optimized render loop with throttling
 	useEffect(() => {
 		if (!active) return;
 		if (!wrapRef.current || !ghostRef.current || !canvasRef.current) return;
@@ -61,11 +61,18 @@ export default function CanvasVideoWord({
 		const ctx = canvas.getContext('2d');
 		if (!ctx) return;
 
+		let lastFrameTime = 0;
+		const targetFPS = 30; // Reduce from 60fps to 30fps for better performance
+		const frameInterval = 1000 / targetFPS;
+
 		function layout() {
 			const rect = ghostRef.current.getBoundingClientRect();
-			const cssW = Math.max(2, Math.ceil(rect.width)) + OVERSCAN_PX; // ➜ widen a touch
+			const cssW = Math.max(2, Math.ceil(rect.width)) + OVERSCAN_PX;
 			const cssH = Math.max(2, Math.ceil(rect.height));
-			const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+			const dpr = Math.max(
+				1,
+				Math.min(2, Math.floor(window.devicePixelRatio || 1))
+			); // Cap DPR at 2
 
 			canvas.style.width = cssW + 'px';
 			canvas.style.height = cssH + 'px';
@@ -74,10 +81,17 @@ export default function CanvasVideoWord({
 
 			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 			ctx.imageSmoothingEnabled = true;
-			ctx.imageSmoothingQuality = 'high';
+			ctx.imageSmoothingQuality = 'medium'; // Reduced from 'high'
 		}
 
 		function draw() {
+			const now = performance.now();
+			if (now - lastFrameTime < frameInterval) {
+				rafRef.current = requestAnimationFrame(draw);
+				return;
+			}
+			lastFrameTime = now;
+
 			const v = videoRef.current;
 			if (!v) return;
 
@@ -119,10 +133,8 @@ export default function CanvasVideoWord({
 		layout();
 		const ro = new ResizeObserver(() => {
 			layout();
-			draw();
 		});
 		ro.observe(ghostRef.current);
-		window.addEventListener('resize', draw);
 
 		const tick = () => {
 			if (!ready) {
@@ -135,7 +147,6 @@ export default function CanvasVideoWord({
 
 		return () => {
 			ro.disconnect();
-			window.removeEventListener('resize', draw);
 			if (rafRef.current) cancelAnimationFrame(rafRef.current);
 		};
 	}, [text, active, ready]);

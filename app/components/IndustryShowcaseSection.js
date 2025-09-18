@@ -218,14 +218,14 @@ const IndustryShowcaseSection = () => {
 						className="absolute left-0 top-0 bottom-0 w-32 z-20 pointer-events-none"
 						style={{
 							background:
-								'linear-gradient(to right, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0.9) 40%, rgba(248, 250, 252, 0.6) 70%, transparent 100%)',
+								'linear-gradient(to right, rgba(243, 247, 250, 1) 0%, rgba(243, 247, 250, 0.9) 40%, rgba(243, 247, 250, 0.6) 70%, transparent 100%)',
 						}}
 					/>
 					<div
 						className="absolute right-0 top-0 bottom-0 w-32 z-20 pointer-events-none"
 						style={{
 							background:
-								'linear-gradient(to left, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0.9) 40%, rgba(248, 250, 252, 0.6) 70%, transparent 100%)',
+								'linear-gradient(to left, rgba(243, 247, 250, 1) 0%, rgba(243, 247, 250, 0.9) 40%, rgba(243, 247, 250, 0.6) 70%, transparent 100%)',
 						}}
 					/>
 
@@ -255,20 +255,7 @@ const IndustryShowcaseSection = () => {
 									return (
 										<motion.div
 											key={`${business.name}-${index}`}
-											className="flex-shrink-0 cursor-pointer group"
-											whileHover={
-												!isMobile
-													? {
-															scale: 1.05,
-															y: -4,
-													  }
-													: {}
-											}
-											transition={{
-												type: 'spring',
-												stiffness: 300,
-												damping: 20,
-											}}
+											className="flex-shrink-0"
 										>
 											<div
 												className="flex items-center gap-3 px-6 py-4 rounded-xl min-w-max"
