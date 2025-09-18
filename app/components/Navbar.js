@@ -69,15 +69,37 @@ const Navbar = () => {
 			hasDropdown: true,
 			href: '/industries',
 			dropdownItems: [
+				{
+					name: 'Barbershops & Salons',
+					href: '/industries/barbershops-salons',
+				},
 				{ name: 'Restaurants', href: '/industries/restaurants' },
-				{ name: 'Real Estate', href: '/industries/real-estate' },
-				{ name: 'Medical', href: '/industries/medical' },
+				{
+					name: 'Clinics & Healthcare',
+					href: '/industries/clinics-healthcare',
+				},
 				{ name: 'Law Firms', href: '/industries/law-firms' },
-				{ name: 'Small Business', href: '/industries/small-business' },
+				{ name: 'Real Estate', href: '/industries/real-estate' },
+				{
+					name: 'Contractors',
+					href: '/industries/contractors-home-services',
+				},
+				{
+					name: 'Small Businesses',
+					href: '/industries/small-businesses',
+				},
 			],
 		},
-		{ name: 'Case Studies', hasDropdown: false, href: '/case-studies' },
-		{ name: 'The Asterra Way', hasDropdown: false, href: '/about' },
+		{
+			name: 'Client Success',
+			hasDropdown: false,
+			href: '/client-success',
+		},
+		{
+			name: 'The Asterra™ Promise',
+			hasDropdown: false,
+			href: '/guarantee',
+		},
 	];
 
 	// Simplified animation variants for better performance
@@ -211,16 +233,13 @@ const Navbar = () => {
 									item.hasDropdown && setActiveDropdown(null)
 								}
 							>
-								<Link
-									href={item.href}
-									className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
-								>
-									<motion.div
-										whileHover={{ scale: 1.02 }}
-										className="flex items-center"
-									>
-										{item.name}
-										{item.hasDropdown && (
+								{item.hasDropdown ? (
+									<div className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center cursor-pointer">
+										<motion.div
+											whileHover={{ scale: 1.02 }}
+											className="flex items-center"
+										>
+											{item.name}
 											<motion.div
 												className="ml-1"
 												animate={{
@@ -236,16 +255,35 @@ const Navbar = () => {
 													icon={faChevronDown}
 												/>
 											</motion.div>
-										)}
-									</motion.div>
-									{/* Hover underline animation */}
-									<motion.div
-										className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-										initial={{ scaleX: 0 }}
-										whileHover={{ scaleX: 1 }}
-										transition={{ duration: 0.2 }}
-									/>
-								</Link>
+										</motion.div>
+										{/* Hover underline animation */}
+										<motion.div
+											className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+											initial={{ scaleX: 0 }}
+											whileHover={{ scaleX: 1 }}
+											transition={{ duration: 0.2 }}
+										/>
+									</div>
+								) : (
+									<Link
+										href={item.href}
+										className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
+									>
+										<motion.div
+											whileHover={{ scale: 1.02 }}
+											className="flex items-center"
+										>
+											{item.name}
+										</motion.div>
+										{/* Hover underline animation */}
+										<motion.div
+											className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+											initial={{ scaleX: 0 }}
+											whileHover={{ scaleX: 1 }}
+											transition={{ duration: 0.2 }}
+										/>
+									</Link>
+								)}
 
 								{/* Clean Dropdown Menu */}
 								<AnimatePresence>
@@ -368,7 +406,7 @@ const Navbar = () => {
 							initial="hidden"
 							animate="visible"
 							exit="exit"
-							className="md:hidden border-t border-gray-100"
+							className="md:hidden border-t border-gray-300"
 						>
 							<div className="py-4 space-y-2">
 								{navItems.map((item) => (
@@ -376,13 +414,21 @@ const Navbar = () => {
 										key={item.name}
 										variants={mobileItemVariants}
 									>
-										<Link
-											href={item.href}
-											className="block px-4 py-2 text-[#151719] hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-200"
-											onClick={() => setIsMenuOpen(false)}
-										>
-											{item.name}
-										</Link>
+										{item.hasDropdown ? (
+											<div className="block px-4 py-2 text-[#151719] hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
+												{item.name}
+											</div>
+										) : (
+											<Link
+												href={item.href}
+												className="block px-4 py-2 text-[#151719] hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-200"
+												onClick={() =>
+													setIsMenuOpen(false)
+												}
+											>
+												{item.name}
+											</Link>
+										)}
 									</motion.div>
 								))}
 								<motion.div

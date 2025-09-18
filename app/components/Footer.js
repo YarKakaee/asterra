@@ -43,7 +43,8 @@ const Footer = () => {
 					<div className="flex flex-col md:flex-row justify-between items-center gap-4">
 						{/* Left side - Copyright */}
 						<div className="text-gray-500 text-sm">
-							© 2025 Asterra. All rights reserved.
+							© 2025 Asterra™ is a brand of Asterra Solutions Inc.
+							All rights reserved.
 						</div>
 
 						{/* Right side - Social Icons and Legal Links */}

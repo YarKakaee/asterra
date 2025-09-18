@@ -102,9 +102,28 @@ const HeroSection = () => {
 				>
 					{/* ROI Guarantee Badge */}
 					<motion.div variants={badgeVariants} className="mb-8">
-						<div className="inline-flex items-center px-6 py-3 glass-plaque rounded-full text-sm font-semibold text-gray-800">
-							ROI Guaranteed in 30 Days.
-						</div>
+						<motion.a
+							href="/guarantee"
+							className="inline-flex items-center px-6 py-3 glass-plaque rounded-full text-sm font-semibold text-gray-800"
+							whileHover={{
+								scale: 1.05,
+								transition: {
+									type: 'spring',
+									stiffness: 400,
+									damping: 25,
+								},
+							}}
+							whileTap={{
+								scale: 0.98,
+								transition: {
+									type: 'spring',
+									stiffness: 600,
+									damping: 20,
+								},
+							}}
+						>
+							ROI Guaranteed in 30 Days.†
+						</motion.a>
 					</motion.div>
 
 					{/* Main Headline */}
