@@ -59,7 +59,7 @@ const FAQSection = () => {
 			shortAnswer:
 				'Dedicated account manager + optimization + unlimited adjustments',
 			detailedAnswer:
-				'You get a dedicated account manager who knows your business, monthly optimization reviews to improve performance, unlimited small adjustments to workflows, and priority support with guaranteed 4-hour response times. We also provide detailed monthly reports showing exactly how much time and money you&apos;re saving.',
+				"You get a dedicated account manager who knows your business, monthly optimization reviews to improve performance, unlimited small adjustments to workflows, and priority support with guaranteed 4-hour response times. We also provide detailed monthly reports showing exactly how much time and money you're saving.",
 			highlight: 'Dedicated support team, not just a help desk',
 			icon: 'Users',
 		},
@@ -69,7 +69,7 @@ const FAQSection = () => {
 			question: 'How quickly will we see results?',
 			shortAnswer: 'Most clients see positive ROI within 30 days',
 			detailedAnswer:
-				'Simple automations like AI receptionists show immediate results - you&apos;ll see more calls answered from day one. Complex workflows typically show measurable improvements within 2-3 weeks. We guarantee positive ROI within 60 days or we&apos;ll refund your setup fee and optimize until you&apos;re profitable.',
+				"Simple automations like AI receptionists show immediate results - you'll see more calls answered from day one. Complex workflows typically show measurable improvements within 2-3 weeks. We guarantee positive ROI within 60 days or we'll refund your setup fee and optimize until you're profitable.",
 			highlight: '60-day ROI guarantee - results or refund',
 			icon: 'Zap',
 		},

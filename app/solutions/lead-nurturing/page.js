@@ -843,7 +843,7 @@ const LeadNurturingPage = () => {
 									<p className="text-gray-700 text-sm">
 										Increase lead-to-customer conversion by
 										up to 300% with personalized nurturing
-										that speaks to each lead's specific
+										that speaks to each lead&apos;s specific
 										needs and interests.
 									</p>
 								</motion.div>
