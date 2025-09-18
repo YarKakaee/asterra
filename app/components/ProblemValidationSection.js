@@ -1,12 +1,35 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 const ProblemValidationSection = () => {
 	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, margin: '-100px' });
+	const [mounted, setMounted] = useState(false);
+	const isInView = useInView(ref, {
+		once: true,
+		margin: '-50px',
+		amount: 0.3,
+	});
 	const [hoveredCard, setHoveredCard] = useState(null);
+
+	// Prevent hydration flash
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
+	if (!mounted) {
+		return (
+			<section ref={ref} className="py-20 bg-white">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="text-center">
+						<div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+						<div className="h-4 bg-gray-200 rounded w-96 mx-auto mb-8"></div>
+					</div>
+				</div>
+			</section>
+		);
+	}
 
 	const problemCards = [
 		{

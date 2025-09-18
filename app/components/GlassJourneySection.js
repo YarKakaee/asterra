@@ -5,7 +5,11 @@ import { useRef, useState, useMemo, useCallback, useEffect } from 'react';
 
 const GlassJourneySection = () => {
 	const sectionRef = useRef(null);
-	const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+	const isInView = useInView(sectionRef, {
+		once: true,
+		margin: '-50px',
+		amount: 0.3,
+	});
 	const [activeStep, setActiveStep] = useState(0);
 	const [expandedCard, setExpandedCard] = useState(null);
 	const [isMobile, setIsMobile] = useState(false);
