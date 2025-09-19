@@ -13,6 +13,7 @@ import TechnologyTransparencySection from './components/TechnologyTransparencySe
 import FAQSection from './components/FAQSection';
 import FinalUrgencySection from './components/FinalUrgencySection';
 import Footer from './components/Footer';
+import { OrganizationSchema, ServiceSchema } from './components/StructuredData';
 // Removed unused motion import for better performance
 
 export default function Home() {
@@ -23,6 +24,8 @@ export default function Home() {
 
 	return (
 		<>
+			<OrganizationSchema />
+			<ServiceSchema />
 			<Navbar />
 
 			<main className="pt-16 relative overflow-hidden">
