@@ -45,56 +45,37 @@ const Navbar = () => {
 	// Navigation menu items
 	const navItems = [
 		{
-			name: 'Solutions',
-			hasDropdown: true,
-			href: '/solutions',
-			dropdownItems: [
-				{
-					name: 'AI Receptionists',
-					href: '/solutions/ai-receptionists',
-				},
-				{
-					name: 'Customer Support',
-					href: '/solutions/customer-support',
-				},
-				{ name: 'Lead Nurturing', href: '/solutions/lead-nurturing' },
-				{
-					name: 'Website Development',
-					href: '/solutions/website-development',
-				},
-			],
+			name: 'Phone Handling',
+			hasDropdown: false,
+			href: '/phone-handling',
 		},
 		{
-			name: 'Industries',
+			name: 'Online Presence',
+			hasDropdown: false,
+			href: '/online-presence',
+		},
+		{
+			name: 'Use Cases',
 			hasDropdown: true,
 			href: '/industries',
 			dropdownItems: [
+				{ name: 'Restaurants', href: '/restaurants' },
 				{
 					name: 'Barbershops & Salons',
-					href: '/industries/barbershops-salons',
+					href: '/barbershops-salons',
 				},
-				{ name: 'Restaurants', href: '/industries/restaurants' },
-				{ name: 'Clinics & Healthcare', href: '/industries/clinics' },
-				{ name: 'Real Estate', href: '/industries/real-estate' },
+				{ name: 'Service Businesses', href: '/service-businesses' },
 				{
 					name: 'Contractors',
 					href: '/industries/contractors',
 				},
-				{
-					name: 'Small Businesses',
-					href: '/industries/small-businesses',
-				},
+				{ name: 'Retail & Local Shops', href: '/retail-local-shops' },
 			],
 		},
 		{
-			name: 'Client Success',
+			name: 'Results',
 			hasDropdown: false,
 			href: '/client-success',
-		},
-		{
-			name: 'The Asterra™ Promise',
-			hasDropdown: false,
-			href: '/guarantee',
 		},
 	];
 
@@ -177,28 +158,34 @@ const Navbar = () => {
 	// Prevent hydration mismatch by using consistent initial state
 	if (!mounted) {
 		return (
-			<nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent border-b border-transparent">
+			<nav className="fixed top-4 left-0 right-0 z-50 transition-all duration-300">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex items-center justify-between h-16">
-						{/* Logo */}
-						<div className="flex-shrink-0">
-							<Link href="/">
-								<Image
-									src="/navlogo.png"
-									alt="Asterra"
-									width={272}
-									height={72}
-									className="h-8 w-auto"
-									priority
-								/>
-							</Link>
-						</div>
-						{/* Placeholder for content during hydration */}
-						<div className="hidden md:flex items-center space-x-4">
-							<div className="w-80 h-8"></div>
-						</div>
-						<div className="hidden md:flex">
-							<div className="w-32 h-8"></div>
+					<div
+						className="rounded-full px-4 sm:px-6"
+						style={{
+							backgroundColor: 'rgba(250, 248, 245, 0)',
+							border: '1px solid rgba(250, 248, 245, 0)',
+						}}
+					>
+						<div className="flex items-center justify-between h-14 sm:h-16">
+							<div className="flex-shrink-0">
+								<Link href="/">
+									<Image
+										src="/navlogo.png"
+										alt="Asterra"
+										width={272}
+										height={72}
+										className="h-7 sm:h-8 w-auto"
+										priority
+									/>
+								</Link>
+							</div>
+							<div className="hidden md:flex items-center space-x-4">
+								<div className="w-80 h-8"></div>
+							</div>
+							<div className="hidden md:flex">
+								<div className="w-32 h-8"></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -208,290 +195,350 @@ const Navbar = () => {
 
 	return (
 		<motion.nav
-			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-				isScrolled || isMobile
-					? 'glass-nav border-b border-white/20'
-					: 'bg-transparent border-b border-transparent'
-			}`}
-			animate={{
-				backgroundColor:
-					isScrolled || isMobile
-						? 'rgba(255, 255, 255, 0.9)'
-						: 'rgba(255, 255, 255, 0)',
-				backdropFilter:
-					isScrolled || isMobile
-						? 'blur(12px) saturate(180%)'
-						: 'blur(0px) saturate(100%)',
-				boxShadow:
-					isScrolled || isMobile
-						? '0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 1px 3px rgba(0, 0, 0, 0.05)'
-						: '0 0 0 rgba(255, 255, 255, 0) inset, 0 0 0 rgba(0, 0, 0, 0)',
-			}}
-			transition={{ duration: 0.3, ease: 'easeOut' }}
+			className="fixed top-4 left-0 right-0 z-50 transition-all duration-300"
+			initial={{ y: -20, opacity: 0 }}
+			animate={{ y: 0, opacity: 1 }}
+			transition={{ duration: 0.3 }}
 		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="flex items-center justify-between h-16">
-					{/* Logo */}
-					<div className="flex-shrink-0">
-						<Link href="/">
-							<Image
-								src="/navlogo.png"
-								alt="Asterra"
-								width={272}
-								height={72}
-								className="h-8 w-auto"
-								priority
-							/>
-						</Link>
+				{/* Glass Pill Container */}
+				<motion.div
+					className={`shadow-lg px-4 sm:px-6 ${
+						isMenuOpen && isMobile
+							? 'rounded-t-3xl rounded-b-3xl'
+							: 'rounded-3xl'
+					}`}
+					animate={{
+						backgroundColor:
+							isScrolled || isMobile
+								? 'rgba(255, 255, 255, 0.8)'
+								: 'rgba(250, 248, 245, 0)',
+						backdropFilter:
+							isScrolled || isMobile
+								? 'blur(12px) saturate(180%)'
+								: 'blur(0px) saturate(100%)',
+						borderColor:
+							isScrolled || isMobile
+								? 'rgba(255, 255, 255, 0.3)'
+								: 'rgba(250, 248, 245, 0)',
+						boxShadow:
+							isScrolled || isMobile
+								? '0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset'
+								: '0 0px 0px rgba(0, 0, 0, 0)',
+					}}
+					style={{
+						borderWidth: '1px',
+						borderStyle: 'solid',
+					}}
+					transition={{ duration: 0.4, ease: 'easeOut' }}
+				>
+					<div className="flex items-center justify-between h-14 sm:h-16 relative">
+						{/* Left side: Logo */}
+						<div className="flex-shrink-0">
+							<Link href="/">
+								<Image
+									src="/navlogo.png"
+									alt="Asterra"
+									width={272}
+									height={72}
+									className="h-7 w-auto mb-0.5"
+									priority
+								/>
+							</Link>
+						</div>
+
+						{/* Center: Desktop Navigation */}
+						<div className="hidden md:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
+							{navItems.map((item) => (
+								<div
+									key={item.name}
+									className="relative"
+									onMouseEnter={() =>
+										item.hasDropdown &&
+										setActiveDropdown(item.name)
+									}
+									onMouseLeave={() =>
+										item.hasDropdown &&
+										setActiveDropdown(null)
+									}
+								>
+									{item.hasDropdown ? (
+										<div className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center cursor-pointer">
+											<motion.div
+												whileHover={{ scale: 1.02 }}
+												className="flex items-center"
+											>
+												{item.name}
+												<motion.div
+													className="ml-1"
+													animate={{
+														rotate:
+															activeDropdown ===
+															item.name
+																? 180
+																: 0,
+													}}
+													transition={{
+														duration: 0.2,
+													}}
+												>
+													<FontAwesomeIcon
+														icon={faChevronDown}
+														className="scale-90"
+													/>
+												</motion.div>
+											</motion.div>
+											{/* Hover underline animation */}
+											<motion.div
+												className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+												initial={{ scaleX: 0 }}
+												whileHover={{ scaleX: 1 }}
+												transition={{
+													duration: 0.2,
+												}}
+											/>
+										</div>
+									) : (
+										<Link
+											href={item.href}
+											className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
+										>
+											<motion.div
+												whileHover={{ scale: 1.02 }}
+												className="flex items-center"
+											>
+												{item.name}
+											</motion.div>
+											{/* Hover underline animation */}
+											<motion.div
+												className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+												initial={{ scaleX: 0 }}
+												whileHover={{ scaleX: 1 }}
+												transition={{
+													duration: 0.2,
+												}}
+											/>
+										</Link>
+									)}
+
+									{/* Clean Dropdown Menu */}
+									<AnimatePresence>
+										{item.hasDropdown &&
+											activeDropdown === item.name && (
+												<motion.div
+													variants={dropdownVariants}
+													initial="hidden"
+													animate="visible"
+													exit="exit"
+													className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl py-2 shadow-lg border border-gray-200 overflow-hidden"
+												>
+													{item.dropdownItems.map(
+														(
+															dropdownItem,
+															index
+														) => (
+															<motion.div
+																key={
+																	dropdownItem.name
+																}
+																variants={{
+																	hidden: {
+																		opacity: 0,
+																		x: -10,
+																	},
+																	visible: {
+																		opacity: 1,
+																		x: 0,
+																	},
+																}}
+																transition={{
+																	delay:
+																		index *
+																		0.03,
+																	duration: 0.15,
+																}}
+															>
+																<Link
+																	href={
+																		dropdownItem.href
+																	}
+																	className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-150 relative group"
+																>
+																	<span className="relative z-10">
+																		{
+																			dropdownItem.name
+																		}
+																	</span>
+																	{/* Simple hover accent */}
+																	<div className="absolute left-0 top-0 bottom-0 w-0 bg-[#FF5633] group-hover:w-1 transition-all duration-150"></div>
+																</Link>
+															</motion.div>
+														)
+													)}
+												</motion.div>
+											)}
+									</AnimatePresence>
+								</div>
+							))}
+						</div>
+
+						{/* Right side: Desktop CTA Button */}
+						<div className="hidden md:flex ml-auto">
+							<Link href="/contact-sales">
+								<motion.div
+									className="bg-[#151719] text-white px-6 py-3 rounded-full text-sm font-medium cursor-pointer"
+									whileHover={{
+										scale: 1.05,
+										boxShadow:
+											'0 4px 12px rgba(21, 23, 25, 0.3)',
+									}}
+									whileTap={{ scale: 0.98 }}
+									transition={{
+										type: 'spring',
+										stiffness: 300,
+										damping: 20,
+									}}
+								>
+									Contact Us
+								</motion.div>
+							</Link>
+						</div>
+
+						{/* Right side: Mobile CTA Button + Hamburger */}
+						<div className="md:hidden flex items-center gap-3 ml-auto">
+							<Link href="/contact-sales">
+								<motion.div
+									className="bg-[#151719] text-white px-5 py-2 rounded-full text-sm font-medium cursor-pointer"
+									whileHover={{
+										scale: 1.05,
+										boxShadow:
+											'0 4px 12px rgba(21, 23, 25, 0.3)',
+									}}
+									whileTap={{ scale: 0.98 }}
+									transition={{
+										type: 'spring',
+										stiffness: 300,
+										damping: 20,
+									}}
+								>
+									Contact Us
+								</motion.div>
+							</Link>
+							<motion.button
+								onClick={() => setIsMenuOpen(!isMenuOpen)}
+								className="text-[#151719] hover:text-[#FF5633] p-2 cursor-pointer"
+								whileTap={{ scale: 0.95 }}
+							>
+								<svg
+									className="h-6 w-6"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									{isMenuOpen ? (
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M6 18L18 6M6 6l12 12"
+										/>
+									) : (
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M4 6h16M4 12h16M4 18h16"
+										/>
+									)}
+								</svg>
+							</motion.button>
+						</div>
 					</div>
 
-					{/* Desktop Navigation */}
-					<div className="hidden md:flex items-center space-x-4">
-						{navItems.map((item) => (
-							<div
-								key={item.name}
-								className="relative"
-								onMouseEnter={() =>
-									item.hasDropdown &&
-									setActiveDropdown(item.name)
-								}
-								onMouseLeave={() =>
-									item.hasDropdown && setActiveDropdown(null)
-								}
+					{/* Mobile Navigation Menu */}
+					<AnimatePresence>
+						{isMenuOpen && (
+							<motion.div
+								variants={mobileMenuVariants}
+								initial="hidden"
+								animate="visible"
+								exit="exit"
+								className="md:hidden border-t border-gray-200 mt-2 -mx-4 sm:-mx-6 px-4 sm:px-6 pb-4"
 							>
-								{item.hasDropdown ? (
-									<div className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center cursor-pointer">
+								<div className="py-4 space-y-0.5">
+									{navItems.map((item) => (
 										<motion.div
-											whileHover={{ scale: 1.02 }}
-											className="flex items-center"
+											key={item.name}
+											variants={mobileItemVariants}
 										>
-											{item.name}
-											<motion.div
-												className="ml-1"
-												animate={{
-													rotate:
-														activeDropdown ===
-														item.name
-															? 180
-															: 0,
-												}}
-												transition={{ duration: 0.2 }}
-											>
-												<FontAwesomeIcon
-													icon={faChevronDown}
-												/>
-											</motion.div>
-										</motion.div>
-										{/* Hover underline animation */}
-										<motion.div
-											className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-											initial={{ scaleX: 0 }}
-											whileHover={{ scaleX: 1 }}
-											transition={{ duration: 0.2 }}
-										/>
-									</div>
-								) : (
-									<Link
-										href={item.href}
-										className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
-									>
-										<motion.div
-											whileHover={{ scale: 1.02 }}
-											className="flex items-center"
-										>
-											{item.name}
-										</motion.div>
-										{/* Hover underline animation */}
-										<motion.div
-											className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-											initial={{ scaleX: 0 }}
-											whileHover={{ scaleX: 1 }}
-											transition={{ duration: 0.2 }}
-										/>
-									</Link>
-								)}
-
-								{/* Clean Dropdown Menu */}
-								<AnimatePresence>
-									{item.hasDropdown &&
-										activeDropdown === item.name && (
-											<motion.div
-												variants={dropdownVariants}
-												initial="hidden"
-												animate="visible"
-												exit="exit"
-												className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl py-2 shadow-lg border border-gray-200 overflow-hidden"
-											>
-												{item.dropdownItems.map(
-													(dropdownItem, index) => (
+											{item.hasDropdown ? (
+												<div>
+													{/* Mobile Dropdown Trigger */}
+													<motion.button
+														onClick={() =>
+															setMobileDropdown(
+																mobileDropdown ===
+																	item.name
+																	? null
+																	: item.name
+															)
+														}
+														className="cursor-pointer w-full flex items-center justify-between px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200 relative group"
+														whileTap={{
+															scale: 0.98,
+														}}
+													>
+														<span className="font-medium">
+															{item.name}
+														</span>
 														<motion.div
-															key={
-																dropdownItem.name
-															}
-															variants={{
-																hidden: {
-																	opacity: 0,
-																	x: -10,
-																},
-																visible: {
-																	opacity: 1,
-																	x: 0,
-																},
+															animate={{
+																rotate:
+																	mobileDropdown ===
+																	item.name
+																		? 180
+																		: 0,
 															}}
 															transition={{
-																delay:
-																	index *
-																	0.03,
-																duration: 0.15,
+																duration: 0.2,
 															}}
+															className="text-gray-400"
 														>
-															<Link
-																href={
-																	dropdownItem.href
+															<FontAwesomeIcon
+																icon={
+																	faChevronDown
 																}
-																className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-150 relative group"
-															>
-																<span className="relative z-10">
-																	{
-																		dropdownItem.name
-																	}
-																</span>
-																{/* Simple hover accent */}
-																<div className="absolute left-0 top-0 bottom-0 w-0 bg-[#FF5633] group-hover:w-1 transition-all duration-150"></div>
-															</Link>
+																className="scale-90"
+															/>
 														</motion.div>
-													)
-												)}
-											</motion.div>
-										)}
-								</AnimatePresence>
-							</div>
-						))}
-					</div>
-
-					{/* CTA Button */}
-					<div className="hidden md:flex">
-						<Link href="/contact-sales">
-							<motion.div
-								className="bg-[#FF5633] text-white/95 px-6 py-2 rounded-lg text-sm cursor-pointer"
-								whileHover={{
-									scale: 1.05,
-									boxShadow:
-										'0 5px 40px rgba(255, 86, 51, 0.3)',
-								}}
-								whileTap={{ scale: 0.98 }}
-								transition={{
-									type: 'spring',
-									stiffness: 300,
-									damping: 20,
-								}}
-							>
-								Contact Sales
-							</motion.div>
-						</Link>
-					</div>
-
-					{/* Mobile menu button */}
-					<div className="md:hidden">
-						<motion.button
-							onClick={() => setIsMenuOpen(!isMenuOpen)}
-							className="text-[#151719] hover:text-[#FF5633] p-2 cursor-pointer"
-							whileTap={{ scale: 0.95 }}
-						>
-							<svg
-								className="h-6 w-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
-								{isMenuOpen ? (
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								) : (
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M4 6h16M4 12h16M4 18h16"
-									/>
-								)}
-							</svg>
-						</motion.button>
-					</div>
-				</div>
-
-				{/* Mobile Navigation Menu */}
-				<AnimatePresence>
-					{isMenuOpen && (
-						<motion.div
-							variants={mobileMenuVariants}
-							initial="hidden"
-							animate="visible"
-							exit="exit"
-							className="md:hidden border-t border-gray-300 "
-						>
-							<div className="py-4 space-y-1">
-								{navItems.map((item) => (
-									<motion.div
-										key={item.name}
-										variants={mobileItemVariants}
-									>
-										{item.hasDropdown ? (
-											<div>
-												{/* Mobile Dropdown Trigger */}
-												<motion.button
-													onClick={() =>
-														setMobileDropdown(
-															mobileDropdown ===
-																item.name
-																? null
-																: item.name
-														)
-													}
-													className="cursor-pointer w-full flex items-center justify-between px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200"
-													whileTap={{ scale: 0.98 }}
-												>
-													<span className="font-medium">
-														{item.name}
-													</span>
-													<motion.div
-														animate={{
-															rotate:
-																mobileDropdown ===
-																item.name
-																	? 180
-																	: 0,
-														}}
-														transition={{
-															duration: 0.2,
-														}}
-														className="text-gray-400"
-													>
-														<FontAwesomeIcon
-															icon={faChevronDown}
-															className="w-4 h-4"
-														/>
-													</motion.div>
-												</motion.button>
-
-												{/* Mobile Dropdown Content */}
-												<AnimatePresence>
-													{mobileDropdown ===
-														item.name && (
+														{/* Hover underline animation */}
 														<motion.div
-															variants={
-																mobileDropdownVariants
-															}
-															initial="hidden"
-															animate="visible"
-															exit="exit"
-															className=" border-l-2 border-[#FF5633] ml-4"
-														>
-															<div className="py-2">
+															className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+															initial={{
+																scaleX: 0,
+															}}
+															whileHover={{
+																scaleX: 1,
+															}}
+															transition={{
+																duration: 0.2,
+															}}
+														/>
+													</motion.button>
+
+													{/* Mobile Dropdown Content */}
+													<AnimatePresence>
+														{mobileDropdown ===
+															item.name && (
+															<motion.div
+																variants={
+																	mobileDropdownVariants
+																}
+																initial="hidden"
+																animate="visible"
+																exit="exit"
+																className="mt-2 ml-4 bg-white rounded-xl py-2 shadow-lg border border-gray-200 overflow-hidden"
+															>
 																{item.dropdownItems.map(
 																	(
 																		dropdownItem,
@@ -501,22 +548,29 @@ const Navbar = () => {
 																			key={
 																				dropdownItem.name
 																			}
-																			variants={
-																				mobileDropdownItemVariants
-																			}
-																			initial="hidden"
-																			animate="visible"
+																			variants={{
+																				hidden: {
+																					opacity: 0,
+																					x: -10,
+																				},
+																				visible:
+																					{
+																						opacity: 1,
+																						x: 0,
+																					},
+																			}}
 																			transition={{
 																				delay:
 																					index *
-																					0.05,
+																					0.03,
+																				duration: 0.15,
 																			}}
 																		>
 																			<Link
 																				href={
 																					dropdownItem.href
 																				}
-																				className="block px-6 py-3 text-sm text-gray-700 hover:text-[#FF5633] transition-colors duration-200 border-l-2 border-transparent hover:border-[#FF5633]"
+																				className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-150 relative group"
 																				onClick={() => {
 																					setIsMenuOpen(
 																						false
@@ -526,53 +580,51 @@ const Navbar = () => {
 																					);
 																				}}
 																			>
-																				{
-																					dropdownItem.name
-																				}
+																				<span className="relative z-10">
+																					{
+																						dropdownItem.name
+																					}
+																				</span>
+																				{/* Simple hover accent */}
+																				<div className="absolute left-0 top-0 bottom-0 w-0 bg-[#FF5633] group-hover:w-1 transition-all duration-150"></div>
 																			</Link>
 																		</motion.div>
 																	)
 																)}
-															</div>
-														</motion.div>
-													)}
-												</AnimatePresence>
-											</div>
-										) : (
-											<Link
-												href={item.href}
-												className="block px-4 py-3 text-[#151719] hover:text-[#FF5633]  transition-colors duration-200 font-medium"
-												onClick={() => {
-													setIsMenuOpen(false);
-													setMobileDropdown(null);
-												}}
-											>
-												{item.name}
-											</Link>
-										)}
-									</motion.div>
-								))}
-
-								{/* Mobile CTA Button */}
-								<motion.div
-									variants={mobileItemVariants}
-									className="px-4 pt-4 border-t border-gray-200 mt-4"
-								>
-									<Link
-										href="/contact-sales"
-										className="block w-full text-center bg-[#FF5633] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[#E04A2B] transition-colors duration-200 shadow-lg"
-										onClick={() => {
-											setIsMenuOpen(false);
-											setMobileDropdown(null);
-										}}
-									>
-										Contact Sales
-									</Link>
-								</motion.div>
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
+															</motion.div>
+														)}
+													</AnimatePresence>
+												</div>
+											) : (
+												<Link
+													href={item.href}
+													className="block px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200 font-medium relative group"
+													onClick={() => {
+														setIsMenuOpen(false);
+														setMobileDropdown(null);
+													}}
+												>
+													{item.name}
+													{/* Hover underline animation */}
+													<motion.div
+														className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+														initial={{ scaleX: 0 }}
+														whileHover={{
+															scaleX: 1,
+														}}
+														transition={{
+															duration: 0.2,
+														}}
+													/>
+												</Link>
+											)}
+										</motion.div>
+									))}
+								</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</motion.div>
 			</div>
 		</motion.nav>
 	);

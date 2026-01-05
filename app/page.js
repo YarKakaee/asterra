@@ -36,7 +36,7 @@ export default function Home() {
 						top: '-4rem', // Extend above to go under navbar
 						height: 'calc(120vh + 4rem)', // Reduced from 300vh for better performance
 						background:
-							'linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 0.8) 30%, rgba(241, 245, 249, 0.6) 70%, rgba(247, 249, 252, 1) 100%)',
+							'linear-gradient(180deg, rgba(250, 248, 245, 1) 0%, rgba(248, 246, 242, 0.8) 30%, rgba(246, 244, 240, 0.6) 50%, rgba(250, 249, 248, 0.9) 75%, rgba(248, 250, 252, 0.98) 90%, rgba(248, 250, 252, 1) 100%)',
 						// Performance optimizations
 						willChange: 'transform',
 						transform: 'translateZ(0)',
@@ -90,7 +90,7 @@ export default function Home() {
 							className="absolute inset-0"
 							style={{
 								background:
-									'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.6) 70%, rgba(247,249,252,0.9) 85%, rgba(247,249,252,1) 100%)',
+									'linear-gradient(180deg, rgba(250,248,245,0) 0%, rgba(250,248,245,0.2) 30%, rgba(250,248,245,0.4) 50%, rgba(250,249,248,0.6) 75%, rgba(248,250,252,0.9) 90%, rgba(248,250,252,1) 100%)',
 								willChange: 'transform',
 								transform: 'translateZ(0)',
 								contain: 'layout style paint',

@@ -3,7 +3,7 @@ import './lib/fontawesome';
 
 export const metadata = {
 	title: {
-		default: 'Asterra | Stop Losing Revenue to Daily Business Problems',
+		default: 'Asterra | Built to Solve Daily Business Problems',
 		template: '%s | Asterra',
 	},
 	description:
@@ -41,7 +41,7 @@ export const metadata = {
 		locale: 'en_CA',
 		url: 'https://asterra.ca',
 		siteName: 'Asterra',
-		title: 'Asterra | Stop Losing Revenue to Daily Business Problems',
+		title: 'Asterra | Built to Solve Daily Business Problems',
 		description:
 			'AI Business Automation That Actually Works. AI receptionists, customer support, lead nurturing, and website development that saves time and money. 30-day ROI guarantee or your money back.',
 		images: [
@@ -49,13 +49,13 @@ export const metadata = {
 				url: '/og-image.png',
 				width: 1200,
 				height: 630,
-				alt: 'Asterra AI Business Automation - Stop Losing Revenue to Daily Business Problems',
+				alt: 'Asterra AI Business Automation - Built to Solve Daily Business Problems',
 			},
 		],
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Asterra | Stop Losing Revenue to Daily Business Problems',
+		title: 'Asterra | Built to Solve Daily Business Problems',
 		description:
 			'AI Business Automation That Actually Works. AI receptionists, customer support, lead nurturing, and website development that saves time and money. 30-day ROI guarantee or your money back.',
 		images: ['/og-image.png'],

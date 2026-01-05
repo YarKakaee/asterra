@@ -101,7 +101,7 @@ const HeroSection = () => {
 					className="text-center"
 				>
 					{/* ROI Guarantee Badge */}
-					<motion.div variants={badgeVariants} className="mb-8">
+					{/* <motion.div variants={badgeVariants} className="mb-8">
 						<motion.a
 							href="/guarantee"
 							className="inline-flex items-center px-6 py-3 glass-plaque rounded-full text-sm font-semibold text-gray-800"
@@ -122,56 +122,44 @@ const HeroSection = () => {
 								},
 							}}
 						>
-							ROI Guaranteed in 30 Days.†
+							Simple Systems, Real Results
 						</motion.a>
-					</motion.div>
+					</motion.div> */}
 
 					{/* Main Headline */}
 					<motion.h1
 						variants={headingContainerVariants}
 						initial="hidden"
 						animate="visible"
-						className="text-3xl sm:text-4xl lg:text-5xl font-bold text-inset leading-tight mb-6 max-w-4xl mx-auto"
+						className="text-3xl sm:text-4xl lg:text-7xl font-extrabold text-inset leading-tight mt-16 mb-6 max-w-4xl mx-auto"
 					>
-						{[
-							'The',
-							'only',
-							'automation',
-							'agency',
-							'that',
-							'fixes',
-							"what's",
-							'actually',
-							'broken',
-							'in',
-							'your',
-							'business',
-						].map((word, index) => (
-							<motion.span
-								key={index}
-								variants={wordVariants}
-								className="inline-block mr-2"
-							>
-								{word}
-							</motion.span>
-						))}
+						{['We', 'scale', 'local', 'businesses.', ,].map(
+							(word, index) => (
+								<motion.span
+									key={index}
+									variants={wordVariants}
+									className="inline-block mr-2 text-[#1d1d1f]"
+								>
+									{word}
+								</motion.span>
+							)
+						)}
 					</motion.h1>
 
 					{/* Subtext */}
 					<motion.p
 						variants={subtextVariants}
-						className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed"
+						className="text-lg sm:text-xl text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed"
 					>
-						Every missed call is missed revenue. Every delayed
-						follow-up is a lost customer. Every manual task is
-						stolen time.
+						Simple systems that help businesses handle calls,
+						customers, and operations — without adding complexity.
 					</motion.p>
 
 					{/* CTA Button */}
 					<motion.div variants={buttonVariants}>
 						<motion.a
 							href="/book-demo"
-							className="inline-flex items-center px-7 py-3.5 bg-[#151719] text-white text-md font-medium rounded-lg hover:bg-[#151719]/90 transition-colors duration-200 shadow-lg"
+							className="inline-flex items-center px-7.5 py-4 bg-[#FF5633] text-white text-lg font-medium rounded-3xl transition-all duration-200 shadow-lg"
 							whileHover={{
 								scale: 1.05,
 								boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)',
@@ -183,7 +171,7 @@ const HeroSection = () => {
 								damping: 20,
 							}}
 						>
-							Book a Free Demo
+							See how it works
 						</motion.a>
 					</motion.div>
 				</motion.div>
