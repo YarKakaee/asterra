@@ -11,7 +11,9 @@ const HeroSection = () => {
 	}, []);
 
 	if (!mounted) {
-		return <section className="h-[770px]"></section>;
+		return (
+			<section className="h-[500px] sm:h-[600px] lg:h-[770px]"></section>
+		);
 	}
 	// Animation variants
 	const containerVariants = {
@@ -92,7 +94,7 @@ const HeroSection = () => {
 	};
 
 	return (
-		<section className="py-18 lg:py-50 relative mb-26 lg:mb-0">
+		<section className="py-12 sm:py-18 lg:py-50 relative mb-16 sm:mb-26 lg:mb-0">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<motion.div
 					variants={containerVariants}
@@ -131,14 +133,14 @@ const HeroSection = () => {
 						variants={headingContainerVariants}
 						initial="hidden"
 						animate="visible"
-						className="text-3xl sm:text-4xl lg:text-7xl font-extrabold text-inset leading-tight mt-16 mb-6 max-w-4xl mx-auto"
+						className="text-5xl lg:text-7xl font-extrabold text-inset leading-tight mt-28 sm:mt-12 lg:mt-16 mb-4 sm:mb-6 max-w-4xl mx-auto"
 					>
 						{['We', 'scale', 'local', 'businesses.', ,].map(
 							(word, index) => (
 								<motion.span
 									key={index}
 									variants={wordVariants}
-									className="inline-block mr-2 text-[#1d1d1f]"
+									className="inline-block mr-1 sm:mr-2 text-[#1d1d1f]"
 								>
 									{word}
 								</motion.span>
@@ -149,7 +151,7 @@ const HeroSection = () => {
 					{/* Subtext */}
 					<motion.p
 						variants={subtextVariants}
-						className="text-lg sm:text-xl text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed"
+						className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto leading-relaxed px-2 sm:px-0"
 					>
 						Simple systems that help businesses handle calls,
 						customers, and operations — without adding complexity.
@@ -159,7 +161,7 @@ const HeroSection = () => {
 					<motion.div variants={buttonVariants}>
 						<motion.a
 							href="/book-demo"
-							className="inline-flex items-center px-7.5 py-4 bg-[#FF5633] text-white text-lg font-medium rounded-3xl transition-all duration-200 shadow-lg"
+							className="inline-flex items-center px-6 py-3 sm:px-7.5 sm:py-4 bg-[#FF5633] text-white text-base sm:text-lg font-semibold rounded-3xl transition-all duration-200 shadow-lg"
 							whileHover={{
 								scale: 1.05,
 								boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)',

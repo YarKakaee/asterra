@@ -3,6 +3,8 @@
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
+import RealitySection from './components/RealitySection';
+import ScopeSection from './components/ScopeSection';
 import Reclaim from './components/Reclaim';
 import ProblemValidationSection from './components/ProblemValidationSection';
 import SolutionPreviewSection from './components/SolutionPreviewSection';
@@ -102,6 +104,8 @@ export default function Home() {
 				{/* Content with relative positioning */}
 				<div className="relative z-10">
 					<HeroSection />
+					<RealitySection />
+					<ScopeSection />
 					<Reclaim />
 					<ProblemValidationSection />
 					<ROICalculatorSection />

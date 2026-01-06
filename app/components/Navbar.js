@@ -13,6 +13,7 @@ const Navbar = () => {
 	const [mobileDropdown, setMobileDropdown] = useState(null);
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
+	const [isLargeScreen, setIsLargeScreen] = useState(false);
 	const [mounted, setMounted] = useState(false);
 
 	// Handle scroll detection
@@ -29,7 +30,8 @@ const Navbar = () => {
 	// Simplified mobile detection for performance optimization
 	useEffect(() => {
 		const checkMobile = () => {
-			setIsMobile(window.innerWidth < 768);
+			setIsMobile(window.innerWidth < 1024);
+			setIsLargeScreen(window.innerWidth >= 1024);
 		};
 
 		checkMobile();
@@ -167,7 +169,7 @@ const Navbar = () => {
 							border: '1px solid rgba(250, 248, 245, 0)',
 						}}
 					>
-						<div className="flex items-center justify-between h-14 sm:h-16">
+						<div className="flex items-center justify-between h-16 sm:h-16">
 							<div className="flex-shrink-0">
 								<Link href="/">
 									<Image
@@ -180,10 +182,10 @@ const Navbar = () => {
 									/>
 								</Link>
 							</div>
-							<div className="hidden md:flex items-center space-x-4">
+							<div className="hidden lg:flex items-center space-x-4">
 								<div className="w-80 h-8"></div>
 							</div>
-							<div className="hidden md:flex">
+							<div className="hidden lg:flex">
 								<div className="w-32 h-8"></div>
 							</div>
 						</div>
@@ -232,7 +234,7 @@ const Navbar = () => {
 					}}
 					transition={{ duration: 0.4, ease: 'easeOut' }}
 				>
-					<div className="flex items-center justify-between h-14 sm:h-16 relative">
+					<div className="flex items-center justify-between h-16 sm:h-16 relative">
 						{/* Left side: Logo */}
 						<div className="flex-shrink-0">
 							<Link href="/">
@@ -241,14 +243,14 @@ const Navbar = () => {
 									alt="Asterra"
 									width={272}
 									height={72}
-									className="h-7 w-auto mb-0.5"
+									className="h-8 sm:h-7 w-auto mb-0.5"
 									priority
 								/>
 							</Link>
 						</div>
 
 						{/* Center: Desktop Navigation */}
-						<div className="hidden md:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
+						<div className="hidden lg:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
 							{navItems.map((item) => (
 								<div
 									key={item.name}
@@ -383,7 +385,7 @@ const Navbar = () => {
 						</div>
 
 						{/* Right side: Desktop CTA Button */}
-						<div className="hidden md:flex ml-auto">
+						<div className="hidden lg:flex ml-auto">
 							<Link href="/contact-sales">
 								<motion.div
 									className="bg-[#151719] text-white px-6 py-3 rounded-full text-sm font-medium cursor-pointer"
@@ -405,10 +407,10 @@ const Navbar = () => {
 						</div>
 
 						{/* Right side: Mobile CTA Button + Hamburger */}
-						<div className="md:hidden flex items-center gap-3 ml-auto">
+						<div className="lg:hidden flex items-center gap-3 ml-auto">
 							<Link href="/contact-sales">
 								<motion.div
-									className="bg-[#151719] text-white px-5 py-2 rounded-full text-sm font-medium cursor-pointer"
+									className="bg-[#151719] text-white px-4 py-2.5 rounded-3xl text-sm font-medium cursor-pointer"
 									whileHover={{
 										scale: 1.05,
 										boxShadow:
@@ -421,7 +423,7 @@ const Navbar = () => {
 										damping: 20,
 									}}
 								>
-									Contact Us
+									Contact
 								</motion.div>
 							</Link>
 							<motion.button
@@ -463,7 +465,7 @@ const Navbar = () => {
 								initial="hidden"
 								animate="visible"
 								exit="exit"
-								className="md:hidden border-t border-gray-200 mt-2 -mx-4 sm:-mx-6 px-4 sm:px-6 pb-4"
+								className="lg:hidden border-t border-gray-200 mt-2 -mx-4 sm:-mx-6 px-4 sm:px-6 pb-4"
 							>
 								<div className="py-4 space-y-0.5">
 									{navItems.map((item) => (
