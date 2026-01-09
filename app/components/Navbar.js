@@ -11,19 +11,38 @@ const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [activeDropdown, setActiveDropdown] = useState(null);
 	const [mobileDropdown, setMobileDropdown] = useState(null);
-	const [isScrolled, setIsScrolled] = useState(false);
+	const [scrollProgress, setScrollProgress] = useState(0); // 0 to 1 for smooth fade
 	const [isMobile, setIsMobile] = useState(false);
 	const [isLargeScreen, setIsLargeScreen] = useState(false);
 	const [mounted, setMounted] = useState(false);
 
-	// Handle scroll detection
+	// Handle scroll detection with smooth gradual fade
 	useEffect(() => {
+		let ticking = false;
+
 		const handleScroll = () => {
-			const scrollTop = window.scrollY;
-			setIsScrolled(scrollTop > 20);
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					const scrollTop = window.scrollY;
+					// Smooth fade: starts at 0px, fully faded at 60px
+					const fadeStart = 0;
+					const fadeEnd = 60;
+					const progress = Math.min(
+						Math.max(
+							(scrollTop - fadeStart) / (fadeEnd - fadeStart),
+							0
+						),
+						1
+					);
+					setScrollProgress(progress);
+					ticking = false;
+				});
+				ticking = true;
+			}
 		};
 
-		window.addEventListener('scroll', handleScroll);
+		window.addEventListener('scroll', handleScroll, { passive: true });
+		handleScroll(); // Check initial scroll position
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
@@ -157,51 +176,8 @@ const Navbar = () => {
 		},
 	};
 
-	// Prevent hydration mismatch by using consistent initial state
-	if (!mounted) {
-		return (
-			<nav className="fixed top-4 left-0 right-0 z-50 transition-all duration-300">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div
-						className="rounded-full px-4 sm:px-6"
-						style={{
-							backgroundColor: 'rgba(250, 248, 245, 0)',
-							border: '1px solid rgba(250, 248, 245, 0)',
-						}}
-					>
-						<div className="flex items-center justify-between h-16 sm:h-16">
-							<div className="flex-shrink-0">
-								<Link href="/">
-									<Image
-										src="/navlogo.png"
-										alt="Asterra"
-										width={272}
-										height={72}
-										className="h-7 sm:h-8 w-auto"
-										priority
-									/>
-								</Link>
-							</div>
-							<div className="hidden lg:flex items-center space-x-4">
-								<div className="w-80 h-8"></div>
-							</div>
-							<div className="hidden lg:flex">
-								<div className="w-32 h-8"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</nav>
-		);
-	}
-
 	return (
-		<motion.nav
-			className="fixed top-4 left-0 right-0 z-50 transition-all duration-300"
-			initial={{ y: -20, opacity: 0 }}
-			animate={{ y: 0, opacity: 1 }}
-			transition={{ duration: 0.3 }}
-		>
+		<motion.nav className="fixed top-4 left-0 right-0 z-50">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Glass Pill Container */}
 				<motion.div
@@ -210,29 +186,33 @@ const Navbar = () => {
 							? 'rounded-t-3xl rounded-b-3xl'
 							: 'rounded-3xl'
 					}`}
-					animate={{
-						backgroundColor:
-							isScrolled || isMobile
-								? 'rgba(255, 255, 255, 0.8)'
-								: 'rgba(250, 248, 245, 0)',
-						backdropFilter:
-							isScrolled || isMobile
-								? 'blur(12px) saturate(180%)'
-								: 'blur(0px) saturate(100%)',
-						borderColor:
-							isScrolled || isMobile
-								? 'rgba(255, 255, 255, 0.3)'
-								: 'rgba(250, 248, 245, 0)',
-						boxShadow:
-							isScrolled || isMobile
-								? '0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset'
-								: '0 0px 0px rgba(0, 0, 0, 0)',
-					}}
 					style={{
+						backgroundColor: isMobile
+							? 'rgba(255, 255, 255, 0.8)'
+							: `rgba(255, 255, 255, ${scrollProgress * 0.8})`,
+						backdropFilter: isMobile
+							? 'blur(12px) saturate(180%)'
+							: `blur(${scrollProgress * 12}px) saturate(${
+									100 + scrollProgress * 80
+							  }%)`,
+						borderColor: isMobile
+							? 'rgba(255, 255, 255, 0.3)'
+							: `rgba(255, 255, 255, ${scrollProgress * 0.3})`,
+						boxShadow: isMobile
+							? '0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset'
+							: scrollProgress > 0
+							? `0 ${scrollProgress * 4}px ${
+									scrollProgress * 20
+							  }px rgba(0, 0, 0, ${scrollProgress * 0.1}), 0 ${
+									scrollProgress * 1
+							  }px 0 rgba(255, 255, 255, ${
+									scrollProgress * 0.8
+							  }) inset`
+							: '0 0px 0px rgba(0, 0, 0, 0)',
 						borderWidth: '1px',
 						borderStyle: 'solid',
+						transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
 					}}
-					transition={{ duration: 0.4, ease: 'easeOut' }}
 				>
 					<div className="flex items-center justify-between h-16 sm:h-16 relative">
 						{/* Left side: Logo */}
@@ -254,15 +234,26 @@ const Navbar = () => {
 							{navItems.map((item) => (
 								<div
 									key={item.name}
-									className="relative"
+									className="relative dropdown-trigger"
 									onMouseEnter={() =>
 										item.hasDropdown &&
 										setActiveDropdown(item.name)
 									}
-									onMouseLeave={() =>
-										item.hasDropdown &&
-										setActiveDropdown(null)
-									}
+									onMouseLeave={(e) => {
+										// Don't close if mouse is moving to dropdown
+										if (item.hasDropdown) {
+											const relatedTarget =
+												e.relatedTarget;
+											if (
+												!relatedTarget ||
+												!relatedTarget.closest(
+													'.dropdown-menu'
+												)
+											) {
+												setActiveDropdown(null);
+											}
+										}
+									}}
 								>
 									{item.hasDropdown ? (
 										<div className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center cursor-pointer">
@@ -332,51 +323,85 @@ const Navbar = () => {
 													initial="hidden"
 													animate="visible"
 													exit="exit"
-													className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl py-2 shadow-lg border border-gray-200 overflow-hidden"
-												>
-													{item.dropdownItems.map(
-														(
-															dropdownItem,
-															index
-														) => (
-															<motion.div
-																key={
-																	dropdownItem.name
-																}
-																variants={{
-																	hidden: {
-																		opacity: 0,
-																		x: -10,
-																	},
-																	visible: {
-																		opacity: 1,
-																		x: 0,
-																	},
-																}}
-																transition={{
-																	delay:
-																		index *
-																		0.03,
-																	duration: 0.15,
-																}}
-															>
-																<Link
-																	href={
-																		dropdownItem.href
-																	}
-																	className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-150 relative group"
-																>
-																	<span className="relative z-10">
-																		{
-																			dropdownItem.name
-																		}
-																	</span>
-																	{/* Simple hover accent */}
-																	<div className="absolute left-0 top-0 bottom-0 w-0 bg-[#FF5633] group-hover:w-1 transition-all duration-150"></div>
-																</Link>
-															</motion.div>
+													className="absolute top-full left-0 pt-2 w-56 overflow-visible dropdown-menu"
+													onMouseEnter={() =>
+														setActiveDropdown(
+															item.name
 														)
-													)}
+													}
+													onMouseLeave={() =>
+														setActiveDropdown(null)
+													}
+												>
+													{/* Invisible bridge area to prevent dropdown from closing when moving mouse through gap */}
+													<div className="h-2 w-full absolute top-0 left-0 pointer-events-auto" />
+													{/* Dropdown content */}
+													<div
+														className="rounded-2xl py-2 overflow-visible"
+														style={{
+															backgroundColor:
+																'rgba(255, 255, 255, 1)',
+															backdropFilter:
+																'blur(12px) saturate(180%)',
+															WebkitBackdropFilter:
+																'blur(12px) saturate(180%)',
+															border: '1px solid rgba(255, 255, 255, 0.3)',
+															boxShadow:
+																'0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset',
+														}}
+													>
+														{item.dropdownItems.map(
+															(
+																dropdownItem,
+																index
+															) => (
+																<motion.div
+																	key={
+																		dropdownItem.name
+																	}
+																	variants={{
+																		hidden: {
+																			opacity: 0,
+																			y: -5,
+																		},
+																		visible:
+																			{
+																				opacity: 1,
+																				y: 0,
+																			},
+																	}}
+																	transition={{
+																		delay:
+																			index *
+																			0.04,
+																		duration: 0.2,
+																		ease: [
+																			0.16,
+																			1,
+																			0.3,
+																			1,
+																		],
+																	}}
+																	className="group overflow-hidden"
+																>
+																	<Link
+																		href={
+																			dropdownItem.href
+																		}
+																		className="block px-5 py-3 text-sm text-[#1d1d1f] group-hover:text-[#FF5633] transition-all duration-200 relative"
+																	>
+																		{/* Smooth hover background */}
+																		<div className="absolute inset-0 bg-[#1d1d1f]/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+																		<span className="relative z-10 font-medium">
+																			{
+																				dropdownItem.name
+																			}
+																		</span>
+																	</Link>
+																</motion.div>
+															)
+														)}
+													</div>
 												</motion.div>
 											)}
 									</AnimatePresence>
@@ -539,7 +564,15 @@ const Navbar = () => {
 																initial="hidden"
 																animate="visible"
 																exit="exit"
-																className="mt-2 ml-4 bg-white rounded-xl py-2 shadow-lg border border-gray-200 overflow-hidden"
+																className="mt-2 ml-4 rounded-xl py-2 backdrop-blur-xl border border-white/20 shadow-lg overflow-hidden"
+																style={{
+																	backgroundColor:
+																		'rgba(255, 255, 255, 0.9)',
+																	backdropFilter:
+																		'blur(16px) saturate(180%)',
+																	WebkitBackdropFilter:
+																		'blur(16px) saturate(180%)',
+																}}
 															>
 																{item.dropdownItems.map(
 																	(
@@ -553,26 +586,32 @@ const Navbar = () => {
 																			variants={{
 																				hidden: {
 																					opacity: 0,
-																					x: -10,
+																					y: -5,
 																				},
 																				visible:
 																					{
 																						opacity: 1,
-																						x: 0,
+																						y: 0,
 																					},
 																			}}
 																			transition={{
 																				delay:
 																					index *
-																					0.03,
-																				duration: 0.15,
+																					0.04,
+																				duration: 0.2,
+																				ease: [
+																					0.16,
+																					1,
+																					0.3,
+																					1,
+																				],
 																			}}
 																		>
 																			<Link
 																				href={
 																					dropdownItem.href
 																				}
-																				className="block px-4 py-2.5 text-sm text-gray-700 hover:text-[#FF5633] hover:bg-gray-50 transition-colors duration-150 relative group"
+																				className="block px-4 py-2.5 text-sm text-[#1d1d1f] hover:text-[#FF5633] transition-all duration-200 relative group font-medium"
 																				onClick={() => {
 																					setIsMenuOpen(
 																						false
@@ -587,8 +626,18 @@ const Navbar = () => {
 																						dropdownItem.name
 																					}
 																				</span>
-																				{/* Simple hover accent */}
-																				<div className="absolute left-0 top-0 bottom-0 w-0 bg-[#FF5633] group-hover:w-1 transition-all duration-150"></div>
+																				<motion.div
+																					className="absolute inset-0 bg-[#FF5633]/5 rounded-lg"
+																					initial={{
+																						opacity: 0,
+																					}}
+																					whileHover={{
+																						opacity: 1,
+																					}}
+																					transition={{
+																						duration: 0.2,
+																					}}
+																				/>
 																			</Link>
 																		</motion.div>
 																	)

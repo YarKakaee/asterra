@@ -133,25 +133,31 @@ const HeroSection = () => {
 						variants={headingContainerVariants}
 						initial="hidden"
 						animate="visible"
-						className="text-5xl lg:text-7xl font-extrabold text-inset leading-tight mt-28 sm:mt-12 lg:mt-16 mb-4 sm:mb-6 max-w-4xl mx-auto"
+						className="text-5xl lg:text-6xl font-extrabold text-inset leading-tight mt-28 sm:mt-12 lg:mt-16 mb-4 sm:mb-6 max-w-4xl mx-auto"
 					>
-						{['We', 'scale', 'local', 'businesses.', ,].map(
-							(word, index) => (
-								<motion.span
-									key={index}
-									variants={wordVariants}
-									className="inline-block mr-1 sm:mr-2 text-[#1d1d1f]"
-								>
-									{word}
-								</motion.span>
-							)
-						)}
+						{[
+							'Turn',
+							'missed',
+							'opportunities',
+							'into',
+							'real',
+							'growth.',
+							,
+						].map((word, index) => (
+							<motion.span
+								key={index}
+								variants={wordVariants}
+								className="inline-block mr-1 sm:mr-2 text-[#1d1d1f]"
+							>
+								{word}
+							</motion.span>
+						))}
 					</motion.h1>
 
 					{/* Subtext */}
 					<motion.p
 						variants={subtextVariants}
-						className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto leading-relaxed px-2 sm:px-0"
+						className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto font-normal leading-relaxed px-2 sm:px-0"
 					>
 						Simple systems that help businesses handle calls,
 						customers, and operations — without adding complexity.

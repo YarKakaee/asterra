@@ -38,7 +38,7 @@ export default function Home() {
 						top: '-4rem', // Extend above to go under navbar
 						height: 'calc(120vh + 4rem)', // Reduced from 300vh for better performance
 						background:
-							'linear-gradient(180deg, rgba(250, 248, 245, 1) 0%, rgba(248, 246, 242, 0.8) 30%, rgba(246, 244, 240, 0.6) 50%, rgba(250, 249, 248, 0.9) 75%, rgba(248, 250, 252, 0.98) 90%, rgba(248, 250, 252, 1) 100%)',
+							'linear-gradient(180deg, #F9F4F2 0%, rgba(249, 244, 242, 0.95) 30%, rgba(249, 244, 242, 0.9) 50%, rgba(249, 244, 242, 0.95) 75%, rgba(248, 250, 252, 0.98) 90%, rgba(248, 250, 252, 1) 100%)',
 						// Performance optimizations
 						willChange: 'transform',
 						transform: 'translateZ(0)',
@@ -56,11 +56,12 @@ export default function Home() {
 					>
 						{/* Base dot texture pattern */}
 						<div
-							className="absolute inset-0 opacity-25"
+							className="absolute inset-0 opacity-30"
 							style={{
 								backgroundImage:
-									'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 3px, transparent 0)',
+									'radial-gradient(circle at center, rgba(0,0,0,0.25) 1.5px, transparent 1.5px)',
 								backgroundSize: '20px 20px',
+								backgroundPosition: '0 0',
 								maskImage:
 									'linear-gradient(180deg, black 0%, black 85%, transparent 100%)',
 								WebkitMaskImage:
@@ -72,11 +73,12 @@ export default function Home() {
 						/>
 						{/* Subtle blur layer for depth */}
 						<div
-							className="absolute inset-0 opacity-15"
+							className="absolute inset-0 opacity-20"
 							style={{
 								backgroundImage:
-									'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0)',
+									'radial-gradient(circle at center, rgba(0,0,0,0.12) 1px, transparent 1px)',
 								backgroundSize: '20px 20px',
+								backgroundPosition: '0 0',
 								filter: 'blur(0.5px)',
 								maskImage:
 									'linear-gradient(180deg, black 20%, black 75%, transparent 90%)',
@@ -92,7 +94,7 @@ export default function Home() {
 							className="absolute inset-0"
 							style={{
 								background:
-									'linear-gradient(180deg, rgba(250,248,245,0) 0%, rgba(250,248,245,0.2) 30%, rgba(250,248,245,0.4) 50%, rgba(250,249,248,0.6) 75%, rgba(248,250,252,0.9) 90%, rgba(248,250,252,1) 100%)',
+									'linear-gradient(180deg, rgba(249,244,242,0) 0%, rgba(249,244,242,0.2) 30%, rgba(249,244,242,0.4) 50%, rgba(249,244,242,0.6) 75%, rgba(248,250,252,0.9) 90%, rgba(248,250,252,1) 100%)',
 								willChange: 'transform',
 								transform: 'translateZ(0)',
 								contain: 'layout style paint',
