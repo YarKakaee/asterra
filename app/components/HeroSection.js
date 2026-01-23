@@ -94,7 +94,7 @@ const HeroSection = () => {
 	};
 
 	return (
-		<section className="py-12 sm:py-18 lg:py-50 relative mb-16 sm:mb-26 lg:mb-0">
+		<section className="min-h-screen flex items-center justify-center py-10 sm:py-18 lg:py-50 relative">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<motion.div
 					variants={containerVariants}
@@ -102,52 +102,38 @@ const HeroSection = () => {
 					animate="visible"
 					className="text-center"
 				>
-					{/* ROI Guarantee Badge */}
-					{/* <motion.div variants={badgeVariants} className="mb-8">
-						<motion.a
-							href="/guarantee"
-							className="inline-flex items-center px-6 py-3 glass-plaque rounded-full text-sm font-semibold text-gray-800"
-							whileHover={{
-								scale: 1.05,
-								transition: {
-									type: 'spring',
-									stiffness: 400,
-									damping: 25,
-								},
-							}}
-							whileTap={{
-								scale: 0.98,
-								transition: {
-									type: 'spring',
-									stiffness: 600,
-									damping: 20,
-								},
-							}}
-						>
-							Simple Systems, Real Results
-						</motion.a>
-					</motion.div> */}
-
 					{/* Main Headline */}
 					<motion.h1
 						variants={headingContainerVariants}
 						initial="hidden"
 						animate="visible"
-						className="text-5xl lg:text-6xl font-extrabold text-inset leading-tight mt-28 sm:mt-12 lg:mt-16 mb-4 sm:mb-6 max-w-4xl mx-auto"
+						className="text-5xl lg:text-6xl font-extrabold text-inset leading-tight -mt-40 lg:-mt-18 mb-4 sm:mb-6 max-w-4xl mx-auto"
 					>
-						{[
-							'Turn',
-							'missed',
-							'opportunities',
-							'into',
-							'real',
-							'growth.',
-							,
-						].map((word, index) => (
+						{['Turn', 'missed'].map((word, index) => (
 							<motion.span
 								key={index}
 								variants={wordVariants}
 								className="inline-block mr-1 sm:mr-2 text-[#1d1d1f]"
+							>
+								{word}
+							</motion.span>
+						))}
+						<br className="sm:hidden" />
+						{['opportunities'].map((word, index) => (
+							<motion.span
+								key={`opp-${index}`}
+								variants={wordVariants}
+								className="text-5xl lg:text-6xl inline-block mr-1 sm:mr-2 text-[#1d1d1f]"
+							>
+								{word}
+							</motion.span>
+						))}
+						<br />
+						{['into', 'real', 'growth.'].map((word, index) => (
+							<motion.span
+								key={`second-${index}`}
+								variants={wordVariants}
+								className="inline-block mr-1 sm:mr-2 text-[#1d1d1f] text-4xl sm:text-6xl lg:text-7xl"
 							>
 								{word}
 							</motion.span>
@@ -159,8 +145,8 @@ const HeroSection = () => {
 						variants={subtextVariants}
 						className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto font-normal leading-relaxed px-2 sm:px-0"
 					>
-						Simple systems that help businesses handle calls,
-						customers, and operations — without adding complexity.
+						Simple systems that quietly run your business behind the
+						scenes.
 					</motion.p>
 
 					{/* CTA Button */}

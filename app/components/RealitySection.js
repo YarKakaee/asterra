@@ -74,7 +74,7 @@ const RealitySection = () => {
 		if (!mounted || !isInView) return;
 
 		const prefersReduced = window.matchMedia(
-			'(prefers-reduced-motion: reduce)'
+			'(prefers-reduced-motion: reduce)',
 		).matches;
 		if (prefersReduced) return;
 
@@ -111,8 +111,19 @@ const RealitySection = () => {
 	}, [activeVideoIndex]);
 
 	return (
-		<section ref={sectionRef} className="py-20 sm:py-28 lg:py-40 relative">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<section
+			ref={sectionRef}
+			className="py-20 sm:py-28 lg:py-40 relative -mt-14"
+		>
+			{/* Background with rounded top corners */}
+			<div
+				className="absolute inset-0 bg-white rounded-t-[3rem] sm:rounded-t-[4rem] lg:rounded-t-[5rem] overflow-hidden border-t border-gray-200"
+				style={{
+					boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.05)',
+				}}
+			/>
+
+			<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<motion.div
 					variants={containerVariants}
 					initial="hidden"
@@ -121,7 +132,7 @@ const RealitySection = () => {
 					{/* Title */}
 					<motion.h2
 						variants={itemVariants}
-						className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#1d1d1f] mb-12 sm:mb-16 lg:mb-20 text-center leading-tight"
+						className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#1d1d1f] mb-12 sm:mb-16 lg:mb-20 text-center leading-tight"
 					>
 						The problems we see every day
 					</motion.h2>

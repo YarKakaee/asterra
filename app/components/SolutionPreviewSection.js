@@ -1,114 +1,43 @@
 'use client';
 
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 
 const SolutionPreviewSection = () => {
 	const ref = useRef(null);
 	const isInView = useInView(ref, { once: true, margin: '-100px' });
 	const [selectedCard, setSelectedCard] = useState(null);
-	const [beforeAfterStates, setBeforeAfterStates] = useState({
-		'ai-receptionist': 'before',
-		'lead-nurturing': 'before',
-		'modern-website': 'before',
-	});
+	const [hoveredButton, setHoveredButton] = useState(null);
 
-	const solutionCards = useMemo(
-		() => [
-			{
-				id: 'ai-receptionist',
-				icon: '🤖',
-				title: 'AI Receptionist',
-				href: '/solutions/ai-receptionists',
-				before: {
-					scenario: 'Phone rings → Voicemail → Lost lead',
-					description: 'Missing calls means missing revenue',
-					bgColor: 'from-red-50 to-red-100',
-					iconColor: 'text-red-500',
-					chart: 'declining',
-				},
-				after: {
-					scenario:
-						'AI answers → Appointment booked → Revenue captured',
-					description: 'Never miss a customer again',
-					bgColor: 'from-green-50 to-green-100',
-					iconColor: 'text-green-500',
-					chart: 'ascending',
-				},
-				results: '127% increase',
-				metric: 'Lead Conversion',
-			},
-			{
-				id: 'lead-nurturing',
-				icon: '📈',
-				title: 'Lead Nurturing AI',
-				href: '/solutions/lead-nurturing',
-				before: {
-					scenario:
-						'Manual follow-ups → Forgotten leads → Cold prospects',
-					description: 'Leads slip through the cracks',
-					bgColor: 'from-red-50 to-red-100',
-					iconColor: 'text-red-500',
-					chart: 'declining',
-				},
-				after: {
-					scenario:
-						'Automated sequences → Perfect timing → Hot prospects',
-					description: 'Every lead gets VIP treatment',
-					bgColor: 'from-green-50 to-green-100',
-					iconColor: 'text-green-500',
-					chart: 'ascending',
-				},
-				results: '89% increase',
-				metric: 'Follow-up Rate',
-			},
-			{
-				id: 'modern-website',
-				icon: '🚀',
-				title: 'Modern Website',
-				href: '/solutions/website-development',
-				before: {
-					scenario: 'Outdated design → Poor UX → Visitors leave',
-					description: 'Your website is costing you customers',
-					bgColor: 'from-red-50 to-red-100',
-					iconColor: 'text-red-500',
-					chart: 'declining',
-				},
-				after: {
-					scenario: 'Premium design → Smooth UX → Conversions soar',
-					description: 'Your website becomes a sales machine',
-					bgColor: 'from-green-50 to-green-100',
-					iconColor: 'text-green-500',
-					chart: 'ascending',
-				},
-				results: '156% increase',
-				metric: 'Conversion Rate',
-			},
-		],
-		[]
-	);
-
-	const toggleBeforeAfter = useCallback((cardId) => {
-		setBeforeAfterStates((prev) => ({
-			...prev,
-			[cardId]: prev[cardId] === 'before' ? 'after' : 'before',
-		}));
-	}, []);
-
-	// Auto-cycle through cards for demonstration
-	useEffect(() => {
-		if (!isInView) return;
-
-		const interval = setInterval(() => {
-			const cardIds = solutionCards.map((card) => card.id);
-			const randomCard =
-				cardIds[Math.floor(Math.random() * cardIds.length)];
-			toggleBeforeAfter(randomCard);
-		}, 4000);
-
-		return () => clearInterval(interval);
-	}, [isInView, solutionCards, toggleBeforeAfter]);
+	const solutionCards = [
+		{
+			id: 'phone-handling',
+			label: 'PHONE HANDLING',
+			valueLine: 'Every call answered. Every time.',
+			supportingLine:
+				'So your team stays focused on the work that matters.',
+			capabilities: [
+				'Available 24/7, without staffing overhead',
+				'Bookings, questions, and follow-ups handled automatically',
+				'No missed calls. No dropped opportunities.',
+			],
+			href: '/solutions/phone-handling',
+		},
+		{
+			id: 'online-presence',
+			label: 'ONLINE PRESENCE',
+			valueLine: 'Clear. Consistent. Working for you.',
+			supportingLine:
+				'So customers trust you before they ever reach out.',
+			capabilities: [
+				'Professional websites and landing pages',
+				'Search visibility across Google and maps',
+				'Trust built across every channel',
+			],
+			href: '/solutions/online-presence',
+		},
+	];
 
 	const containerVariants = {
 		hidden: { opacity: 0 },
@@ -146,75 +75,11 @@ const SolutionPreviewSection = () => {
 		},
 	};
 
-	const ChartIcon = ({ type, className }) => (
-		<div className={`w-16 h-10 ${className}`}>
-			{type === 'declining' ? (
-				<svg viewBox="0 0 64 40" className="w-full h-full">
-					<motion.path
-						d="M8,32 L20,28 L32,30 L44,35 L56,38"
-						stroke="currentColor"
-						strokeWidth="3"
-						fill="none"
-						strokeLinecap="round"
-						initial={{ pathLength: 0 }}
-						animate={{ pathLength: 1 }}
-						transition={{ duration: 1.5, ease: 'easeInOut' }}
-					/>
-				</svg>
-			) : (
-				<svg viewBox="0 0 64 40" className="w-full h-full">
-					<motion.path
-						d="M8,35 L20,30 L32,20 L44,12 L56,8"
-						stroke="currentColor"
-						strokeWidth="3"
-						fill="none"
-						strokeLinecap="round"
-						initial={{ pathLength: 0 }}
-						animate={{ pathLength: 1 }}
-						transition={{ duration: 1.5, ease: 'easeInOut' }}
-					/>
-				</svg>
-			)}
-		</div>
-	);
-
 	return (
 		<section
 			ref={ref}
-			className="relative py-20 lg:py-36 overflow-hidden"
-			style={{
-				background:
-					'linear-gradient(180deg, #151719 0%, #151719 20%, #151719 50%, #151719 100%)',
-			}}
+			className="relative py-20 lg:py-36 overflow-hidden bg-[#030303]"
 		>
-			{/* Animated background elements */}
-			<div className="absolute inset-0">
-				<motion.div
-					className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"
-					animate={{
-						x: [0, 100, 0],
-						y: [0, -50, 0],
-					}}
-					transition={{
-						duration: 20,
-						repeat: Infinity,
-						ease: 'linear',
-					}}
-				/>
-				<motion.div
-					className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl"
-					animate={{
-						x: [0, -80, 0],
-						y: [0, 60, 0],
-					}}
-					transition={{
-						duration: 25,
-						repeat: Infinity,
-						ease: 'linear',
-					}}
-				/>
-			</div>
-
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 				<motion.div
 					variants={containerVariants}
@@ -222,373 +87,328 @@ const SolutionPreviewSection = () => {
 					animate={isInView ? 'visible' : 'hidden'}
 					className="text-center mb-16"
 				>
-					{/* Eyebrow */}
-					<motion.div
-						variants={headerVariants}
-						className="inline-flex items-center px-6 py-3 rounded-full mb-8 glass-plaque-dark"
-						style={{
-							background:
-								'linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.2) 100%)',
-							backdropFilter: 'blur(16px) saturate(180%)',
-							border: '1px solid rgba(255, 255, 255, 0.3)',
-							borderTop: '1px solid rgba(255, 255, 255, 0.6)',
-							borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-							boxShadow: `
-								0 8px 32px rgba(0, 0, 0, 0.3),
-								0 2px 8px rgba(0, 0, 0, 0.2),
-								inset 0 1px 0 rgba(255, 255, 255, 0.7),
-								inset 0 0 20px rgba(255, 255, 255, 0.1)
-							`,
-							position: 'relative',
-							overflow: 'hidden',
-						}}
-					>
-						{/* Shimmer effect */}
-						<motion.div
-							className="absolute inset-0 opacity-40"
-							style={{
-								background:
-									'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%)',
-							}}
-							animate={{
-								x: ['-100%', '100%'],
-							}}
-							transition={{
-								duration: 6,
-								repeat: Infinity,
-								ease: 'easeInOut',
-							}}
-						/>
-						<span className="text-sm font-semibold text-white tracking-wide relative z-10">
-							THE TRANSFORMATION
-						</span>
-					</motion.div>
-
 					{/* Main Headline */}
 					<motion.h2
 						variants={headerVariants}
-						className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+						className="text-xl sm:text-5xl font-bold text-white mb-5 leading-tight"
 					>
-						What If These Problems Just...{' '}
-						<motion.span
-							className="relative inline-block"
-							animate={{
-								scale: [1, 1.02, 1],
-							}}
-							transition={{
-								duration: 4,
-								repeat: Infinity,
-								ease: 'easeInOut',
-							}}
-						>
-							<span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-								Disappeared?
-							</span>
-							<motion.div
-								className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-300 to-transparent rounded-full"
-								initial={{ scaleX: 0 }}
-								animate={
-									isInView ? { scaleX: 1 } : { scaleX: 0 }
-								}
-								transition={{ delay: 1, duration: 0.8 }}
-							/>
-						</motion.span>
+						Two simple systems.{' '}
+						<span className="text-white font-semibold">
+							Unlimited results.
+						</span>
 					</motion.h2>
 
-					{/* Subtext */}
 					<motion.p
 						variants={headerVariants}
-						className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed"
+						className="text-base sm:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-light"
 					>
-						See how businesses like yours are winning with
-						automation
+						Together, they turn everyday friction into predictable
+						growth.
 					</motion.p>
 				</motion.div>
 
-				{/* Solution Cards */}
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					animate={isInView ? 'visible' : 'hidden'}
-					className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16"
-				>
+				{/* Solution Sections - Vertical Split Layout */}
+				<div className="space-y-24 mb-16">
 					{solutionCards.map((card, index) => {
-						const currentState = beforeAfterStates[card.id];
-						const stateData = card[currentState];
+						const isPhoneHandling = card.id === 'phone-handling';
 
 						return (
-							<Link key={card.id} href={card.href}>
+							<div key={card.id}>
+								{/* Mobile: Label first (outside grid) */}
+								{card.label && (
+									<motion.div
+										variants={cardVariants}
+										initial="hidden"
+										animate={
+											isInView ? 'visible' : 'hidden'
+										}
+										className="mb-6 lg:hidden"
+									>
+										<p className="text-xs font-medium text-white/40 tracking-[0.15em] uppercase">
+											{card.label}
+										</p>
+									</motion.div>
+								)}
+
 								<motion.div
 									variants={cardVariants}
-									whileHover={{
-										scale:
-											selectedCard === card.id
-												? 1.05
-												: 1.02,
-										y: -10,
-
-										transition: { duration: 0.3 },
-									}}
-									onClick={() =>
-										setSelectedCard(
-											selectedCard === card.id
-												? null
-												: card.id
-										)
-									}
-									className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl cursor-pointer group"
-									style={{
-										transformStyle: 'preserve-3d',
-										willChange: 'transform',
-									}}
+									initial="hidden"
+									animate={isInView ? 'visible' : 'hidden'}
+									className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
 								>
-									{/* Before/After Toggle */}
-									<div className="absolute top-6 right-6 z-20">
-										<motion.button
-											onClick={(e) => {
-												e.preventDefault();
-												e.stopPropagation();
-												toggleBeforeAfter(card.id);
-											}}
-											className="relative w-16 h-8 rounded-full p-1 transition-colors duration-300"
-											style={{
-												background:
-													currentState === 'before'
-														? 'linear-gradient(135deg, #fee2e2, #fecaca)'
-														: 'linear-gradient(135deg, #dcfce7, #bbf7d0)',
-											}}
-											whileHover={{ scale: 1.05 }}
-											whileTap={{ scale: 0.95 }}
+									{/* Left Side - Text Content (Mobile: order-3, Desktop: first/left) */}
+									<div className="text-left order-3 lg:order-none">
+										{/* Small System Label - Desktop only */}
+										{card.label && (
+											<div className="hidden lg:block mb-8">
+												<p className="text-xs font-medium text-white/40 tracking-[0.15em] uppercase">
+													{card.label}
+												</p>
+											</div>
+										)}
+
+										{/* Icon and Title (for online presence) */}
+										{card.icon && card.title && (
+											<div className="flex items-center gap-3 mb-6">
+												<div className="text-3xl">
+													{card.icon}
+												</div>
+												<h3 className="text-3xl sm:text-4xl font-bold text-white">
+													{card.title}
+												</h3>
+											</div>
+										)}
+
+										{/* Main Promise - Most breathing room */}
+										<p className="text-2xl sm:text-3xl font-semibold text-white mb-8 leading-tight">
+											{card.valueLine}
+										</p>
+
+										{/* Grounding Sentence - Extra space after promise (slightly more for online presence) */}
+										<p
+											className={`text-base text-white/70 leading-relaxed ${
+												card.id === 'online-presence'
+													? 'mb-9'
+													: 'mb-8'
+											}`}
+										>
+											{card.supportingLine}
+										</p>
+
+										{/* Capability Lines - Closer together, no bullets (lighter for online presence) */}
+										{card.capabilities && (
+											<div className="space-y-3 mb-8">
+												{card.capabilities.map(
+													(capability, capIndex) => (
+														<p
+															key={capIndex}
+															className={`text-sm leading-relaxed ${
+																card.id ===
+																'online-presence'
+																	? 'text-white/50'
+																	: 'text-white/60'
+															}`}
+														>
+															{capability}
+														</p>
+													),
+												)}
+											</div>
+										)}
+
+										{/* Bullets (for online presence) */}
+										{card.bullets && (
+											<ul className="space-y-2 mb-6">
+												{card.bullets.map(
+													(bullet, bulletIndex) => (
+														<li
+															key={bulletIndex}
+															className="text-sm text-white/60 leading-relaxed"
+														>
+															{bullet}
+														</li>
+													),
+												)}
+											</ul>
+										)}
+
+										{/* Glassmorphism Button */}
+										<Link
+											href={card.href}
+											className="group inline-block"
 										>
 											<motion.div
-												className="w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center"
-												animate={{
-													x:
-														currentState ===
-														'before'
-															? 0
-															: 32,
+												onHoverStart={() =>
+													setHoveredButton(card.id)
+												}
+												onHoverEnd={() =>
+													setHoveredButton(null)
+												}
+												whileHover={{
+													scale: 1.02,
+													boxShadow:
+														card.id ===
+														'online-presence'
+															? `
+													0 8px 24px rgba(176, 48, 96, 0.25),
+													0 2px 8px rgba(0, 0, 0, 0.15),
+													inset 0 1px 0 rgba(220, 20, 60, 0.4),
+													inset 0 0 16px rgba(178, 34, 34, 0.15)
+												`
+															: `
+													0 8px 24px rgba(59, 130, 246, 0.25),
+													0 2px 8px rgba(0, 0, 0, 0.15),
+													inset 0 1px 0 rgba(191, 219, 254, 0.4),
+													inset 0 0 16px rgba(96, 165, 250, 0.15)
+												`,
 												}}
+												whileTap={{ scale: 0.98 }}
 												transition={{
 													type: 'spring',
 													stiffness: 300,
 													damping: 20,
 												}}
+												className="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl"
+												style={{
+													background:
+														card.id ===
+														'online-presence'
+															? 'linear-gradient(135deg, rgba(220, 20, 60, 0.15) 0%, rgba(176, 48, 96, 0.1) 50%, rgba(128, 0, 0, 0.15) 100%)'
+															: 'linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(59, 130, 246, 0.1) 50%, rgba(37, 99, 235, 0.15) 100%)',
+													backdropFilter:
+														'blur(16px) saturate(180%)',
+													border:
+														card.id ===
+														'online-presence'
+															? '1px solid rgba(220, 20, 60, 0.25)'
+															: '1px solid rgba(147, 197, 253, 0.25)',
+													borderTop:
+														card.id ===
+														'online-presence'
+															? '1px solid rgba(255, 105, 180, 0.35)'
+															: '1px solid rgba(191, 219, 254, 0.35)',
+													borderBottom:
+														card.id ===
+														'online-presence'
+															? '1px solid rgba(178, 34, 34, 0.15)'
+															: '1px solid rgba(96, 165, 250, 0.15)',
+													boxShadow:
+														card.id ===
+														'online-presence'
+															? `
+													0 4px 20px rgba(176, 48, 96, 0.12),
+													0 1px 4px rgba(0, 0, 0, 0.08),
+													inset 0 1px 0 rgba(255, 105, 180, 0.25),
+													inset 0 0 12px rgba(220, 20, 60, 0.08)
+												`
+															: `
+													0 4px 20px rgba(59, 130, 246, 0.12),
+													0 1px 4px rgba(0, 0, 0, 0.08),
+													inset 0 1px 0 rgba(191, 219, 254, 0.25),
+													inset 0 0 12px rgba(96, 165, 250, 0.08)
+												`,
+												}}
 											>
-												<span className="text-xs">
-													{currentState === 'before'
-														? '😰'
-														: '😊'}
+												<span className="text-sm font-medium text-white">
+													How it works
 												</span>
+												<motion.svg
+													width="14"
+													height="14"
+													viewBox="0 0 24 24"
+													fill="none"
+													stroke="white"
+													strokeWidth="2.5"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													animate={{
+														x:
+															hoveredButton ===
+															card.id
+																? 4
+																: 0,
+													}}
+													transition={{
+														type: 'spring',
+														stiffness: 400,
+														damping: 30,
+													}}
+												>
+													<path d="M5 12h14M12 5l7 7-7 7" />
+												</motion.svg>
 											</motion.div>
-										</motion.button>
-										{/* Toggle Labels */}
-										<div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-black/80">
-											{currentState === 'before'
-												? 'Before'
-												: 'After'}
-										</div>
+										</Link>
 									</div>
 
-									{/* Results Badge */}
-									<motion.div
-										className="absolute top-6 left-6 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF5633] to-[#ff7a59] text-white font-bold text-sm shadow-lg"
-										animate={{
-											scale: [1, 1.05, 1],
-										}}
-										transition={{
-											duration: 5,
-											repeat: Infinity,
-											delay: index * 1.5,
-										}}
-									>
-										{card.results}
-									</motion.div>
-
-									{/* Card Content */}
-									<div className="pt-16">
-										{/* Icon with animation */}
-										<motion.div
-											className="text-6xl mb-6 text-center"
-											animate={{
-												rotateY: [0, 10, 0, -10, 0],
-											}}
-											transition={{
-												duration: 4,
-												repeat: Infinity,
-												ease: 'easeInOut',
-											}}
-										>
-											{card.icon}
-										</motion.div>
-
-										{/* Title */}
-										<h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-											{card.title}
-										</h3>
-
-										{/* Content with state transition */}
-										<AnimatePresence mode="wait">
+									{/* Right Side - Video/Media (Mobile: order-2, Desktop: second/right) */}
+									<div className="relative order-2 lg:order-none">
+										{isPhoneHandling ? (
 											<motion.div
-												key={`${card.id}-${currentState}`}
 												initial={{
 													opacity: 0,
-													y: 20,
-													rotateX: -10,
+													scale: 0.95,
 												}}
-												animate={{
-													opacity: 1,
-													y: 0,
-													rotateX: 0,
-												}}
-												exit={{
-													opacity: 0,
-													y: -20,
-													rotateX: 10,
-												}}
+												animate={
+													isInView
+														? {
+																opacity: 1,
+																scale: 1,
+															}
+														: {
+																opacity: 0,
+																scale: 0.95,
+															}
+												}
 												transition={{
-													duration: 0.4,
-													ease: 'easeInOut',
+													delay: 0.3,
+													duration: 0.6,
 												}}
-												className={`p-6 rounded-2xl bg-gradient-to-br ${
-													stateData.bgColor
-												} border-2 ${
-													currentState === 'before'
-														? 'border-red-200'
-														: 'border-green-200'
-												}`}
-												style={{ minHeight: '180px' }}
+												className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900/50 backdrop-blur-sm"
+												style={{
+													boxShadow:
+														'0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+												}}
 											>
-												{/* Scenario */}
-												<div className="text-center mb-4 flex flex-col justify-between h-full">
-													<div>
-														<p className="text-lg font-semibold text-gray-800 mb-2 leading-tight">
-															{stateData.scenario}
-														</p>
-														<p
-															className={`text-sm ${stateData.iconColor}`}
-														>
-															{
-																stateData.description
-															}
-														</p>
-													</div>
-
-													{/* Chart */}
-													<div className="flex justify-center mt-4">
-														<ChartIcon
-															type={
-																stateData.chart
-															}
-															className={
-																stateData.iconColor
-															}
-														/>
-													</div>
-												</div>
+												<video
+													autoPlay
+													loop
+													muted
+													playsInline
+													className="w-full h-auto block"
+												>
+													<source
+														src="/phonevideo.mp4"
+														type="video/mp4"
+													/>
+												</video>
 											</motion.div>
-										</AnimatePresence>
-
-										{/* Metric Label */}
-										<div className="text-center mt-4">
-											<span className="text-sm text-gray-600 font-medium">
-												{card.metric}
-											</span>
-										</div>
-
-										{/* Interaction Cue */}
-										<motion.div
-											className="text-center mt-4 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-											animate={{
-												y: [0, -2, 0],
-											}}
-											transition={{
-												duration: 2,
-												repeat: Infinity,
-											}}
-										>
-											Click to explore →
-										</motion.div>
+										) : (
+											<motion.div
+												initial={{
+													opacity: 0,
+													scale: 0.95,
+												}}
+												animate={
+													isInView
+														? {
+																opacity: 1,
+																scale: 1,
+															}
+														: {
+																opacity: 0,
+																scale: 0.95,
+															}
+												}
+												transition={{
+													delay: 0.3,
+													duration: 0.6,
+												}}
+												className="relative rounded-3xl overflow-hidden shadow-2xl bg-gray-900/50 backdrop-blur-sm"
+												style={{
+													boxShadow:
+														'0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+												}}
+											>
+												<video
+													autoPlay
+													loop
+													muted
+													playsInline
+													className="w-full h-auto block"
+												>
+													<source
+														src="/onlinevideo.mp4"
+														type="video/mp4"
+													/>
+												</video>
+											</motion.div>
+										)}
 									</div>
 								</motion.div>
-							</Link>
+							</div>
 						);
 					})}
-				</motion.div>
-
-				{/* CTA Button */}
-				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					animate={
-						isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-					}
-					transition={{ delay: 1.5, duration: 0.8 }}
-					className="text-center"
-				>
-					<Link href="/book-demo">
-						<motion.button
-							className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
-							style={{
-								background:
-									'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
-								backdropFilter: 'blur(16px) saturate(180%)',
-								border: '1px solid rgba(255, 255, 255, 0.3)',
-								borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-								borderBottom:
-									'1px solid rgba(255, 255, 255, 0.1)',
-								boxShadow: `
-									0 8px 32px rgba(0, 0, 0, 0.2),
-									0 2px 8px rgba(0, 0, 0, 0.1),
-									inset 0 1px 0 rgba(255, 255, 255, 0.6),
-									inset 0 0 20px rgba(255, 255, 255, 0.05)
-								`,
-							}}
-							whileHover={{
-								scale: 1.05,
-								boxShadow: `
-									0 12px 40px rgba(0, 0, 0, 0.3),
-									0 4px 12px rgba(0, 0, 0, 0.15),
-									inset 0 1px 0 rgba(255, 255, 255, 0.7),
-									inset 0 0 25px rgba(255, 255, 255, 0.1)
-								`,
-							}}
-							whileTap={{ scale: 0.98 }}
-							transition={{
-								type: 'spring',
-								stiffness: 300,
-								damping: 20,
-							}}
-						>
-							<span>
-								Join businesses already winning with automation
-							</span>
-							<motion.div
-								className="ml-3"
-								animate={{
-									x: [0, 4, 0],
-								}}
-								transition={{
-									duration: 2,
-									repeat: Infinity,
-									ease: 'easeInOut',
-								}}
-							>
-								<svg
-									width="20"
-									height="20"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								>
-									<path d="M5 12h14M12 5l7 7-7 7" />
-								</svg>
-							</motion.div>
-						</motion.button>
-					</Link>
-				</motion.div>
+				</div>
 			</div>
 		</section>
 	);
