@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
-const TechnologyTransparencySection = () => {
+const TechnologyTransparencySection = ({ className = '' } = {}) => {
 	const sectionRef = useRef(null);
 	const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 	const [isMobile, setIsMobile] = useState(false);
@@ -121,7 +121,7 @@ const TechnologyTransparencySection = () => {
 	return (
 		<section
 			ref={sectionRef}
-			className="relative py-20 lg:py-36 overflow-hidden"
+			className={`relative py-20 lg:py-36 overflow-hidden ${className}`}
 			style={{
 				background:
 					'linear-gradient(180deg, #151719 0%, #151719 20%, #151719 50%, #151719 100%)',
@@ -162,88 +162,20 @@ const TechnologyTransparencySection = () => {
 					animate={isInView ? 'visible' : 'hidden'}
 					className="text-center mb-16"
 				>
-					{/* Glass Badge */}
-					<motion.div
-						variants={headerVariants}
-						className="inline-flex items-center px-6 py-3 rounded-full mb-8"
-						style={{
-							background:
-								'linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.2) 100%)',
-							backdropFilter: 'blur(16px) saturate(180%)',
-							border: '1px solid rgba(255, 255, 255, 0.3)',
-							borderTop: '1px solid rgba(255, 255, 255, 0.6)',
-							borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-							boxShadow: `
-								0 8px 32px rgba(0, 0, 0, 0.3),
-								0 2px 8px rgba(0, 0, 0, 0.2),
-								inset 0 1px 0 rgba(255, 255, 255, 0.7),
-								inset 0 0 20px rgba(255, 255, 255, 0.1)
-							`,
-							position: 'relative',
-							overflow: 'hidden',
-						}}
-					>
-						{/* Shimmer effect */}
-						{!isMobile && (
-							<motion.div
-								className="absolute inset-0 opacity-40"
-								style={{
-									background:
-										'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%)',
-								}}
-								animate={{
-									x: ['-100%', '100%'],
-								}}
-								transition={{
-									duration: 6,
-									repeat: Infinity,
-									ease: 'easeInOut',
-								}}
-							/>
-						)}
-						<span className="text-sm font-semibold text-white tracking-wide relative z-10">
-							FULL TRANSPARENCY
-						</span>
-					</motion.div>
-
 					<motion.h2
 						variants={headerVariants}
 						className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
 					>
-						See Exactly How We Solve{' '}
-						<motion.span
-							className="relative inline-block"
-							animate={{
-								scale: [1, 1.02, 1],
-							}}
-							transition={{
-								duration: 4,
-								repeat: Infinity,
-								ease: 'easeInOut',
-							}}
-						>
-							<span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-								Your Problems
-							</span>
-							<motion.div
-								className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-300 to-transparent rounded-full"
-								initial={{ scaleX: 0 }}
-								animate={
-									isInView ? { scaleX: 1 } : { scaleX: 0 }
-								}
-								transition={{ delay: 1, duration: 0.8 }}
-							/>
-						</motion.span>
+						How we solve your problems
 					</motion.h2>
 
 					<motion.p
 						variants={headerVariants}
 						className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed"
 					>
-						Here&apos;s a behind-the-scenes look at how one of our
-						barbershop AI receptionists works — answering calls,
-						checking availability, and booking appointments
-						automatically.
+						A behind-the-scenes look at how an automated phone line
+						handles real calls — from first hello to confirmed
+						booking.
 					</motion.p>
 				</motion.div>
 
@@ -278,78 +210,6 @@ const TechnologyTransparencySection = () => {
 							</div>
 						</div>
 					</div>
-				</motion.div>
-
-				{/* CTA Button */}
-				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					animate={
-						isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-					}
-					transition={{ delay: 1.5, duration: 0.8 }}
-					className="text-center"
-				>
-					<Link href="/book-demo">
-						<motion.button
-							className="inline-flex items-center px-4 sm:px-8 py-4 rounded-2xl sm:font-semibold text-sm sm:text-lg text-white cursor-pointer"
-							style={{
-								background:
-									'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.15) 100%)',
-								backdropFilter: 'blur(16px) saturate(180%)',
-								border: '1px solid rgba(255, 255, 255, 0.3)',
-								borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-								borderBottom:
-									'1px solid rgba(255, 255, 255, 0.1)',
-								boxShadow: `
-									0 8px 32px rgba(0, 0, 0, 0.2),
-									0 2px 8px rgba(0, 0, 0, 0.1),
-									inset 0 1px 0 rgba(255, 255, 255, 0.6),
-									inset 0 0 20px rgba(255, 255, 255, 0.05)
-								`,
-							}}
-							whileHover={{
-								scale: 1.05,
-								boxShadow: `
-									0 12px 40px rgba(0, 0, 0, 0.3),
-									0 4px 12px rgba(0, 0, 0, 0.15),
-									inset 0 1px 0 rgba(255, 255, 255, 0.7),
-									inset 0 0 25px rgba(255, 255, 255, 0.1)
-								`,
-							}}
-							whileTap={{ scale: 0.98 }}
-							transition={{
-								type: 'spring',
-								stiffness: 300,
-								damping: 20,
-							}}
-						>
-							<span>Get Your Custom Workflow </span>
-							<motion.div
-								className="ml-3"
-								animate={{
-									x: [0, 4, 0],
-								}}
-								transition={{
-									duration: 2,
-									repeat: Infinity,
-									ease: 'easeInOut',
-								}}
-							>
-								<svg
-									width="20"
-									height="20"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								>
-									<path d="M5 12h14M12 5l7 7-7 7" />
-								</svg>
-							</motion.div>
-						</motion.button>
-					</Link>
 				</motion.div>
 			</div>
 		</section>

@@ -22,7 +22,7 @@ const SolutionPreviewSection = () => {
 				'Bookings, questions, and follow-ups handled automatically',
 				'No missed calls. No dropped opportunities.',
 			],
-			href: '/solutions/phone-handling',
+			href: '/phone-handling',
 		},
 		{
 			id: 'online-presence',
@@ -35,7 +35,7 @@ const SolutionPreviewSection = () => {
 				'Search visibility across Google and maps',
 				'Trust built across every channel',
 			],
-			href: '/solutions/online-presence',
+			href: '/online-presence',
 		},
 	];
 

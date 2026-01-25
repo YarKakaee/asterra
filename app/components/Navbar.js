@@ -30,9 +30,9 @@ const Navbar = () => {
 					const progress = Math.min(
 						Math.max(
 							(scrollTop - fadeStart) / (fadeEnd - fadeStart),
-							0
+							0,
 						),
-						1
+						1,
 					);
 					setScrollProgress(progress);
 					ticking = false;
@@ -194,21 +194,21 @@ const Navbar = () => {
 							? 'blur(12px) saturate(180%)'
 							: `blur(${scrollProgress * 12}px) saturate(${
 									100 + scrollProgress * 80
-							  }%)`,
+								}%)`,
 						borderColor: isMobile
 							? 'rgba(255, 255, 255, 0.3)'
 							: `rgba(255, 255, 255, ${scrollProgress * 0.3})`,
 						boxShadow: isMobile
 							? '0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset'
 							: scrollProgress > 0
-							? `0 ${scrollProgress * 4}px ${
-									scrollProgress * 20
-							  }px rgba(0, 0, 0, ${scrollProgress * 0.1}), 0 ${
-									scrollProgress * 1
-							  }px 0 rgba(255, 255, 255, ${
-									scrollProgress * 0.8
-							  }) inset`
-							: '0 0px 0px rgba(0, 0, 0, 0)',
+								? `0 ${scrollProgress * 4}px ${
+										scrollProgress * 20
+									}px rgba(0, 0, 0, ${scrollProgress * 0.1}), 0 ${
+										scrollProgress * 1
+									}px 0 rgba(255, 255, 255, ${
+										scrollProgress * 0.8
+									}) inset`
+								: '0 0px 0px rgba(0, 0, 0, 0)',
 						borderWidth: '1px',
 						borderStyle: 'solid',
 						transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -244,10 +244,14 @@ const Navbar = () => {
 										if (item.hasDropdown) {
 											const relatedTarget =
 												e.relatedTarget;
+											const relatedEl =
+												relatedTarget instanceof Element
+													? relatedTarget
+													: null;
 											if (
-												!relatedTarget ||
-												!relatedTarget.closest(
-													'.dropdown-menu'
+												!relatedEl ||
+												!relatedEl.closest(
+													'.dropdown-menu',
 												)
 											) {
 												setActiveDropdown(null);
@@ -326,7 +330,7 @@ const Navbar = () => {
 													className="absolute top-full left-0 pt-2 w-56 overflow-visible dropdown-menu"
 													onMouseEnter={() =>
 														setActiveDropdown(
-															item.name
+															item.name,
 														)
 													}
 													onMouseLeave={() =>
@@ -353,7 +357,7 @@ const Navbar = () => {
 														{item.dropdownItems.map(
 															(
 																dropdownItem,
-																index
+																index,
 															) => (
 																<motion.div
 																	key={
@@ -399,7 +403,7 @@ const Navbar = () => {
 																		</span>
 																	</Link>
 																</motion.div>
-															)
+															),
 														)}
 													</div>
 												</motion.div>
@@ -507,7 +511,7 @@ const Navbar = () => {
 																mobileDropdown ===
 																	item.name
 																	? null
-																	: item.name
+																	: item.name,
 															)
 														}
 														className="cursor-pointer w-full flex items-center justify-between px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200 relative group"
@@ -577,7 +581,7 @@ const Navbar = () => {
 																{item.dropdownItems.map(
 																	(
 																		dropdownItem,
-																		index
+																		index,
 																	) => (
 																		<motion.div
 																			key={
@@ -614,10 +618,10 @@ const Navbar = () => {
 																				className="block px-4 py-2.5 text-sm text-[#1d1d1f] hover:text-[#FF5633] transition-all duration-200 relative group font-medium"
 																				onClick={() => {
 																					setIsMenuOpen(
-																						false
+																						false,
 																					);
 																					setMobileDropdown(
-																						null
+																						null,
 																					);
 																				}}
 																			>
@@ -640,7 +644,7 @@ const Navbar = () => {
 																				/>
 																			</Link>
 																		</motion.div>
-																	)
+																	),
 																)}
 															</motion.div>
 														)}
