@@ -43,7 +43,7 @@ export const OrganizationSchema = () => {
 		sameAs: [
 			'https://www.linkedin.com/company/teamasterra/',
 			'https://x.com/AsterraTeam',
-			'https://www.instagram.com/asterraai/',
+			'https://www.instagram.com/asterra.ai/',
 		],
 		offers: {
 			'@type': 'Offer',

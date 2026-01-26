@@ -90,7 +90,7 @@ const Footer = () => {
 									/>
 								</motion.a>
 								<motion.a
-									href="https://www.instagram.com/asterraai/"
+									href="https://www.instagram.com/asterra.ai/"
 									target="_blank"
 									aria-label="Instagram"
 									whileHover={{ scale: 1.1 }}
