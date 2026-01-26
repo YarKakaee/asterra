@@ -6,9 +6,7 @@ import Image from 'next/image';
 
 function titleFromFilename(filename) {
 	const base = filename.replace(/\.[^/.]+$/, '');
-	return base
-		.replace(/[-_]+/g, ' ')
-		.replace(/\b\w/g, (m) => m.toUpperCase());
+	return base.replace(/[-_]+/g, ' ').replace(/\b\w/g, (m) => m.toUpperCase());
 }
 
 const LogoMarquee = ({ logos, direction = 'left', ariaLabel }) => {
@@ -19,7 +17,10 @@ const LogoMarquee = ({ logos, direction = 'left', ariaLabel }) => {
 			: 'animate-logo-marquee';
 
 	return (
-		<div className="relative mx-auto max-w-6xl px-2 sm:px-4" aria-label={ariaLabel}>
+		<div
+			className="relative mx-auto max-w-6xl px-2 sm:px-4"
+			aria-label={ariaLabel}
+		>
 			{/* Edge fade via mask (no blur / no hard blocks) */}
 			<div
 				className="overflow-hidden py-3"
@@ -53,8 +54,7 @@ const LogoMarquee = ({ logos, direction = 'left', ariaLabel }) => {
 								className="h-9 sm:h-10 w-auto select-none"
 								draggable={false}
 								style={{
-									filter:
-										'grayscale(0.25) saturate(0.9) contrast(1.03) opacity(0.9)',
+									filter: 'grayscale(0.25) saturate(0.9) contrast(1.03) opacity(0.9)',
 								}}
 							/>
 						</div>
@@ -70,27 +70,35 @@ const WhatItHandlesSection = () => {
 	const isInView = useInView(ref, { once: true, margin: '-120px' });
 
 	const crmLogos = useMemo(
-		() => [
-			'/crm/booksy.png',
-			'/crm/fresha.png',
-			'/crm/glossgenius.png',
-			'/crm/mangomint.png',
-			'/crm/mindbody.png',
-			'/crm/setmore.png',
-			'/crm/vagaro.png',
-		].map((src) => ({ src, alt: titleFromFilename(src.split('/').pop()) })),
+		() =>
+			[
+				'/crm/booksy.png',
+				'/crm/fresha.png',
+				'/crm/glossgenius.png',
+				'/crm/mangomint.png',
+				'/crm/mindbody.png',
+				'/crm/setmore.png',
+				'/crm/vagaro.png',
+			].map((src) => ({
+				src,
+				alt: titleFromFilename(src.split('/').pop()),
+			})),
 		[],
 	);
 
 	const posLogos = useMemo(
-		() => [
-			'/pos/clover.png',
-			'/pos/lightspeed.png',
-			'/pos/micros.png',
-			'/pos/square.png',
-			'/pos/toast.png',
-			'/pos/touchbistro.png',
-		].map((src) => ({ src, alt: titleFromFilename(src.split('/').pop()) })),
+		() =>
+			[
+				'/pos/clover.png',
+				'/pos/lightspeed.png',
+				'/pos/micros.png',
+				'/pos/square.png',
+				'/pos/toast.png',
+				'/pos/touchbistro.png',
+			].map((src) => ({
+				src,
+				alt: titleFromFilename(src.split('/').pop()),
+			})),
 		[],
 	);
 
@@ -115,7 +123,10 @@ const WhatItHandlesSection = () => {
 	};
 
 	return (
-		<section ref={ref} className="relative bg-white py-16 sm:py-20 lg:py-24">
+		<section
+			ref={ref}
+			className="relative bg-white py-16 sm:py-20 lg:py-32"
+		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<motion.div
 					variants={containerVariants}
@@ -126,7 +137,7 @@ const WhatItHandlesSection = () => {
 					{/* Headline */}
 					<motion.h2
 						variants={itemVariants}
-						className="text-4xl sm:text-5xl lg:text-[58px] font-bold text-[#1d1d1f] text-center leading-tight"
+						className="text-4xl sm:text-5xl lg:text-5xl font-bold text-[#1d1d1f] text-center leading-tight"
 					>
 						What happens when someone calls
 					</motion.h2>
@@ -155,7 +166,8 @@ const WhatItHandlesSection = () => {
 									<li className="flex items-start gap-3">
 										<span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300 flex-shrink-0" />
 										<p className="text-sm text-gray-600 leading-relaxed">
-											Hours, location, and common questions
+											Hours, location, and common
+											questions
 										</p>
 									</li>
 									<li className="flex items-start gap-3">
@@ -167,7 +179,8 @@ const WhatItHandlesSection = () => {
 									<li className="flex items-start gap-3">
 										<span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300 flex-shrink-0" />
 										<p className="text-sm text-gray-600 leading-relaxed">
-											Appointments, reservations, or orders
+											Appointments, reservations, or
+											orders
 										</p>
 									</li>
 								</ul>
@@ -176,18 +189,16 @@ const WhatItHandlesSection = () => {
 							{/* Divider / flow cue */}
 							<div className="hidden lg:flex items-center justify-center px-2">
 								<div className="flex items-center gap-3">
-									<div className="h-px w-10 bg-gray-200" />
 									<div className="h-9 w-9 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-400">
 										<span className="text-base leading-none">
 											→
 										</span>
 									</div>
-									<div className="h-px w-10 bg-gray-200" />
 								</div>
 							</div>
 
 							{/* Right: grounded */}
-							<div className="rounded-2xl border border-gray-200/50 bg-[#F9F4F2] p-7 sm:p-8">
+							<div className="rounded-2xl border border-gray-200/50 bg-white p-7 sm:p-8">
 								<p className="text-base font-semibold text-[#1d1d1f]">
 									What happens next
 								</p>
@@ -195,8 +206,8 @@ const WhatItHandlesSection = () => {
 									<li className="flex items-start gap-3">
 										<span className="mt-2 h-1.5 w-1.5 rounded-full bg-gray-300 flex-shrink-0" />
 										<p className="text-sm text-gray-700 leading-relaxed">
-											Bookings and reservations are created in your
-											scheduling system
+											Bookings and reservations are
+											created in your scheduling system
 										</p>
 									</li>
 									<li className="flex items-start gap-3">
@@ -212,17 +223,15 @@ const WhatItHandlesSection = () => {
 										</p>
 									</li>
 								</ul>
-
-								<p className="mt-6 text-sm text-gray-500 leading-relaxed">
-									Everything stays in the tools your team already
-									uses.
-								</p>
 							</div>
 						</div>
 					</motion.div>
 
 					{/* Integrations */}
-					<motion.div variants={itemVariants} className="mt-10 sm:mt-12">
+					<motion.div
+						variants={itemVariants}
+						className="mt-10 sm:mt-12"
+					>
 						<p className="text-sm text-gray-500 font-medium text-center">
 							Works with the tools you already use
 						</p>
@@ -242,8 +251,8 @@ const WhatItHandlesSection = () => {
 						</div>
 
 						<p className="text-sm sm:text-base text-gray-600 text-center max-w-3xl mx-auto mt-10 leading-relaxed">
-							No workflow changes required. The phone line fits into
-							how you already operate.
+							No workflow changes required. The phone line fits
+							into how you already operate.
 						</p>
 					</motion.div>
 				</motion.div>
@@ -253,4 +262,3 @@ const WhatItHandlesSection = () => {
 };
 
 export default WhatItHandlesSection;
-

@@ -63,7 +63,7 @@ const PhoneHandlingPage = () => {
 				{/* Hero Section */}
 				<section
 					ref={heroRef}
-					className="relative pt-32 pb-16 sm:pt-48 sm:pb-0 overflow-hidden"
+					className="relative pt-32 sm:pt-48 sm:pb-0 overflow-hidden"
 				>
 					{/* Subtle off-white texture background */}
 					<div

@@ -23,6 +23,15 @@ export default function Home() {
 	useEffect(() => {
 		// Add loaded class after hydration to enable transitions
 		document.documentElement.classList.add('loaded');
+
+		// If we landed here with a hash, smooth scroll to it.
+		if (typeof window !== 'undefined' && window.location.hash === '#use-cases') {
+			// Let layout settle for a frame.
+			window.requestAnimationFrame(() => {
+				const el = document.getElementById('use-cases');
+				if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			});
+		}
 	}, []);
 
 	return (
@@ -89,6 +98,7 @@ export default function Home() {
 					<HeroSection />
 					<RealitySection />
 					<SolutionPreviewSection />
+					<UseCasesSection />
 					
 					
 

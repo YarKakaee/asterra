@@ -13,10 +13,7 @@ import Image from 'next/image';
 
 const Footer = () => {
 	return (
-		<footer
-			className="relative text-gray-100 overflow-hidden"
-			style={{ backgroundColor: '#030303' }}
-		>
+		<footer className="relative overflow-hidden bg-white text-[#1d1d1f]">
 			{/* Main Footer Content - Logo and Description */}
 			<div className="relative z-10 py-16">
 				<div className="max-w-4xl mx-auto px-6 text-center">
@@ -27,13 +24,13 @@ const Footer = () => {
 						viewport={{ once: true }}
 					>
 						<Image
-							src="/footerlogowhite.png"
+							src="/footerlogo.png"
 							alt="Asterra"
 							width={355}
 							height={215}
 							className="h-20 w-auto mx-auto mb-6"
 						/>
-						<p className="text-gray-400 leading-relaxed max-w-2xl mx-auto">
+						<p className="text-gray-600 leading-relaxed max-w-2xl mx-auto">
 							Simple systems. Real results.
 						</p>
 					</motion.div>
@@ -41,11 +38,11 @@ const Footer = () => {
 			</div>
 
 			{/* Footer Bottom Line */}
-			<div className="relative z-10 border-t border-[#212121] py-8">
+			<div className="relative z-10 border-t border-gray-200 py-8">
 				<div className="max-w-6xl mx-auto px-6">
 					<div className="flex flex-col md:flex-row justify-between items-center gap-6">
 						{/* Left side - Copyright */}
-						<div className="text-gray-400 text-sm text-center md:text-left">
+						<div className="text-gray-500 text-sm text-center md:text-left">
 							© 2025 Asterra™ is a brand of Asterra Solutions Inc.
 							All rights reserved.
 						</div>
@@ -59,7 +56,7 @@ const Footer = () => {
 									aria-label="Email Support"
 									whileHover={{ scale: 1.1 }}
 									whileTap={{ scale: 0.9 }}
-									className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+									className="text-gray-500 hover:text-orange-500 transition-colors duration-300"
 								>
 									<FontAwesomeIcon
 										icon={faEnvelope}
@@ -72,7 +69,7 @@ const Footer = () => {
 									aria-label="LinkedIn"
 									whileHover={{ scale: 1.1 }}
 									whileTap={{ scale: 0.9 }}
-									className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+									className="text-gray-500 hover:text-orange-500 transition-colors duration-300"
 								>
 									<FontAwesomeIcon
 										icon={faLinkedin}
@@ -85,7 +82,7 @@ const Footer = () => {
 									aria-label="X"
 									whileHover={{ scale: 1.1 }}
 									whileTap={{ scale: 0.9 }}
-									className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+									className="text-gray-500 hover:text-orange-500 transition-colors duration-300"
 								>
 									<FontAwesomeIcon
 										icon={faXTwitter}
@@ -98,7 +95,7 @@ const Footer = () => {
 									aria-label="Instagram"
 									whileHover={{ scale: 1.1 }}
 									whileTap={{ scale: 0.9 }}
-									className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+									className="text-gray-500 hover:text-orange-500 transition-colors duration-300"
 								>
 									<FontAwesomeIcon
 										icon={faInstagram}
@@ -111,13 +108,13 @@ const Footer = () => {
 							<div className="flex gap-6 text-sm justify-center">
 								<a
 									href="/privacy"
-									className="text-gray-400 hover:text-gray-200 transition-colors duration-300"
+									className="text-gray-500 hover:text-gray-900 transition-colors duration-300"
 								>
 									Privacy Policy
 								</a>
 								<a
 									href="/terms"
-									className="text-gray-400 hover:text-gray-200 transition-colors duration-300"
+									className="text-gray-500 hover:text-gray-900 transition-colors duration-300"
 								>
 									Terms of Service
 								</a>

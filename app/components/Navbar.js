@@ -77,21 +77,8 @@ const Navbar = () => {
 		},
 		{
 			name: 'Use Cases',
-			hasDropdown: true,
-			href: '/industries',
-			dropdownItems: [
-				{ name: 'Restaurants', href: '/restaurants' },
-				{
-					name: 'Barbershops & Salons',
-					href: '/barbershops-salons',
-				},
-				{ name: 'Service Businesses', href: '/service-businesses' },
-				{
-					name: 'Contractors',
-					href: '/industries/contractors',
-				},
-				{ name: 'Retail & Local Shops', href: '/retail-local-shops' },
-			],
+			hasDropdown: false,
+			href: '/#use-cases',
 		},
 		{
 			name: 'Results',
@@ -99,6 +86,26 @@ const Navbar = () => {
 			href: '/client-success',
 		},
 	];
+
+	const handleUseCasesClick = (e) => {
+		// If we're already on the homepage, smooth scroll in-place.
+		if (typeof window !== 'undefined' && window.location.pathname === '/') {
+			e.preventDefault();
+			const target = document.getElementById('use-cases');
+			if (target) {
+				target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				window.history.replaceState(null, '', '/#use-cases');
+			}
+			setIsMenuOpen(false);
+			setMobileDropdown(null);
+			setActiveDropdown(null);
+			return;
+		}
+		// Otherwise, allow navigation to /#use-cases (Home handles the scroll on load).
+		setIsMenuOpen(false);
+		setMobileDropdown(null);
+		setActiveDropdown(null);
+	};
 
 	// Simplified animation variants for better performance
 	const dropdownVariants = {
@@ -298,6 +305,11 @@ const Navbar = () => {
 									) : (
 										<Link
 											href={item.href}
+											onClick={
+												item.name === 'Use Cases'
+													? handleUseCasesClick
+													: undefined
+											}
 											className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
 										>
 											<motion.div
@@ -653,11 +665,19 @@ const Navbar = () => {
 											) : (
 												<Link
 													href={item.href}
+													onClick={
+														item.name === 'Use Cases'
+															? handleUseCasesClick
+															: () => {
+																	setIsMenuOpen(
+																		false,
+																	);
+																	setMobileDropdown(
+																		null,
+																	);
+																}
+													}
 													className="block px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200 font-medium relative group"
-													onClick={() => {
-														setIsMenuOpen(false);
-														setMobileDropdown(null);
-													}}
 												>
 													{item.name}
 													{/* Hover underline animation */}
