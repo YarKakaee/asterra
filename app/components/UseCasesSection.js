@@ -238,7 +238,7 @@ const UseCasesSection = () => {
 				<div className="mt-14 sm:mt-16 text-center">
 					<div className="mt-5">
 						<Link
-							href="/industries"
+							href="/contact"
 							className="inline-flex items-center justify-center px-6 py-4 rounded-2xl font-medium bg-white/80 border border-gray-200 text-[#151719] shadow-sm hover:shadow-md transition-shadow duration-200"
 						>
 							See how it works <span className="ml-2">→</span>

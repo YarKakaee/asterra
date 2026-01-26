@@ -80,11 +80,6 @@ const Navbar = () => {
 			hasDropdown: false,
 			href: '/#use-cases',
 		},
-		{
-			name: 'Results',
-			hasDropdown: false,
-			href: '/client-success',
-		},
 	];
 
 	const handleUseCasesClick = (e) => {
@@ -427,7 +422,7 @@ const Navbar = () => {
 
 						{/* Right side: Desktop CTA Button */}
 						<div className="hidden lg:flex ml-auto">
-							<Link href="/contact-sales">
+							<Link href="/contact">
 								<motion.div
 									className="bg-[#151719] text-white px-6 py-3 rounded-full text-sm font-medium cursor-pointer"
 									whileHover={{
@@ -449,7 +444,7 @@ const Navbar = () => {
 
 						{/* Right side: Mobile CTA Button + Hamburger */}
 						<div className="lg:hidden flex items-center gap-3 ml-auto">
-							<Link href="/contact-sales">
+							<Link href="/contact">
 								<motion.div
 									className="bg-[#151719] text-white px-4 py-2.5 rounded-3xl text-sm font-medium cursor-pointer"
 									whileHover={{
@@ -666,7 +661,8 @@ const Navbar = () => {
 												<Link
 													href={item.href}
 													onClick={
-														item.name === 'Use Cases'
+														item.name ===
+														'Use Cases'
 															? handleUseCasesClick
 															: () => {
 																	setIsMenuOpen(

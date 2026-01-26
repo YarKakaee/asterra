@@ -152,7 +152,7 @@ const HeroSection = () => {
 					{/* CTA Button */}
 					<motion.div variants={buttonVariants}>
 						<motion.a
-							href="/book-demo"
+							href="/contact"
 							className="inline-flex items-center px-6 py-3 sm:px-7.5 sm:py-4 bg-[#FF5633] text-white text-base sm:text-lg font-semibold rounded-3xl transition-all duration-200 shadow-lg"
 							whileHover={{
 								scale: 1.05,
