@@ -117,7 +117,7 @@ const ScopeSection = () => {
 								{/* Heading */}
 								<h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6 leading-tight">
 									We handle incoming calls so your team
-									doesn't have to.
+									doesn&apos;t have to.
 								</h3>
 
 								{/* Description */}

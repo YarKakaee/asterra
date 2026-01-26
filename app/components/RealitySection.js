@@ -95,7 +95,7 @@ const RealitySection = () => {
 		}, videoDuration + transitionDelay);
 
 		return () => clearInterval(interval);
-	}, [mounted, isInView]);
+	}, [mounted, isInView, problems.length]);
 
 	// Handle video play/pause
 	useEffect(() => {
@@ -212,9 +212,9 @@ const RealitySection = () => {
 					<motion.div variants={itemVariants} className="text-center">
 						<div className="inline-block px-6 sm:px-8 py-4 sm:py-5 rounded-2xl bg-gray-50/80 backdrop-blur-sm border border-gray-200/50">
 							<p className="text-lg sm:text-xl lg:text-2xl text-[#1d1d1f] font-semibold leading-relaxed">
-								These aren't growth problems.{' '}
+								These aren&apos;t growth problems.{` `}
 								<span className="text-gray-600 font-normal">
-									They're operational ones.
+									They&apos;re operational ones.
 								</span>
 							</p>
 						</div>
