@@ -1,22 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import RealitySection from './components/RealitySection';
-import ScopeSection from './components/ScopeSection';
-import Reclaim from './components/Reclaim';
-import ProblemValidationSection from './components/ProblemValidationSection';
-import SolutionPreviewSection from './components/SolutionPreviewSection';
-import UseCasesSection from './components/UseCasesSection';
-import GlassJourneySection from './components/GlassJourneySection';
-import ROICalculatorSection from './components/ROICalculatorSection';
-import IndustryShowcaseSection from './components/IndustryShowcaseSection';
-import TechnologyTransparencySection from './components/TechnologyTransparencySection';
-import FAQSection from './components/FAQSection';
-import FinalUrgencySection from './components/FinalUrgencySection';
 import Footer from './components/Footer';
+import HeroSection from './components/HeroSection';
+import Navbar from './components/Navbar';
+import RealitySection from './components/RealitySection';
+import SolutionPreviewSection from './components/SolutionPreviewSection';
 import { OrganizationSchema, ServiceSchema } from './components/StructuredData';
+import UseCasesSection from './components/UseCasesSection';
 // Removed unused motion import for better performance
 
 export default function Home() {
@@ -25,11 +16,15 @@ export default function Home() {
 		document.documentElement.classList.add('loaded');
 
 		// If we landed here with a hash, smooth scroll to it.
-		if (typeof window !== 'undefined' && window.location.hash === '#use-cases') {
+		if (
+			typeof window !== 'undefined' &&
+			window.location.hash === '#use-cases'
+		) {
 			// Let layout settle for a frame.
 			window.requestAnimationFrame(() => {
 				const el = document.getElementById('use-cases');
-				if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				if (el)
+					el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			});
 		}
 	}, []);
@@ -99,8 +94,6 @@ export default function Home() {
 					<RealitySection />
 					<SolutionPreviewSection />
 					<UseCasesSection />
-					
-					
 
 					{/* Additional sections will go here */}
 				</div>
