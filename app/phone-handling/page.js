@@ -183,7 +183,7 @@ const PhoneHandlingPage = () => {
 										}}
 									>
 										<motion.a
-											href="tel:+16475550198"
+											href="tel:+14374944696"
 											className="inline-flex flex-col items-center gap-4 w-full"
 											whileHover={{ scale: 1.02 }}
 											whileTap={{ scale: 0.98 }}
@@ -197,7 +197,7 @@ const PhoneHandlingPage = () => {
 												Call the live demo
 											</button>
 											<p className="text-xs text-gray-400/80 text-center">
-												(647) 555-0198
+												(437) 494-4696
 											</p>
 										</motion.a>
 									</motion.div>
