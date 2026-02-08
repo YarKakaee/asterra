@@ -95,6 +95,8 @@ const WhatItHandlesSection = () => {
 				'/pos/square.png',
 				'/pos/toast.png',
 				'/pos/touchbistro.png',
+				'/pos/opentable.png',
+				'/pos/resyos.png',
 			].map((src) => ({
 				src,
 				alt: titleFromFilename(src.split('/').pop()),
