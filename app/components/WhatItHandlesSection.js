@@ -53,9 +53,6 @@ const LogoMarquee = ({ logos, direction = 'left', ariaLabel }) => {
 								height={60}
 								className="h-9 sm:h-10 w-auto select-none"
 								draggable={false}
-								style={{
-									filter: 'grayscale(0.25) saturate(0.9) contrast(1.03) opacity(0.9)',
-								}}
 							/>
 						</div>
 					))}
@@ -93,9 +90,9 @@ const WhatItHandlesSection = () => {
 				'/pos/lightspeed.png',
 				'/pos/micros.png',
 				'/pos/square.png',
+				'/pos/opentable.png',
 				'/pos/toast.png',
 				'/pos/touchbistro.png',
-				'/pos/opentable.png',
 				'/pos/resyos.png',
 			].map((src) => ({
 				src,
