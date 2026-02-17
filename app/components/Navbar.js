@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -79,6 +79,11 @@ const Navbar = () => {
 			name: 'Use Cases',
 			hasDropdown: false,
 			href: '/#use-cases',
+		},
+		{
+			name: 'Client Access',
+			hasDropdown: false,
+			href: 'https://dashboard.asterra.ca',
 		},
 	];
 
@@ -234,189 +239,199 @@ const Navbar = () => {
 						{/* Center: Desktop Navigation */}
 						<div className="hidden lg:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
 							{navItems.map((item) => (
-								<div
-									key={item.name}
-									className="relative dropdown-trigger"
-									onMouseEnter={() =>
-										item.hasDropdown &&
-										setActiveDropdown(item.name)
-									}
-									onMouseLeave={(e) => {
-										// Don't close if mouse is moving to dropdown
-										if (item.hasDropdown) {
-											const relatedTarget =
-												e.relatedTarget;
-											const relatedEl =
-												relatedTarget instanceof Element
-													? relatedTarget
-													: null;
-											if (
-												!relatedEl ||
-												!relatedEl.closest(
-													'.dropdown-menu',
-												)
-											) {
-												setActiveDropdown(null);
-											}
+								<Fragment key={item.name}>
+									<div
+										className="relative dropdown-trigger"
+										onMouseEnter={() =>
+											item.hasDropdown &&
+											setActiveDropdown(item.name)
 										}
-									}}
-								>
-									{item.hasDropdown ? (
-										<div className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center cursor-pointer">
-											<motion.div
-												whileHover={{ scale: 1.02 }}
-												className="flex items-center"
-											>
-												{item.name}
+										onMouseLeave={(e) => {
+											// Don't close if mouse is moving to dropdown
+											if (item.hasDropdown) {
+												const relatedTarget =
+													e.relatedTarget;
+												const relatedEl =
+													relatedTarget instanceof
+													Element
+														? relatedTarget
+														: null;
+												if (
+													!relatedEl ||
+													!relatedEl.closest(
+														'.dropdown-menu',
+													)
+												) {
+													setActiveDropdown(null);
+												}
+											}
+										}}
+									>
+										{item.hasDropdown ? (
+											<div className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center cursor-pointer">
 												<motion.div
-													className="ml-1"
-													animate={{
-														rotate:
-															activeDropdown ===
-															item.name
-																? 180
-																: 0,
-													}}
+													whileHover={{ scale: 1.02 }}
+													className="flex items-center"
+												>
+													{item.name}
+													<motion.div
+														className="ml-1"
+														animate={{
+															rotate:
+																activeDropdown ===
+																item.name
+																	? 180
+																	: 0,
+														}}
+														transition={{
+															duration: 0.2,
+														}}
+													>
+														<FontAwesomeIcon
+															icon={faChevronDown}
+															className="scale-90"
+														/>
+													</motion.div>
+												</motion.div>
+												{/* Hover underline animation */}
+												<motion.div
+													className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+													initial={{ scaleX: 0 }}
+													whileHover={{ scaleX: 1 }}
 													transition={{
 														duration: 0.2,
 													}}
-												>
-													<FontAwesomeIcon
-														icon={faChevronDown}
-														className="scale-90"
-													/>
-												</motion.div>
-											</motion.div>
-											{/* Hover underline animation */}
-											<motion.div
-												className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-												initial={{ scaleX: 0 }}
-												whileHover={{ scaleX: 1 }}
-												transition={{
-													duration: 0.2,
-												}}
-											/>
-										</div>
-									) : (
-										<Link
-											href={item.href}
-											onClick={
-												item.name === 'Use Cases'
-													? handleUseCasesClick
-													: undefined
-											}
-											className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
-										>
-											<motion.div
-												whileHover={{ scale: 1.02 }}
-												className="flex items-center"
+												/>
+											</div>
+										) : (
+											<Link
+												href={item.href}
+												onClick={
+													item.name === 'Use Cases'
+														? handleUseCasesClick
+														: undefined
+												}
+												className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
 											>
-												{item.name}
-											</motion.div>
-											{/* Hover underline animation */}
-											<motion.div
-												className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-												initial={{ scaleX: 0 }}
-												whileHover={{ scaleX: 1 }}
-												transition={{
-													duration: 0.2,
-												}}
-											/>
-										</Link>
-									)}
-
-									{/* Clean Dropdown Menu */}
-									<AnimatePresence>
-										{item.hasDropdown &&
-											activeDropdown === item.name && (
 												<motion.div
-													variants={dropdownVariants}
-													initial="hidden"
-													animate="visible"
-													exit="exit"
-													className="absolute top-full left-0 pt-2 w-56 overflow-visible dropdown-menu"
-													onMouseEnter={() =>
-														setActiveDropdown(
-															item.name,
-														)
-													}
-													onMouseLeave={() =>
-														setActiveDropdown(null)
-													}
+													whileHover={{ scale: 1.02 }}
+													className="flex items-center"
 												>
-													{/* Invisible bridge area to prevent dropdown from closing when moving mouse through gap */}
-													<div className="h-2 w-full absolute top-0 left-0 pointer-events-auto" />
-													{/* Dropdown content */}
-													<div
-														className="rounded-2xl py-2 overflow-visible"
-														style={{
-															backgroundColor:
-																'rgba(255, 255, 255, 1)',
-															backdropFilter:
-																'blur(12px) saturate(180%)',
-															WebkitBackdropFilter:
-																'blur(12px) saturate(180%)',
-															border: '1px solid rgba(255, 255, 255, 0.3)',
-															boxShadow:
-																'0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset',
-														}}
-													>
-														{item.dropdownItems.map(
-															(
-																dropdownItem,
-																index,
-															) => (
-																<motion.div
-																	key={
-																		dropdownItem.name
-																	}
-																	variants={{
-																		hidden: {
-																			opacity: 0,
-																			y: -5,
-																		},
-																		visible:
-																			{
-																				opacity: 1,
-																				y: 0,
-																			},
-																	}}
-																	transition={{
-																		delay:
-																			index *
-																			0.04,
-																		duration: 0.2,
-																		ease: [
-																			0.16,
-																			1,
-																			0.3,
-																			1,
-																		],
-																	}}
-																	className="group overflow-hidden"
-																>
-																	<Link
-																		href={
-																			dropdownItem.href
-																		}
-																		className="block px-5 py-3 text-sm text-[#1d1d1f] group-hover:text-[#FF5633] transition-all duration-200 relative"
-																	>
-																		{/* Smooth hover background */}
-																		<div className="absolute inset-0 bg-[#1d1d1f]/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-																		<span className="relative z-10 font-medium">
-																			{
-																				dropdownItem.name
-																			}
-																		</span>
-																	</Link>
-																</motion.div>
-															),
-														)}
-													</div>
+													{item.name}
 												</motion.div>
-											)}
-									</AnimatePresence>
-								</div>
+												{/* Hover underline animation */}
+												<motion.div
+													className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
+													initial={{ scaleX: 0 }}
+													whileHover={{ scaleX: 1 }}
+													transition={{
+														duration: 0.2,
+													}}
+												/>
+											</Link>
+										)}
+
+										{/* Clean Dropdown Menu */}
+										<AnimatePresence>
+											{item.hasDropdown &&
+												activeDropdown ===
+													item.name && (
+													<motion.div
+														variants={
+															dropdownVariants
+														}
+														initial="hidden"
+														animate="visible"
+														exit="exit"
+														className="absolute top-full left-0 pt-2 w-56 overflow-visible dropdown-menu"
+														onMouseEnter={() =>
+															setActiveDropdown(
+																item.name,
+															)
+														}
+														onMouseLeave={() =>
+															setActiveDropdown(
+																null,
+															)
+														}
+													>
+														{/* Invisible bridge area to prevent dropdown from closing when moving mouse through gap */}
+														<div className="h-2 w-full absolute top-0 left-0 pointer-events-auto" />
+														{/* Dropdown content */}
+														<div
+															className="rounded-2xl py-2 overflow-visible"
+															style={{
+																backgroundColor:
+																	'rgba(255, 255, 255, 1)',
+																backdropFilter:
+																	'blur(12px) saturate(180%)',
+																WebkitBackdropFilter:
+																	'blur(12px) saturate(180%)',
+																border: '1px solid rgba(255, 255, 255, 0.3)',
+																boxShadow:
+																	'0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset',
+															}}
+														>
+															{item.dropdownItems.map(
+																(
+																	dropdownItem,
+																	index,
+																) => (
+																	<motion.div
+																		key={
+																			dropdownItem.name
+																		}
+																		variants={{
+																			hidden: {
+																				opacity: 0,
+																				y: -5,
+																			},
+																			visible:
+																				{
+																					opacity: 1,
+																					y: 0,
+																				},
+																		}}
+																		transition={{
+																			delay:
+																				index *
+																				0.04,
+																			duration: 0.2,
+																			ease: [
+																				0.16,
+																				1,
+																				0.3,
+																				1,
+																			],
+																		}}
+																		className="group overflow-hidden"
+																	>
+																		<Link
+																			href={
+																				dropdownItem.href
+																			}
+																			className="block px-5 py-3 text-sm text-[#1d1d1f] group-hover:text-[#FF5633] transition-all duration-200 relative"
+																		>
+																			{/* Smooth hover background */}
+																			<div className="absolute inset-0 bg-[#1d1d1f]/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+																			<span className="relative z-10 font-medium">
+																				{
+																					dropdownItem.name
+																				}
+																			</span>
+																		</Link>
+																	</motion.div>
+																),
+															)}
+														</div>
+													</motion.div>
+												)}
+										</AnimatePresence>
+									</div>
+									{item.name === 'Use Cases' && (
+										<div className="h-4 w-px bg-[#151719]/20 rounded-full mx-1" />
+									)}
+								</Fragment>
 							))}
 						</div>
 
