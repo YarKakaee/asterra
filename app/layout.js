@@ -3,26 +3,21 @@ import './lib/fontawesome';
 
 export const metadata = {
 	title: {
-		default: 'Asterra | Built to Solve Daily Business Problems',
+		default:
+			'Asterra | Streamline Operations & Elevate Customer Experiences',
 		template: '%s | Asterra',
 	},
 	description:
-		'AI Business Automation That Actually Works. AI receptionists, customer support, lead nurturing, and website development that saves time and money. 30-day ROI guarantee or your money back.',
+		'Asterra provides modern automation tools for service-based brands. Handle high call volumes, manage bookings effortlessly, and deliver exceptional guest experiences without the overhead.',
 	keywords: [
-		'AI automation',
 		'business automation',
-		'AI receptionist',
-		'customer support AI',
-		'lead nurturing',
-		'website development',
-		'ROI guarantee',
-		'small business automation',
-		'business efficiency',
-		'AI solutions',
-		'automation software',
-		'business AI',
-		'customer service automation',
-		'lead generation automation',
+		'service business software',
+		'restaurant automation',
+		'phone handling system',
+		'customer experience platform',
+		'business operations software',
+		'automated booking system',
+		'digital front desk',
 	],
 	authors: [{ name: 'Asterra Solutions Inc.' }],
 	creator: 'Asterra Solutions Inc.',
@@ -41,23 +36,23 @@ export const metadata = {
 		locale: 'en_CA',
 		url: 'https://asterra.ca',
 		siteName: 'Asterra',
-		title: 'Asterra | Built to Solve Daily Business Problems',
+		title: 'Asterra | Streamline Operations & Elevate Customer Experiences',
 		description:
-			'AI Business Automation That Actually Works. AI receptionists, customer support, lead nurturing, and website development that saves time and money. 30-day ROI guarantee or your money back.',
+			'Asterra provides modern automation tools for service-based brands. Handle high call volumes, manage bookings effortlessly, and deliver exceptional guest experiences without the overhead.',
 		images: [
 			{
 				url: '/og-image.png',
 				width: 1200,
 				height: 630,
-				alt: 'Asterra AI Business Automation - Built to Solve Daily Business Problems',
+				alt: 'Asterra Business Automation - Built for Service Based Brands',
 			},
 		],
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Asterra | Built to Solve Daily Business Problems',
+		title: 'Asterra | Streamline Operations & Elevate Customer Experiences',
 		description:
-			'AI Business Automation That Actually Works. AI receptionists, customer support, lead nurturing, and website development that saves time and money. 30-day ROI guarantee or your money back.',
+			'Asterra provides modern automation tools for service-based brands. Handle high call volumes, manage bookings effortlessly, and deliver exceptional guest experiences without the overhead.',
 		images: ['/og-image.png'],
 		creator: '@AsterraTeam',
 	},
