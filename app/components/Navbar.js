@@ -1,514 +1,282 @@
 'use client';
 
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { usePathname } from 'next/navigation';
+
+const navLinks = [
+	{ name: 'Phone Handling', href: '/phone-handling' },
+	{ name: 'For Restaurants', href: '/#restaurants' },
+	{ name: 'Multi-Location', href: '/#franchise' },
+];
+
+const clientAccessLink = {
+	name: 'Client Access',
+	href: 'https://dashboard.asterra.ca',
+	external: true,
+};
 
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [activeDropdown, setActiveDropdown] = useState(null);
-	const [mobileDropdown, setMobileDropdown] = useState(null);
-	const [scrollProgress, setScrollProgress] = useState(0); // 0 to 1 for smooth fade
+	const [scrolled, setScrolled] = useState(0);
 	const [isMobile, setIsMobile] = useState(false);
-	const [isLargeScreen, setIsLargeScreen] = useState(false);
-	const [mounted, setMounted] = useState(false);
+	const pathname = usePathname();
+	const { scrollY } = useScroll();
 
-	// Handle scroll detection with smooth gradual fade
+	useMotionValueEvent(scrollY, 'change', (latest) => {
+		const progress = Math.min(Math.max(latest / 80, 0), 1);
+		setScrolled(progress);
+	});
+
 	useEffect(() => {
-		let ticking = false;
-
-		const handleScroll = () => {
-			if (!ticking) {
-				window.requestAnimationFrame(() => {
-					const scrollTop = window.scrollY;
-					// Smooth fade: starts at 0px, fully faded at 60px
-					const fadeStart = 0;
-					const fadeEnd = 60;
-					const progress = Math.min(
-						Math.max(
-							(scrollTop - fadeStart) / (fadeEnd - fadeStart),
-							0,
-						),
-						1,
-					);
-					setScrollProgress(progress);
-					ticking = false;
-				});
-				ticking = true;
-			}
-		};
-
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		handleScroll(); // Check initial scroll position
-		return () => window.removeEventListener('scroll', handleScroll);
+		const check = () => setIsMobile(window.innerWidth < 1024);
+		check();
+		window.addEventListener('resize', check);
+		return () => window.removeEventListener('resize', check);
 	}, []);
 
-	// Simplified mobile detection for performance optimization
+	// Lock body scroll when mobile menu is open
 	useEffect(() => {
-		const checkMobile = () => {
-			setIsMobile(window.innerWidth < 1024);
-			setIsLargeScreen(window.innerWidth >= 1024);
-		};
+		if (isMenuOpen) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+		return () => { document.body.style.overflow = ''; };
+	}, [isMenuOpen]);
 
-		checkMobile();
-		window.addEventListener('resize', checkMobile);
-		return () => window.removeEventListener('resize', checkMobile);
-	}, []);
-
-	// Handle hydration
+	// Close mobile menu on route change
 	useEffect(() => {
-		setMounted(true);
-	}, []);
+		setIsMenuOpen(false);
+	}, [pathname]);
 
-	// Navigation menu items
-	const navItems = [
-		{
-			name: 'Phone Handling',
-			hasDropdown: false,
-			href: '/phone-handling',
-		},
-		{
-			name: 'Online Presence',
-			hasDropdown: false,
-			href: '/online-presence',
-		},
-		{
-			name: 'Use Cases',
-			hasDropdown: false,
-			href: '/#use-cases',
-		},
-		{
-			name: 'Client Access',
-			hasDropdown: false,
-			href: 'https://dashboard.asterra.ca',
-		},
-	];
+	const handleAnchorClick = useCallback((e, href) => {
+		const hash = href.split('#')[1];
+		if (!hash) return;
 
-	const handleUseCasesClick = (e) => {
-		// If we're already on the homepage, smooth scroll in-place.
-		if (typeof window !== 'undefined' && window.location.pathname === '/') {
+		if (pathname === '/') {
 			e.preventDefault();
-			const target = document.getElementById('use-cases');
+			const target = document.getElementById(hash);
 			if (target) {
 				target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				window.history.replaceState(null, '', '/#use-cases');
+				window.history.replaceState(null, '', href);
 			}
-			setIsMenuOpen(false);
-			setMobileDropdown(null);
-			setActiveDropdown(null);
-			return;
 		}
-		// Otherwise, allow navigation to /#use-cases (Home handles the scroll on load).
 		setIsMenuOpen(false);
-		setMobileDropdown(null);
-		setActiveDropdown(null);
-	};
+	}, [pathname]);
 
-	// Simplified animation variants for better performance
-	const dropdownVariants = {
-		hidden: {
-			opacity: 0,
-			y: -4,
-		},
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				duration: 0.15,
-				ease: 'easeOut',
-			},
-		},
-		exit: {
-			opacity: 0,
-			y: -2,
-			transition: {
-				duration: 0.1,
-				ease: 'easeIn',
-			},
-		},
-	};
+	// Computed glass values based on scroll
+	const glassOpacity = isMobile ? 0.82 : 0.12 + scrolled * 0.7;
+	const blurAmount = isMobile ? 24 : 6 + scrolled * 18;
+	const saturation = isMobile ? 200 : 120 + scrolled * 80;
+	const borderOpacity = isMobile ? 0.5 : scrolled * 0.5;
+	const shadowIntensity = isMobile ? 0.08 : scrolled * 0.08;
+	const innerGlow = isMobile ? 0.7 : scrolled * 0.7;
 
 	const mobileMenuVariants = {
-		hidden: { opacity: 0, height: 0 },
+		hidden: {
+			opacity: 0,
+			height: 0,
+			transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+		},
 		visible: {
 			opacity: 1,
 			height: 'auto',
 			transition: {
-				duration: 0.2,
-				ease: 'easeOut',
+				duration: 0.32,
+				ease: [0.16, 1, 0.3, 1],
+				staggerChildren: 0.04,
+				delayChildren: 0.06,
 			},
 		},
 		exit: {
 			opacity: 0,
 			height: 0,
-			transition: { duration: 0.15 },
+			transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
 		},
 	};
 
 	const mobileItemVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: { duration: 0.15 },
-		},
+		hidden: { opacity: 0, x: -12 },
+		visible: { opacity: 1, x: 0, transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] } },
+		exit: { opacity: 0, x: -8, transition: { duration: 0.15 } },
 	};
 
-	const mobileDropdownVariants = {
-		hidden: {
-			opacity: 0,
-			height: 0,
-			transition: { duration: 0.2, ease: 'easeInOut' },
-		},
-		visible: {
-			opacity: 1,
-			height: 'auto',
-			transition: { duration: 0.3, ease: 'easeInOut' },
-		},
-		exit: {
-			opacity: 0,
-			height: 0,
-			transition: { duration: 0.2, ease: 'easeInOut' },
-		},
-	};
+	const renderNavLink = (item, mobile = false) => {
+		const baseClasses = mobile
+			? 'block px-4 py-3.5 text-[var(--text)] hover:text-[var(--terracotta)] font-medium text-[14px] tracking-[-0.01em] transition-colors duration-200 font-body'
+			: 'text-[var(--text)] hover:text-[var(--terracotta)] px-3.5 py-2 text-[13px] font-medium transition-colors duration-200 tracking-[-0.01em] font-body';
 
-	const mobileDropdownItemVariants = {
-		hidden: { opacity: 0, x: -10 },
-		visible: {
-			opacity: 1,
-			x: 0,
-			transition: { duration: 0.2, ease: 'easeOut' },
-		},
+		if (item.external) {
+			return (
+				<a
+					href={item.href}
+					target="_blank"
+					rel="noopener noreferrer"
+					className={baseClasses}
+					onClick={mobile ? () => setIsMenuOpen(false) : undefined}
+				>
+					{item.name}
+					{!mobile && (
+						<svg className="inline-block ml-1 w-2.5 h-2.5 opacity-40" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+							<path d="M3.5 1.5H10.5V8.5" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
+					)}
+				</a>
+			);
+		}
+
+		return (
+			<Link
+				href={item.href}
+				onClick={
+					item.href.includes('#')
+						? (e) => handleAnchorClick(e, item.href)
+						: mobile
+							? () => setIsMenuOpen(false)
+							: undefined
+				}
+				className={baseClasses}
+			>
+				{item.name}
+			</Link>
+		);
 	};
 
 	return (
-		<motion.nav className="fixed top-4 left-0 right-0 z-50">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				{/* Glass Pill Container */}
+		<motion.nav
+			className="fixed top-0 left-0 right-0 z-50 pt-3 sm:pt-4 pointer-events-none"
+			initial={{ y: -20, opacity: 0 }}
+			animate={{ y: 0, opacity: 1 }}
+			transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+		>
+			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-auto">
 				<motion.div
-					className={`shadow-lg px-4 sm:px-6 ${
-						isMenuOpen && isMobile
-							? 'rounded-t-3xl rounded-b-3xl'
-							: 'rounded-3xl'
+					className={`glass-nav px-5 sm:px-6 ${
+						isMenuOpen && isMobile ? 'rounded-[var(--r-xl)]' : 'rounded-[var(--r-full)]'
 					}`}
 					style={{
-						backgroundColor: isMobile
-							? 'rgba(255, 255, 255, 0.8)'
-							: `rgba(255, 255, 255, ${scrollProgress * 0.8})`,
-						backdropFilter: isMobile
-							? 'blur(12px) saturate(180%)'
-							: `blur(${scrollProgress * 12}px) saturate(${
-									100 + scrollProgress * 80
-								}%)`,
-						borderColor: isMobile
-							? 'rgba(255, 255, 255, 0.3)'
-							: `rgba(255, 255, 255, ${scrollProgress * 0.3})`,
-						boxShadow: isMobile
-							? '0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset'
-							: scrollProgress > 0
-								? `0 ${scrollProgress * 4}px ${
-										scrollProgress * 20
-									}px rgba(0, 0, 0, ${scrollProgress * 0.1}), 0 ${
-										scrollProgress * 1
-									}px 0 rgba(255, 255, 255, ${
-										scrollProgress * 0.8
-									}) inset`
-								: '0 0px 0px rgba(0, 0, 0, 0)',
+						backgroundColor: `rgba(253, 252, 250, ${glassOpacity})`,
+						backdropFilter: `blur(${blurAmount}px) saturate(${saturation}%)`,
+						WebkitBackdropFilter: `blur(${blurAmount}px) saturate(${saturation}%)`,
 						borderWidth: '1px',
 						borderStyle: 'solid',
-						transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+						borderColor: `rgba(255, 255, 255, ${borderOpacity})`,
+						boxShadow: shadowIntensity > 0
+							? `0 ${shadowIntensity * 50}px ${shadowIntensity * 300}px rgba(18, 18, 18, ${shadowIntensity * 0.75}), 0 ${shadowIntensity * 6}px ${shadowIntensity * 20}px rgba(18, 18, 18, ${shadowIntensity * 0.5}), inset 0 1px 0 rgba(255, 255, 255, ${innerGlow})`
+							: 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
 					}}
 				>
-					<div className="flex items-center justify-between h-16 sm:h-16 relative">
-						{/* Left side: Logo */}
+					<div className="flex items-center justify-between h-[52px] sm:h-14">
+						{/* Logo */}
 						<div className="flex-shrink-0">
-							<Link href="/">
-								<Image
-									src="/navlogo.png"
-									alt="Asterra"
-									width={272}
-									height={72}
-									className="h-8 sm:h-7 w-auto mb-0.5"
-									priority
-								/>
+							<Link href="/" aria-label="Asterra Home">
+								<motion.div
+									whileHover={{ opacity: 0.8 }}
+									transition={{ duration: 0.2 }}
+								>
+									<Image
+										src="/navlogo.png"
+										alt="Asterra"
+										width={272}
+										height={72}
+										className="h-[22px] sm:h-[26px] w-auto"
+										priority
+									/>
+								</motion.div>
 							</Link>
 						</div>
 
-						{/* Center: Desktop Navigation */}
-						<div className="hidden lg:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
-							{navItems.map((item) => (
-								<Fragment key={item.name}>
-									<div
-										className="relative dropdown-trigger"
-										onMouseEnter={() =>
-											item.hasDropdown &&
-											setActiveDropdown(item.name)
-										}
-										onMouseLeave={(e) => {
-											// Don't close if mouse is moving to dropdown
-											if (item.hasDropdown) {
-												const relatedTarget =
-													e.relatedTarget;
-												const relatedEl =
-													relatedTarget instanceof
-													Element
-														? relatedTarget
-														: null;
-												if (
-													!relatedEl ||
-													!relatedEl.closest(
-														'.dropdown-menu',
-													)
-												) {
-													setActiveDropdown(null);
-												}
-											}
-										}}
-									>
-										{item.hasDropdown ? (
-											<div className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center cursor-pointer">
-												<motion.div
-													whileHover={{ scale: 1.02 }}
-													className="flex items-center"
-												>
-													{item.name}
-													<motion.div
-														className="ml-1"
-														animate={{
-															rotate:
-																activeDropdown ===
-																item.name
-																	? 180
-																	: 0,
-														}}
-														transition={{
-															duration: 0.2,
-														}}
-													>
-														<FontAwesomeIcon
-															icon={faChevronDown}
-															className="scale-90"
-														/>
-													</motion.div>
-												</motion.div>
-												{/* Hover underline animation */}
-												<motion.div
-													className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-													initial={{ scaleX: 0 }}
-													whileHover={{ scaleX: 1 }}
-													transition={{
-														duration: 0.2,
-													}}
-												/>
-											</div>
-										) : (
-											<Link
-												href={item.href}
-												onClick={
-													item.name === 'Use Cases'
-														? handleUseCasesClick
-														: undefined
-												}
-												className="text-[#151719] hover:text-[#FF5633] px-3 py-2 text-sm font-medium transition-colors duration-200 relative group flex items-center"
-											>
-												<motion.div
-													whileHover={{ scale: 1.02 }}
-													className="flex items-center"
-												>
-													{item.name}
-												</motion.div>
-												{/* Hover underline animation */}
-												<motion.div
-													className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-													initial={{ scaleX: 0 }}
-													whileHover={{ scaleX: 1 }}
-													transition={{
-														duration: 0.2,
-													}}
-												/>
-											</Link>
-										)}
-
-										{/* Clean Dropdown Menu */}
-										<AnimatePresence>
-											{item.hasDropdown &&
-												activeDropdown ===
-													item.name && (
-													<motion.div
-														variants={
-															dropdownVariants
-														}
-														initial="hidden"
-														animate="visible"
-														exit="exit"
-														className="absolute top-full left-0 pt-2 w-56 overflow-visible dropdown-menu"
-														onMouseEnter={() =>
-															setActiveDropdown(
-																item.name,
-															)
-														}
-														onMouseLeave={() =>
-															setActiveDropdown(
-																null,
-															)
-														}
-													>
-														{/* Invisible bridge area to prevent dropdown from closing when moving mouse through gap */}
-														<div className="h-2 w-full absolute top-0 left-0 pointer-events-auto" />
-														{/* Dropdown content */}
-														<div
-															className="rounded-2xl py-2 overflow-visible"
-															style={{
-																backgroundColor:
-																	'rgba(255, 255, 255, 1)',
-																backdropFilter:
-																	'blur(12px) saturate(180%)',
-																WebkitBackdropFilter:
-																	'blur(12px) saturate(180%)',
-																border: '1px solid rgba(255, 255, 255, 0.3)',
-																boxShadow:
-																	'0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset',
-															}}
-														>
-															{item.dropdownItems.map(
-																(
-																	dropdownItem,
-																	index,
-																) => (
-																	<motion.div
-																		key={
-																			dropdownItem.name
-																		}
-																		variants={{
-																			hidden: {
-																				opacity: 0,
-																				y: -5,
-																			},
-																			visible:
-																				{
-																					opacity: 1,
-																					y: 0,
-																				},
-																		}}
-																		transition={{
-																			delay:
-																				index *
-																				0.04,
-																			duration: 0.2,
-																			ease: [
-																				0.16,
-																				1,
-																				0.3,
-																				1,
-																			],
-																		}}
-																		className="group overflow-hidden"
-																	>
-																		<Link
-																			href={
-																				dropdownItem.href
-																			}
-																			className="block px-5 py-3 text-sm text-[#1d1d1f] group-hover:text-[#FF5633] transition-all duration-200 relative"
-																		>
-																			{/* Smooth hover background */}
-																			<div className="absolute inset-0 bg-[#1d1d1f]/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-																			<span className="relative z-10 font-medium">
-																				{
-																					dropdownItem.name
-																				}
-																			</span>
-																		</Link>
-																	</motion.div>
-																),
-															)}
-														</div>
-													</motion.div>
-												)}
-										</AnimatePresence>
-									</div>
-									{item.name === 'Use Cases' && (
-										<div className="h-4 w-px bg-[#151719]/20 rounded-full mx-1" />
-									)}
-								</Fragment>
+						{/* Desktop Center Nav */}
+						<div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 transform -translate-x-1/2">
+							{navLinks.map((item) => (
+								<div key={item.name} className="flex items-center">
+									{renderNavLink(item)}
+								</div>
 							))}
+
+							{/* Divider */}
+							<div className="h-4 w-px bg-[var(--text-faint)] opacity-30 mx-2 rounded-full" />
+
+							{/* Client Access */}
+							<div className="flex items-center">
+								{renderNavLink(clientAccessLink)}
+							</div>
 						</div>
 
-						{/* Right side: Desktop CTA Button */}
+						{/* Desktop CTA */}
 						<div className="hidden lg:flex ml-auto">
 							<Link href="/contact">
 								<motion.div
-									className="bg-[#151719] text-white px-6 py-3 rounded-full text-sm font-medium cursor-pointer"
+									className="font-body text-[13px] font-bold tracking-[-0.01em] px-5 py-2 cursor-pointer rounded-[var(--r-full)] text-white"
+									style={{
+										backgroundColor: 'var(--terracotta)',
+									}}
 									whileHover={{
-										scale: 1.05,
-										boxShadow:
-											'0 4px 12px rgba(21, 23, 25, 0.3)',
+										scale: 1.04,
+										backgroundColor: 'var(--terracotta-hover)',
+										boxShadow: '0 4px 20px rgba(200, 67, 43, 0.3)',
 									}}
-									whileTap={{ scale: 0.98 }}
-									transition={{
-										type: 'spring',
-										stiffness: 300,
-										damping: 20,
-									}}
+									whileTap={{ scale: 0.97 }}
+									transition={{ type: 'spring', stiffness: 400, damping: 25 }}
 								>
-									Contact Us
+									Book a Demo
 								</motion.div>
 							</Link>
 						</div>
 
-						{/* Right side: Mobile CTA Button + Hamburger */}
-						<div className="lg:hidden flex items-center gap-3 ml-auto">
+						{/* Mobile: CTA + Hamburger */}
+						<div className="lg:hidden flex items-center gap-2.5 ml-auto">
 							<Link href="/contact">
 								<motion.div
-									className="bg-[#151719] text-white px-4 py-2.5 rounded-3xl text-sm font-medium cursor-pointer"
-									whileHover={{
-										scale: 1.05,
-										boxShadow:
-											'0 4px 12px rgba(21, 23, 25, 0.3)',
-									}}
-									whileTap={{ scale: 0.98 }}
-									transition={{
-										type: 'spring',
-										stiffness: 300,
-										damping: 20,
-									}}
+									className="font-body text-[12px] font-bold tracking-[-0.01em] px-4 py-1.5 cursor-pointer rounded-[var(--r-full)] text-white"
+									style={{ backgroundColor: 'var(--terracotta)' }}
+									whileHover={{ scale: 1.04 }}
+									whileTap={{ scale: 0.96 }}
 								>
-									Contact
+									Book a Demo
 								</motion.div>
 							</Link>
 							<motion.button
-								onClick={() => setIsMenuOpen(!isMenuOpen)}
-								className="text-[#151719] hover:text-[#FF5633] p-2 cursor-pointer"
-								whileTap={{ scale: 0.95 }}
+								onClick={() => setIsMenuOpen((prev) => !prev)}
+								className="text-[var(--text)] p-1.5 cursor-pointer rounded-[var(--r-sm)]"
+								whileTap={{ scale: 0.9 }}
+								aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+								aria-expanded={isMenuOpen}
 							>
-								<svg
-									className="h-6 w-6"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-								>
-									{isMenuOpen ? (
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M6 18L18 6M6 6l12 12"
-										/>
-									) : (
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M4 6h16M4 12h16M4 18h16"
-										/>
-									)}
+								<svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+									<AnimatePresence mode="wait">
+										{isMenuOpen ? (
+											<motion.g
+												key="close"
+												initial={{ opacity: 0, rotate: -90 }}
+												animate={{ opacity: 1, rotate: 0 }}
+												exit={{ opacity: 0, rotate: 90 }}
+												transition={{ duration: 0.2 }}
+											>
+												<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+											</motion.g>
+										) : (
+											<motion.g
+												key="menu"
+												initial={{ opacity: 0, rotate: 90 }}
+												animate={{ opacity: 1, rotate: 0 }}
+												exit={{ opacity: 0, rotate: -90 }}
+												transition={{ duration: 0.2 }}
+											>
+												<path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+											</motion.g>
+										)}
+									</AnimatePresence>
 								</svg>
 							</motion.button>
 						</div>
 					</div>
 
-					{/* Mobile Navigation Menu */}
+					{/* Mobile Menu Dropdown */}
 					<AnimatePresence>
 						{isMenuOpen && (
 							<motion.div
@@ -516,196 +284,23 @@ const Navbar = () => {
 								initial="hidden"
 								animate="visible"
 								exit="exit"
-								className="lg:hidden border-t border-gray-200 mt-2 -mx-4 sm:-mx-6 px-4 sm:px-6 pb-4"
+								className="lg:hidden overflow-hidden"
 							>
-								<div className="py-4 space-y-0.5">
-									{navItems.map((item) => (
-										<motion.div
-											key={item.name}
-											variants={mobileItemVariants}
-										>
-											{item.hasDropdown ? (
-												<div>
-													{/* Mobile Dropdown Trigger */}
-													<motion.button
-														onClick={() =>
-															setMobileDropdown(
-																mobileDropdown ===
-																	item.name
-																	? null
-																	: item.name,
-															)
-														}
-														className="cursor-pointer w-full flex items-center justify-between px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200 relative group"
-														whileTap={{
-															scale: 0.98,
-														}}
-													>
-														<span className="font-medium">
-															{item.name}
-														</span>
-														<motion.div
-															animate={{
-																rotate:
-																	mobileDropdown ===
-																	item.name
-																		? 180
-																		: 0,
-															}}
-															transition={{
-																duration: 0.2,
-															}}
-															className="text-gray-400"
-														>
-															<FontAwesomeIcon
-																icon={
-																	faChevronDown
-																}
-																className="scale-90"
-															/>
-														</motion.div>
-														{/* Hover underline animation */}
-														<motion.div
-															className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-															initial={{
-																scaleX: 0,
-															}}
-															whileHover={{
-																scaleX: 1,
-															}}
-															transition={{
-																duration: 0.2,
-															}}
-														/>
-													</motion.button>
+								<div className="border-t border-[var(--glass-border-faint)] mt-1 pt-3 pb-4">
+									<div className="space-y-0.5">
+										{navLinks.map((item) => (
+											<motion.div key={item.name} variants={mobileItemVariants}>
+												{renderNavLink(item, true)}
+											</motion.div>
+										))}
+									</div>
 
-													{/* Mobile Dropdown Content */}
-													<AnimatePresence>
-														{mobileDropdown ===
-															item.name && (
-															<motion.div
-																variants={
-																	mobileDropdownVariants
-																}
-																initial="hidden"
-																animate="visible"
-																exit="exit"
-																className="mt-2 ml-4 rounded-xl py-2 backdrop-blur-xl border border-white/20 shadow-lg overflow-hidden"
-																style={{
-																	backgroundColor:
-																		'rgba(255, 255, 255, 0.9)',
-																	backdropFilter:
-																		'blur(16px) saturate(180%)',
-																	WebkitBackdropFilter:
-																		'blur(16px) saturate(180%)',
-																}}
-															>
-																{item.dropdownItems.map(
-																	(
-																		dropdownItem,
-																		index,
-																	) => (
-																		<motion.div
-																			key={
-																				dropdownItem.name
-																			}
-																			variants={{
-																				hidden: {
-																					opacity: 0,
-																					y: -5,
-																				},
-																				visible:
-																					{
-																						opacity: 1,
-																						y: 0,
-																					},
-																			}}
-																			transition={{
-																				delay:
-																					index *
-																					0.04,
-																				duration: 0.2,
-																				ease: [
-																					0.16,
-																					1,
-																					0.3,
-																					1,
-																				],
-																			}}
-																		>
-																			<Link
-																				href={
-																					dropdownItem.href
-																				}
-																				className="block px-4 py-2.5 text-sm text-[#1d1d1f] hover:text-[#FF5633] transition-all duration-200 relative group font-medium"
-																				onClick={() => {
-																					setIsMenuOpen(
-																						false,
-																					);
-																					setMobileDropdown(
-																						null,
-																					);
-																				}}
-																			>
-																				<span className="relative z-10">
-																					{
-																						dropdownItem.name
-																					}
-																				</span>
-																				<motion.div
-																					className="absolute inset-0 bg-[#FF5633]/5 rounded-lg"
-																					initial={{
-																						opacity: 0,
-																					}}
-																					whileHover={{
-																						opacity: 1,
-																					}}
-																					transition={{
-																						duration: 0.2,
-																					}}
-																				/>
-																			</Link>
-																		</motion.div>
-																	),
-																)}
-															</motion.div>
-														)}
-													</AnimatePresence>
-												</div>
-											) : (
-												<Link
-													href={item.href}
-													onClick={
-														item.name ===
-														'Use Cases'
-															? handleUseCasesClick
-															: () => {
-																	setIsMenuOpen(
-																		false,
-																	);
-																	setMobileDropdown(
-																		null,
-																	);
-																}
-													}
-													className="block px-4 py-3 text-[#151719] hover:text-[#FF5633] transition-colors duration-200 font-medium relative group"
-												>
-													{item.name}
-													{/* Hover underline animation */}
-													<motion.div
-														className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF5633]"
-														initial={{ scaleX: 0 }}
-														whileHover={{
-															scaleX: 1,
-														}}
-														transition={{
-															duration: 0.2,
-														}}
-													/>
-												</Link>
-											)}
-										</motion.div>
-									))}
+									{/* Mobile divider */}
+									<div className="h-px bg-[var(--text-faint)] opacity-15 mx-4 my-2" />
+
+									<motion.div variants={mobileItemVariants}>
+										{renderNavLink(clientAccessLink, true)}
+									</motion.div>
 								</div>
 							</motion.div>
 						)}

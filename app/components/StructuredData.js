@@ -20,24 +20,22 @@ export const OrganizationSchema = () => {
 		url: 'https://asterra.ca',
 		logo: 'https://asterra.ca/footerlogo.png',
 		description:
-			'AI business automation solutions that save time and money. AI receptionists, customer support, lead nurturing, and website development with 30-day ROI guarantee.',
+			'Asterra provides phone handling for restaurants and QSR. Every call answered, every order captured, every location covered.',
 		foundingDate: '2024',
 		address: {
 			'@type': 'PostalAddress',
+			addressLocality: 'Toronto',
+			addressRegion: 'ON',
 			addressCountry: 'CA',
 		},
 		contactPoint: [
 			{
 				'@type': 'ContactPoint',
-				telephone: '+1-XXX-XXX-XXXX',
-				contactType: 'customer service',
-				email: 'support@asterra.ca',
-			},
-			{
-				'@type': 'ContactPoint',
-				telephone: '+1-XXX-XXX-XXXX',
+				telephone: '+1-437-494-4696',
 				contactType: 'sales',
-				email: 'sales@asterra.ca',
+				email: 'support@asterra.ca',
+				areaServed: 'CA',
+				availableLanguage: 'English',
 			},
 		],
 		sameAs: [
@@ -45,13 +43,6 @@ export const OrganizationSchema = () => {
 			'https://x.com/AsterraTeam',
 			'https://www.instagram.com/asterra.ai/',
 		],
-		offers: {
-			'@type': 'Offer',
-			description:
-				'AI business automation solutions with 30-day ROI guarantee',
-			priceCurrency: 'CAD',
-			availability: 'https://schema.org/InStock',
-		},
 	};
 
 	return <StructuredData data={organizationData} />;
@@ -61,52 +52,57 @@ export const ServiceSchema = () => {
 	const serviceData = {
 		'@context': 'https://schema.org',
 		'@type': 'Service',
-		name: 'AI Business Automation',
+		name: 'Restaurant Phone Handling',
 		description:
-			'Comprehensive AI automation solutions for businesses including AI receptionists, customer support, lead nurturing, and website development.',
+			'Automated phone handling for restaurants and QSR. Answers calls, takes orders, handles questions, and sends orders to your POS.',
 		provider: {
 			'@type': 'Organization',
 			name: 'Asterra Solutions Inc.',
 			url: 'https://asterra.ca',
 		},
-		areaServed: {
-			'@type': 'Country',
-			name: 'Canada',
-		},
+		areaServed: [
+			{
+				'@type': 'City',
+				name: 'Toronto',
+			},
+			{
+				'@type': 'AdministrativeArea',
+				name: 'Greater Toronto Area',
+			},
+			{
+				'@type': 'Country',
+				name: 'Canada',
+			},
+		],
 		hasOfferCatalog: {
 			'@type': 'OfferCatalog',
-			name: 'AI Automation Services',
+			name: 'Phone Handling Services',
 			itemListElement: [
 				{
 					'@type': 'Offer',
 					itemOffered: {
 						'@type': 'Service',
-						name: 'AI Receptionist',
-						description: '24/7 automated phone and chat support',
+						name: 'Restaurant Phone Handling',
+						description:
+							'Automated inbound call handling for restaurants — answers calls, takes orders, handles questions.',
 					},
 				},
 				{
 					'@type': 'Offer',
 					itemOffered: {
 						'@type': 'Service',
-						name: 'AI Customer Support',
-						description: 'Automated customer service and support',
+						name: 'Multi-Location Phone Handling',
+						description:
+							'Centralized phone handling for franchise and multi-location restaurant groups.',
 					},
 				},
 				{
 					'@type': 'Offer',
 					itemOffered: {
 						'@type': 'Service',
-						name: 'AI Lead Nurturing',
-						description: 'Automated lead follow-up and conversion',
-					},
-				},
-				{
-					'@type': 'Offer',
-					itemOffered: {
-						'@type': 'Service',
-						name: 'AI Website Development',
-						description: 'Custom business websites built by AI',
+						name: 'POS Order Integration',
+						description:
+							'Phone orders sent directly to your POS system — Toast, Square, Clover, and more.',
 					},
 				},
 			],

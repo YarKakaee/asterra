@@ -1,7 +1,7 @@
 export const metadata = {
-	title: 'Smart Phone Handling',
+	title: 'Phone Handling for Restaurants',
 	description:
-		'Never miss another booking or lead. Our intelligent phone systems answer calls instantly, manage reservations, and provide perfect customer service during your busiest hours.',
+		'Every call answered, every order captured. Asterra handles inbound calls, takes orders, and sends them to your POS — so your team stays on the line.',
 };
 
 export default function PhoneHandlingLayout({ children }) {

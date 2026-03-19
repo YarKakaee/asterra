@@ -1,7 +1,7 @@
 export const metadata = {
-	title: 'Contact Sales',
+	title: 'Book a Demo',
 	description:
-		'Get in touch with the Asterra team. Discover how our modern automation solutions can streamline your operations, save time, and improve your bottom line.',
+		'See how Asterra handles calls for restaurants like yours. Book a 15-minute demo or call our live line to experience it firsthand.',
 };
 
 export default function ContactLayout({ children }) {
