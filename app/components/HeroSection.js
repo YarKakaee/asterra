@@ -189,7 +189,7 @@ export default function HeroSection() {
 				>
 					{/* Above heading, drifting right */}
 					<Image
-						src="/cloud.png"
+						src="/Cloud.png"
 						width={600}
 						height={400}
 						alt=""
