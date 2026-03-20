@@ -42,7 +42,7 @@ const CARDS = [
 function BentoCard({ image, title, description, className }) {
 	return (
 		<div
-			className={`bento-card relative overflow-hidden rounded-2xl ${className}`}
+			className={`bento-card relative overflow-hidden rounded-3xl ${className}`}
 		>
 			<img
 				src={image}
@@ -75,8 +75,8 @@ function BentoCard({ image, title, description, className }) {
 
 export default function HowItWorksSection() {
 	return (
-		<section className="relative py-24 sm:py-32">
-			<div className="w-full max-w-7xl mx-auto px-5 sm:px-8">
+		<section id="how-it-works" className="relative py-24 sm:py-32">
+			<div className="w-full max-w-7xl mx-auto px-2">
 				{/* Heading */}
 				<div className="text-center mb-12 sm:mb-16">
 					<h2
@@ -90,7 +90,7 @@ export default function HowItWorksSection() {
 						More than a voice.
 					</h2>
 					<p
-						className="text-[#6B7280] text-base sm:text-lg max-w-[520px] mx-auto"
+						className="text-[#6B7280] text-base sm:text-lg mx-auto"
 						style={{
 							fontFamily:
 								'var(--font-inter), system-ui, sans-serif',
@@ -104,35 +104,35 @@ export default function HowItWorksSection() {
 				</div>
 
 				{/* Bento Grid */}
-				<div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+				<div className="grid grid-cols-1 md:grid-cols-12 gap-3">
 					{/* Row 1 */}
 					<BentoCard
 						{...CARDS[0]}
-						className="md:col-span-4 aspect-[4/3] md:aspect-auto md:h-[340px]"
+						className="md:col-span-4 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					/>
 					<BentoCard
 						{...CARDS[1]}
-						className="md:col-span-8 aspect-[4/3] md:aspect-auto md:h-[340px]"
+						className="md:col-span-8 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					/>
 
 					{/* Row 2 */}
 					<BentoCard
 						{...CARDS[2]}
-						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[340px]"
+						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					/>
 					<BentoCard
 						{...CARDS[3]}
-						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[340px]"
+						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					/>
 
 					{/* Row 3 */}
 					<BentoCard
 						{...CARDS[4]}
-						className="md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[340px]"
+						className="md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					/>
 					<BentoCard
 						{...CARDS[5]}
-						className="md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[340px]"
+						className="md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					/>
 				</div>
 			</div>

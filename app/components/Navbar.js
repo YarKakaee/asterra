@@ -27,7 +27,7 @@ export default function Navbar() {
 			<div
 				className="relative w-full transition-all duration-500 ease-out"
 				style={{
-					maxWidth: scrolled ? '1140px' : '1280px',
+					maxWidth: scrolled ? '1280px' : '1400px',
 					margin: scrolled ? '12px auto 0' : '0 auto',
 					borderRadius: scrolled ? '24px' : '0px',
 					padding: scrolled ? '0 8px' : '0 32px',
