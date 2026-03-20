@@ -58,15 +58,12 @@ export default function HeroSection() {
 
 			if (dest && section && dest.getBoundingClientRect().width > 0) {
 				const destRect = dest.getBoundingClientRect();
-				const sectionRect = section.getBoundingClientRect();
 
 				// Nudge slightly to the left (-48px) for perfect visual balance with the 3D perspective
 				endX = destRect.left + destRect.width / 2 - phoneWidth / 2 - 48;
 
-				// Calculate dynamic top by getting the element's position relative to its section
-				const finalDestTop = destRect.top - sectionRect.top;
-				endY =
-					finalDestTop + destRect.height / 2 - phoneHeight / 2 - 125;
+				// Use viewport-center so the phone always lands mid-screen on ANY resolution
+				endY = (vh - phoneHeight) / 2;
 			} else {
 				// Fallback layout when elements are unavailable
 				const maxW = Math.min(1280, vw);
@@ -80,9 +77,11 @@ export default function HeroSection() {
 
 			ctx = gsap.context(() => {
 				ScrollTrigger.create({
-					trigger: sectionRef.current,
-					start: 'bottom 80%',
-					end: 'bottom -20%',
+					// Trigger based on call-now-section so the animation completes
+					// when the section is centered — works on all screen sizes
+					trigger: section || sectionRef.current,
+					start: 'top bottom',
+					end: 'center center',
 					scrub: 2,
 					onEnter: () => {
 						// Snapshot current viewport position and switch to fixed

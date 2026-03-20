@@ -9,9 +9,9 @@ const CARDS = [
 	},
 	{
 		image: '/card2.png',
-		title: 'Orders placed directly into your POS',
+		title: 'Orders, reservations, and bookings placed directly into your system',
 		description:
-			'Confirmed and pushed to your system the moment the call ends. No re-entry, no mistakes.',
+			'The moment a call ends, everything is already in your POS or booking platform. Orders confirmed, tables reserved, no staff involvement.',
 	},
 	{
 		image: '/card3.png',
@@ -76,7 +76,7 @@ function BentoCard({ image, title, description, className }) {
 export default function HowItWorksSection() {
 	return (
 		<section id="how-it-works" className="relative py-24 sm:py-32">
-			<div className="w-full max-w-7xl mx-auto px-2">
+			<div className="w-full max-w-6xl mx-auto px-2">
 				{/* Heading */}
 				<div className="text-center mb-12 sm:mb-16">
 					<h2
