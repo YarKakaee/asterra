@@ -1,1 +1,152 @@
 @import 'tailwindcss';
+
+/* ---- Base ---- */
+html, body {
+	max-width: 100vw;
+	overflow-x: hidden;
+	background: #ffffff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.font-sans {
+	font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+/* ---- Order Card Glass ---- */
+.order-card {
+	background: rgba(30, 30, 35, 0.65);
+	backdrop-filter: blur(24px) saturate(140%);
+	-webkit-backdrop-filter: blur(24px) saturate(140%);
+	border: 0.5px solid rgba(255, 255, 255, 0.12);
+	box-shadow:
+		0 8px 32px rgba(0, 0, 0, 0.35),
+		inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Pulse Dot ---- */
+.pulse-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #34D399;
+	flex-shrink: 0;
+	animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+	0%, 100% {
+		opacity: 1;
+		box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+	}
+	50% {
+		opacity: 0.6;
+		box-shadow: 0 0 0 4px rgba(52, 211, 153, 0);
+	}
+}
+
+/* ---- Hero Glow ---- */
+.hero-glow {
+	position: absolute;
+	bottom: -50px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 90%;
+	height: 120px;
+	border-radius: 50%;
+	background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.5) 0%, rgba(96, 165, 250, 0.25) 35%, transparent 65%);
+	filter: blur(35px);
+	pointer-events: none;
+	z-index: 0;
+}
+
+/* ---- Navbar ---- */
+.nav-link::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 8px;
+	background: rgba(0, 0, 0, 0);
+	transition: background 0.35s ease, transform 0.35s ease;
+	transform: scale(0.92);
+	z-index: 0;
+}
+.nav-link:hover::before {
+	background: rgba(0, 0, 0, 0.04);
+	transform: scale(1);
+}
+
+.nav-btn-primary {
+	position: relative;
+	overflow: hidden;
+}
+.nav-btn-primary::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 999px;
+	background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+.nav-btn-primary:hover {
+	background: #222 !important;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+.nav-btn-primary:hover::after {
+	opacity: 1;
+}
+
+.nav-btn-secondary:hover {
+	background: rgba(255, 255, 255, 0.9) !important;
+	border-color: rgba(0, 0, 0, 0.2) !important;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* ---- Call Now Button ---- */
+.call-now-btn {
+	position: relative;
+	overflow: hidden;
+}
+.call-now-btn::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 999px;
+	background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+.call-now-btn:hover {
+	background: #222 !important;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	transform: translateY(-1px);
+}
+.call-now-btn:hover::after {
+	opacity: 1;
+}
+
+/* ---- Bento Cards ---- */
+.bento-card {
+	background: #111;
+}
+.bento-card-overlay {
+	background: linear-gradient(
+		to top,
+		rgba(0, 0, 0, 0.75) 0%,
+		rgba(0, 0, 0, 0.45) 35%,
+		rgba(0, 0, 0, 0) 60%
+	);
+}
+
+/* ---- Fade In keyframe ---- */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

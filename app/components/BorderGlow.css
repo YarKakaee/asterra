@@ -1,0 +1,69 @@
+/* app/components/BorderGlow.css */
+
+@property --glow-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+
+@keyframes spin-glow {
+	from { --glow-angle: 0deg; }
+	to { --glow-angle: 360deg; }
+}
+
+.border-glow-wrapper {
+	position: relative;
+	border-radius: var(--border-radius, 20px);
+	isolation: isolate;
+}
+
+.border-glow-animated-rim {
+	position: absolute;
+	inset: calc(var(--border-width) * -1);
+	border-radius: calc(var(--border-radius) + var(--border-width));
+	padding: var(--border-width);
+	background: conic-gradient(
+		from var(--glow-angle) at 50% 50%,
+		rgba(59, 130, 246, 0) 0%,      
+		rgba(59, 130, 246, 0) 30%,     
+		rgba(96, 165, 250, 0.6) 60%,   
+		rgba(147, 197, 253, 0.9) 80%,   
+		rgba(255, 255, 255, 1) 100%    
+	);
+	animation: spin-glow 3s linear infinite;
+
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	pointer-events: none;
+	z-index: 20;
+}
+
+.border-glow-animated-diffuse {
+	position: absolute;
+	inset: calc(var(--border-width) * -1);
+	border-radius: calc(var(--border-radius) + var(--border-width));
+	padding: var(--border-width);
+	background: conic-gradient(
+		from var(--glow-angle) at 50% 50%,
+		rgba(59, 130, 246, 0) 0%,
+		rgba(59, 130, 246, 0.3) 30%,
+		rgba(59, 130, 246, 0.8) 60%,
+		rgba(96, 165, 250, 1) 85%,
+		rgba(147, 197, 253, 1) 100%
+	);
+	animation: spin-glow 3s linear infinite;
+	filter: blur(35px);
+	pointer-events: none;
+	z-index: -1;
+	opacity: 1;
+}
+
+.border-glow-content {
+	position: relative;
+	z-index: 10;
+	height: 100%;
+	width: 100%;
+	border-radius: var(--border-radius);
+}
