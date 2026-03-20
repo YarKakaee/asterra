@@ -99,7 +99,8 @@ export default function HeroSection() {
 					},
 					onLeave: () => {
 						// Animation complete: hide animated phone and instantly show static
-						const staticPhone = document.getElementById('static-phone');
+						const staticPhone =
+							document.getElementById('static-phone');
 						if (staticPhone) staticPhone.style.opacity = '1';
 						phone.style.display = 'none';
 					},
@@ -107,7 +108,8 @@ export default function HeroSection() {
 						// Scrolling back up: show animated phone, hide static
 						if (startX === undefined) return;
 						phone.style.display = '';
-						const staticPhone = document.getElementById('static-phone');
+						const staticPhone =
+							document.getElementById('static-phone');
 						if (staticPhone) staticPhone.style.opacity = '0';
 						phone.style.position = 'fixed';
 						phone.style.left = startX + 'px';
@@ -184,7 +186,7 @@ export default function HeroSection() {
 			>
 				{/* Cloud decorations — lowest layer, below gradient */}
 				<div
-					className="absolute inset-0 pointer-events-none overflow-hidden"
+					className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden"
 					style={{ zIndex: 0 }}
 				>
 					{/* Above heading, drifting right */}
@@ -205,7 +207,7 @@ export default function HeroSection() {
 					/>
 					{/* Near description, drifting left */}
 					<img
-						src="/cloud.png"
+						src="/Cloud.png"
 						alt=""
 						className="absolute select-none"
 						style={{
@@ -219,7 +221,7 @@ export default function HeroSection() {
 					/>
 					{/* Left of video */}
 					<img
-						src="/cloud.png"
+						src="/Cloud.png"
 						alt=""
 						className="absolute select-none"
 						style={{
@@ -233,7 +235,7 @@ export default function HeroSection() {
 					/>
 					{/* Right of video */}
 					<img
-						src="/cloud.png"
+						src="/Cloud.png"
 						alt=""
 						className="absolute select-none hidden sm:block"
 						style={{
@@ -247,7 +249,7 @@ export default function HeroSection() {
 					/>
 					{/* Below video, left-center */}
 					<img
-						src="/cloud.png"
+						src="/Cloud.png"
 						alt=""
 						className="absolute select-none"
 						style={{
@@ -261,7 +263,7 @@ export default function HeroSection() {
 					/>
 					{/* Below video, right-center */}
 					<img
-						src="/cloud.png"
+						src="/Cloud.png"
 						alt=""
 						className="absolute select-none hidden sm:block"
 						style={{
@@ -336,7 +338,7 @@ export default function HeroSection() {
 					{/* Media container */}
 					<div className="relative max-w-[960px] mx-auto">
 						{/* Glow beneath container */}
-						<div className="hero-glow" />
+						<div className="hidden sm:block hero-glow" />
 
 						{/* Glow Wrapper */}
 						<BorderGlow

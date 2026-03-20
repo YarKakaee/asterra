@@ -18,8 +18,8 @@ export default function BorderGlow({
 			}}
 			{...props}
 		>
-			<div className="border-glow-animated-diffuse" />
-			<div className="border-glow-animated-rim" />
+			<div className="hidden sm:block border-glow-animated-diffuse" />
+			<div className="hidden sm:block border-glow-animated-rim" />
 			<div className="border-glow-content">{children}</div>
 		</div>
 	);

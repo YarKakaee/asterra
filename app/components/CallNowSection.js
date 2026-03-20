@@ -44,7 +44,7 @@ export default function CallNowSection() {
 		>
 			{/* Background Cloud decorations */}
 			<div
-				className="absolute inset-0 pointer-events-none"
+				className="hidden sm:block absolute inset-0 pointer-events-none"
 				style={{ zIndex: 0 }}
 			>
 				<Image
@@ -149,36 +149,36 @@ export default function CallNowSection() {
 									border: '1px solid rgba(255,255,255,0.1)',
 								}}
 							>
-							{/* Hover Background Radial Glow */}
-							<div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-								<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-white/5 to-transparent" />
-							</div>
-
-							{/* Glass Sweep Animation */}
-							<div className="absolute inset-0 -translate-x-[150%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[800ms] ease-out group-hover:translate-x-[150%] pointer-events-none" />
-
-							{/* Button Content Context */}
-							<div className="relative z-10 flex items-center gap-3 text-white transition-transform duration-500 group-hover:scale-[1.03]">
-								<div className="relative flex items-center justify-center">
-									{/* Inner Icon Glow */}
-									<div className="absolute inset-0 bg-white/50 blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-500 rounded-full" />
-
-									<svg
-										width="16"
-										height="16"
-										viewBox="0 0 512 512"
-										fill="currentColor"
-										xmlns="http://www.w3.org/2000/svg"
-										className="relative z-10 transition-all duration-500 group-hover:-rotate-12 group-hover:scale-110 group-hover:text-white"
-									>
-										<path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-									</svg>
+								{/* Hover Background Radial Glow */}
+								<div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+									<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-white/5 to-transparent" />
 								</div>
-								<span className="tracking-wide group-hover:text-white transition-colors duration-500">
-									+1 (437) 494-4696
-								</span>
-							</div>
-						</a>
+
+								{/* Glass Sweep Animation */}
+								<div className="absolute inset-0 -translate-x-[150%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[800ms] ease-out group-hover:translate-x-[150%] pointer-events-none" />
+
+								{/* Button Content Context */}
+								<div className="relative z-10 flex items-center gap-3 text-white transition-transform duration-500 group-hover:scale-[1.03]">
+									<div className="relative flex items-center justify-center">
+										{/* Inner Icon Glow */}
+										<div className="absolute inset-0 bg-white/50 blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-500 rounded-full" />
+
+										<svg
+											width="16"
+											height="16"
+											viewBox="0 0 512 512"
+											fill="currentColor"
+											xmlns="http://www.w3.org/2000/svg"
+											className="relative z-10 transition-all duration-500 group-hover:-rotate-12 group-hover:scale-110 group-hover:text-white"
+										>
+											<path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
+										</svg>
+									</div>
+									<span className="tracking-wide group-hover:text-white transition-colors duration-500">
+										+1 (437) 494-4696
+									</span>
+								</div>
+							</a>
 						</ScrollReveal>
 					</div>
 				</div>
