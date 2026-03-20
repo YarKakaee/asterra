@@ -188,8 +188,10 @@ export default function HeroSection() {
 					style={{ zIndex: 0 }}
 				>
 					{/* Above heading, drifting right */}
-					<img
+					<Image
 						src="/cloud.png"
+						width={600}
+						height={400}
 						alt=""
 						className="absolute select-none hidden sm:block"
 						style={{

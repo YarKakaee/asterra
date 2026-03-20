@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ScrollReveal from './ScrollReveal';
+import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -337,11 +338,13 @@ export default function IntegrationsSection() {
 						if (posData.right) pos.right = posData.right;
 
 						return (
-							<img
+							<Image
 								key={logo.alt}
 								ref={(el) => (logosRef.current[i] = el)}
 								src={logo.src}
 								alt={logo.alt}
+								width={logo.width * 2}
+								height={logo.width * 2}
 								className="absolute select-none will-change-transform"
 								style={{
 									...pos,
