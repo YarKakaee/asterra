@@ -5,10 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const NAV_LINKS = [
-	{ label: 'How it works', href: '#how-it-works' },
-	{ label: 'Integrations', href: '#integrations' },
-	{ label: 'Pricing', href: '#pricing' },
-	{ label: 'Business types', href: '#business-types' },
+	{ label: 'How it works', href: '/#how-it-works' },
+	{ label: 'Integrations', href: '/#integrations' },
+	{ label: 'Pricing', href: '/pricing' },
+	{ label: 'Scalability', href: '/#coordination' },
 ];
 
 export default function Navbar() {
@@ -72,7 +72,7 @@ export default function Navbar() {
 						{/* Links — absolutely centered */}
 						<div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
 							{NAV_LINKS.map((link) => (
-								<a
+								<Link
 									key={link.href}
 									href={link.href}
 									className="nav-link relative px-4 py-2 text-[14px] font-medium text-gray-700 rounded-lg transition-colors duration-300 hover:text-black whitespace-nowrap"
@@ -80,14 +80,14 @@ export default function Navbar() {
 									<span className="relative z-10">
 										{link.label}
 									</span>
-								</a>
+								</Link>
 							))}
 						</div>
 
 						{/* Buttons — right */}
 						<div className="hidden lg:flex items-center gap-3 ml-auto">
 							<a
-								href="#book"
+								href="/contact"
 								className="nav-btn-primary px-4 py-[9px] text-[13px] font-medium text-white rounded-2xl transition-all duration-300"
 								style={{
 									background: '#111',
@@ -96,7 +96,9 @@ export default function Navbar() {
 								Book a Call
 							</a>
 							<a
-								href="#login"
+								href="https://dashboard.asterra.ca"
+								target="_blank"
+								rel="noopener noreferrer"
 								className="nav-btn-secondary px-4 py-[9px] text-[13px] font-medium text-gray-800 rounded-2xl border transition-all duration-300"
 								style={{
 									borderColor: 'rgba(0, 0, 0, 0.15)',
@@ -108,12 +110,21 @@ export default function Navbar() {
 						</div>
 
 						{/* Mobile Menu Button */}
-						<button 
+						<button
 							className="lg:hidden ml-auto p-2 text-gray-800"
 							onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
 							aria-label="Toggle navigation menu"
 						>
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<svg
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
 								{mobileMenuOpen ? (
 									<path d="M18 6L6 18M6 6l12 12" />
 								) : (
@@ -125,27 +136,27 @@ export default function Navbar() {
 				</div>
 
 				{/* Mobile Menu dropdown */}
-				<div 
+				<div
 					className={`lg:hidden absolute top-[calc(100%+8px)] left-0 w-full overflow-hidden transition-all duration-300 origin-top ${mobileMenuOpen ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'}`}
 					style={{ padding: scrolled ? '0 8px' : '0 32px' }}
 				>
 					<div className="bg-white/95 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-xl flex flex-col p-4 gap-4">
 						<div className="flex flex-col gap-1">
 							{NAV_LINKS.map((link) => (
-								<a
+								<Link
 									key={link.href}
 									href={link.href}
 									onClick={() => setMobileMenuOpen(false)}
 									className="px-4 py-3 text-[15px] font-medium text-gray-700 hover:bg-gray-100 hover:text-black rounded-xl transition-colors"
 								>
 									{link.label}
-								</a>
+								</Link>
 							))}
 						</div>
 						<div className="h-[1px] bg-gray-200/50 w-full" />
 						<div className="flex flex-col gap-3">
 							<a
-								href="#book"
+								href="/contact"
 								onClick={() => setMobileMenuOpen(false)}
 								className="w-full text-center px-4 py-[14px] text-[14px] font-semibold text-white rounded-2xl transition-all"
 								style={{ background: '#111' }}
@@ -153,7 +164,9 @@ export default function Navbar() {
 								Book a Call
 							</a>
 							<a
-								href="#login"
+								href="https://dashboard.asterra.ca"
+								target="_blank"
+								rel="noopener noreferrer"
 								onClick={() => setMobileMenuOpen(false)}
 								className="w-full text-center px-4 py-[14px] text-[14px] font-medium text-gray-800 rounded-2xl border border-gray-200 transition-all bg-white"
 							>

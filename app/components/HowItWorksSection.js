@@ -1,5 +1,7 @@
 'use client';
 
+import ScrollReveal from './ScrollReveal';
+
 const CARDS = [
 	{
 		image: '/card1.png',
@@ -79,61 +81,112 @@ export default function HowItWorksSection() {
 			<div className="w-full max-w-6xl mx-auto px-2">
 				{/* Heading */}
 				<div className="text-center mb-12 sm:mb-16">
-					<h2
-						className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] font-bold text-black leading-[1.1] mb-4"
-						style={{
-							fontFamily:
-								'var(--font-inter), system-ui, sans-serif',
-							letterSpacing: '-0.03em',
-						}}
-					>
-						More than a voice.
-					</h2>
-					<p
-						className="text-[#6B7280] text-base sm:text-lg mx-auto"
-						style={{
-							fontFamily:
-								'var(--font-inter), system-ui, sans-serif',
-							fontWeight: 400,
-							lineHeight: 1.6,
-						}}
-					>
-						Orders placed, tables booked, questions answered. No
-						staff required.
-					</p>
+					<ScrollReveal>
+						<h2
+							className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] font-bold text-black leading-[1.1] mb-4"
+							style={{
+								fontFamily:
+									'var(--font-inter), system-ui, sans-serif',
+								letterSpacing: '-0.03em',
+							}}
+						>
+							More than a voice.
+						</h2>
+					</ScrollReveal>
+					<ScrollReveal delay={0.1}>
+						<p
+							className="text-[#6B7280] text-base sm:text-lg mx-auto"
+							style={{
+								fontFamily:
+									'var(--font-inter), system-ui, sans-serif',
+								fontWeight: 400,
+								lineHeight: 1.6,
+							}}
+						>
+							Orders placed, tables booked, questions answered.
+							No staff required.
+						</p>
+					</ScrollReveal>
 				</div>
 
 				{/* Bento Grid */}
 				<div className="grid grid-cols-1 md:grid-cols-12 gap-3">
 					{/* Row 1 */}
-					<BentoCard
-						{...CARDS[0]}
+					<ScrollReveal
+						y={32}
+						duration={0.7}
+						margin="-60px"
 						className="md:col-span-4 aspect-[4/3] md:aspect-auto md:h-[350px]"
-					/>
-					<BentoCard
-						{...CARDS[1]}
+					>
+						<BentoCard
+							{...CARDS[0]}
+							className="h-full w-full"
+						/>
+					</ScrollReveal>
+					<ScrollReveal
+						delay={0.1}
+						y={32}
+						duration={0.7}
+						margin="-60px"
 						className="md:col-span-8 aspect-[4/3] md:aspect-auto md:h-[350px]"
-					/>
+					>
+						<BentoCard
+							{...CARDS[1]}
+							className="h-full w-full"
+						/>
+					</ScrollReveal>
 
 					{/* Row 2 */}
-					<BentoCard
-						{...CARDS[2]}
+					<ScrollReveal
+						delay={0.1}
+						y={32}
+						duration={0.7}
+						margin="-60px"
 						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[350px]"
-					/>
-					<BentoCard
-						{...CARDS[3]}
+					>
+						<BentoCard
+							{...CARDS[2]}
+							className="h-full w-full"
+						/>
+					</ScrollReveal>
+					<ScrollReveal
+						delay={0.2}
+						y={32}
+						duration={0.7}
+						margin="-60px"
 						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[350px]"
-					/>
+					>
+						<BentoCard
+							{...CARDS[3]}
+							className="h-full w-full"
+						/>
+					</ScrollReveal>
 
 					{/* Row 3 */}
-					<BentoCard
-						{...CARDS[4]}
+					<ScrollReveal
+						delay={0.2}
+						y={32}
+						duration={0.7}
+						margin="-60px"
 						className="md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[350px]"
-					/>
-					<BentoCard
-						{...CARDS[5]}
+					>
+						<BentoCard
+							{...CARDS[4]}
+							className="h-full w-full"
+						/>
+					</ScrollReveal>
+					<ScrollReveal
+						delay={0.3}
+						y={32}
+						duration={0.7}
+						margin="-60px"
 						className="md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[350px]"
-					/>
+					>
+						<BentoCard
+							{...CARDS[5]}
+							className="h-full w-full"
+						/>
+					</ScrollReveal>
 				</div>
 			</div>
 		</section>

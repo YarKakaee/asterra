@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import ScrollReveal from './ScrollReveal';
 
 export default function CallNowSection() {
 	const [showStaticPhone, setShowStaticPhone] = useState(false);
@@ -107,40 +108,45 @@ export default function CallNowSection() {
 
 					{/* Right side — text content */}
 					<div className="max-w-[480px] mx-auto text-center lg:text-left lg:mx-0">
-						<h2
-							className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] font-bold text-black leading-[1.1] mb-5"
-							style={{
-								fontFamily:
-									'var(--font-inter), system-ui, sans-serif',
-								letterSpacing: '-0.03em',
-							}}
-						>
-							Hear exactly what your
-							<br />
-							customers will hear.
-						</h2>
+						<ScrollReveal>
+							<h2
+								className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] font-bold text-black leading-[1.1] mb-5"
+								style={{
+									fontFamily:
+										'var(--font-inter), system-ui, sans-serif',
+									letterSpacing: '-0.03em',
+								}}
+							>
+								Hear exactly what your
+								<br />
+								customers will hear.
+							</h2>
+						</ScrollReveal>
 
-						<p
-							className="text-[#6B7280] text-base mb-8"
-							style={{
-								fontFamily:
-									'var(--font-inter), system-ui, sans-serif',
-								fontWeight: 400,
-							}}
-						>
-							Call the number below, a fully working demo for a
-							fake pizza shop. Place an order, book a table, and
-							hear exactly how it sounds.
-						</p>
+						<ScrollReveal delay={0.1}>
+							<p
+								className="text-[#6B7280] text-base mb-8"
+								style={{
+									fontFamily:
+										'var(--font-inter), system-ui, sans-serif',
+									fontWeight: 400,
+								}}
+							>
+								Call the number below, a fully working demo for
+								a fake pizza shop. Place an order, book a table,
+								and hear exactly how it sounds.
+							</p>
+						</ScrollReveal>
 
-						<a
-							href="tel:+14374944696"
-							className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-[15px] font-semibold transition-all duration-500 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_20px_40px_-10px_rgba(255,255,255,0.15)] mx-auto lg:mx-0 overflow-hidden"
-							style={{
-								background: '#0a0a0a',
-								border: '1px solid rgba(255,255,255,0.1)',
-							}}
-						>
+						<ScrollReveal delay={0.2}>
+							<a
+								href="tel:+14374944696"
+								className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-[15px] font-semibold transition-all duration-500 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_20px_40px_-10px_rgba(255,255,255,0.15)] mx-auto lg:mx-0 overflow-hidden"
+								style={{
+									background: '#0a0a0a',
+									border: '1px solid rgba(255,255,255,0.1)',
+								}}
+							>
 							{/* Hover Background Radial Glow */}
 							<div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
 								<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-white/5 to-transparent" />
@@ -171,6 +177,7 @@ export default function CallNowSection() {
 								</span>
 							</div>
 						</a>
+						</ScrollReveal>
 					</div>
 				</div>
 			</div>

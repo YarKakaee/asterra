@@ -10,8 +10,28 @@ const inter = Inter({
 });
 
 export const metadata = {
-	title: 'Asterra',
-	description: 'Asterra',
+	title: {
+		template: '%s | Asterra',
+		default: 'Asterra | Smarter Phone Handling that Answers, Books, and Orders',
+	},
+	description:
+		'Asterra connects directly to your POS, reservation, and booking systems. Our AI phone agent handles calls, takes orders, and books reservations so you never miss a customer.',
+	metadataBase: new URL('https://asterra.ca'),
+	openGraph: {
+		title: 'Asterra | Smarter Phone Handling that Answers, Books, and Orders',
+		description:
+			'Asterra connects directly to your POS, reservation, and booking systems. Our AI phone agent handles calls, takes orders, and books reservations so you never miss a customer.',
+		url: 'https://asterra.ca',
+		siteName: 'Asterra',
+		locale: 'en_CA',
+		type: 'website',
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'Asterra | Smarter Phone Handling that Answers, Books, and Orders',
+		description:
+			'Asterra connects directly to your POS, reservation, and booking systems. Our AI phone agent handles calls, takes orders, and books reservations so you never miss a customer.',
+	},
 };
 
 export default function RootLayout({ children }) {
