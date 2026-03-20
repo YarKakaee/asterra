@@ -295,7 +295,7 @@ export default function HeroSection() {
 					{/* Text block */}
 					<div className="text-center mb-10 sm:mb-14">
 						<h1
-							className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] font-bold text-black leading-[1.08] mb-5"
+							className="text-[1.5rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] font-bold text-black leading-[1.08] mb-5"
 							style={{
 								fontFamily:
 									'var(--font-inter), system-ui, sans-serif',
@@ -315,7 +315,7 @@ export default function HeroSection() {
 						</h1>
 
 						<p
-							className="text-[#6B7280] text-base sm:text-lg max-w-[480px] mx-auto"
+							className="text-[#6B7280] text-[14px] sm:text-lg max-w-[480px] mx-auto"
 							style={{
 								fontFamily:
 									'var(--font-inter), system-ui, sans-serif',
