@@ -1,289 +1,242 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin, faXTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import {
+	faLinkedinIn,
+	faXTwitter,
+	faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
 
-const Footer = () => {
-	const footerLinks = [
-		{ name: 'Phone Handling', href: '/phone-handling' },
-		{ name: 'For Restaurants', href: '/#restaurants' },
-		{ name: 'Multi-Location', href: '/#franchise' },
-		{ name: 'Contact', href: '/contact' },
-	];
+const FOOTER_LINKS = [
+	{
+		links: [
+			{ label: 'How it works', href: '/#how-it-works' },
+			{ label: 'Integrations', href: '/#integrations' },
+			{ label: 'Pricing', href: '/pricing' },
+			{ label: 'Scalability', href: '/#coordination' },
+		],
+	},
+	{
+		links: [
+			{ label: 'Contact', href: '/contact' },
+			{ label: 'Privacy Policy', href: '/privacy' },
+			{ label: 'Terms & Conditions', href: '/terms' },
+			{ label: 'Client login', href: 'https://dashboard.asterra.ca' },
+		],
+	},
+];
 
-	const socialLinks = [
-		{ icon: faEnvelope, href: 'mailto:support@asterra.ca', label: 'Email' },
-		{ icon: faLinkedin, href: 'https://www.linkedin.com/company/teamasterra/', label: 'LinkedIn' },
-		{ icon: faXTwitter, href: 'https://x.com/AsterraTeam', label: 'X' },
-		{ icon: faInstagram, href: 'https://www.instagram.com/asterra.ai/', label: 'Instagram' },
-	];
-
+export default function Footer() {
 	return (
-		<footer
-			className="relative overflow-hidden"
-			style={{ backgroundColor: 'var(--dark)' }}
-		>
-			{/* Gradient mesh background */}
-			<div
-				className="absolute inset-0 pointer-events-none"
-				style={{
-					background: [
-						'radial-gradient(ellipse 80% 50% at 20% 40%, rgba(200, 67, 43, 0.06) 0%, transparent 70%)',
-						'radial-gradient(ellipse 60% 60% at 75% 20%, rgba(180, 140, 100, 0.04) 0%, transparent 70%)',
-						'radial-gradient(ellipse 70% 50% at 50% 90%, rgba(200, 180, 150, 0.03) 0%, transparent 70%)',
-					].join(', '),
-				}}
-			/>
-
-			{/* Subtle grain overlay */}
-			<div
-				className="absolute inset-0 pointer-events-none opacity-[0.03]"
-				style={{
-					backgroundImage:
-						"url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
-					backgroundSize: '200px 200px',
-				}}
-			/>
-
-			{/* Top accent line */}
-			<div
-				className="absolute top-0 left-1/2 -translate-x-1/2 w-[50%] h-[1px]"
-				style={{
-					background:
-						'linear-gradient(90deg, transparent, rgba(200, 67, 43, 0.3), transparent)',
-				}}
-			/>
-
-			{/* Main footer content */}
-			<div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 pt-20 sm:pt-24 pb-14 sm:pb-16">
-				<div className="grid grid-cols-1 md:grid-cols-12 gap-14 md:gap-10 lg:gap-16">
-
-					{/* Brand column */}
-					<div className="md:col-span-5 lg:col-span-4">
-						<Image
-							src="/footerlogowhite.png"
-							alt="Asterra"
-							width={355}
-							height={215}
-							className="h-12 w-auto mb-6"
-						/>
-						<p
-							className="font-serif text-lg sm:text-xl leading-snug max-w-xs mb-4"
-							style={{ color: 'var(--text-on-dark-muted)' }}
-						>
-							Phone handling built for restaurants.
-						</p>
-						<p
-							className="text-[13px] tracking-wide"
-							style={{ color: 'rgba(248, 246, 241, 0.3)' }}
-						>
-							Toronto &middot; GTA &middot; Canada
-						</p>
-					</div>
-
-					{/* Links column */}
-					<div className="md:col-span-3 lg:col-span-3">
-						<p
-							className="font-display text-[11px] font-semibold tracking-[0.15em] uppercase mb-6"
-							style={{ color: 'rgba(248, 246, 241, 0.35)' }}
-						>
-							Navigate
-						</p>
-						<ul className="space-y-4">
-							{footerLinks.map((link) => (
-								<li key={link.name}>
-									<Link
-										href={link.href}
-										className="font-body text-[15px] transition-colors duration-200"
-										style={{ color: 'var(--text-on-dark-muted)' }}
-										onMouseEnter={(e) =>
-											(e.currentTarget.style.color = 'var(--text-on-dark)')
-										}
-										onMouseLeave={(e) =>
-											(e.currentTarget.style.color = 'var(--text-on-dark-muted)')
-										}
-									>
-										{link.name}
-									</Link>
-								</li>
-							))}
-						</ul>
-					</div>
-
-					{/* CTA column */}
-					<div className="md:col-span-4 lg:col-span-5">
-						<p
-							className="font-display text-[11px] font-semibold tracking-[0.15em] uppercase mb-6"
-							style={{ color: 'rgba(248, 246, 241, 0.35)' }}
-						>
-							Get Started
-						</p>
-						<p
-							className="font-body text-[15px] leading-relaxed max-w-sm mb-7"
-							style={{ color: 'var(--text-on-dark-muted)' }}
-						>
-							See how Asterra handles calls for restaurants like yours.
-						</p>
-
-						<Link href="/contact">
-							<motion.div
-								className="btn-primary text-sm px-6 py-3 inline-flex cursor-pointer"
-								whileHover={{
-									scale: 1.03,
-									boxShadow: '0 8px 30px rgba(200, 67, 43, 0.3)',
-								}}
-								whileTap={{ scale: 0.98 }}
-								transition={{
-									type: 'spring',
-									stiffness: 400,
-									damping: 25,
-								}}
-							>
-								Book a Demo
-							</motion.div>
-						</Link>
-
-						<div className="mt-5">
-							<a
-								href="tel:+14374944696"
-								className="inline-flex items-center gap-2 font-body text-sm transition-colors duration-200"
-								style={{ color: 'rgba(248, 246, 241, 0.4)' }}
-								onMouseEnter={(e) =>
-									(e.currentTarget.style.color = 'var(--text-on-dark)')
-								}
-								onMouseLeave={(e) =>
-									(e.currentTarget.style.color = 'rgba(248, 246, 241, 0.4)')
-								}
-							>
-								<svg
-									className="w-3.5 h-3.5"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									strokeWidth={2}
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-									/>
-								</svg>
-								Live demo: (437) 494-4696
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			{/* Divider */}
-			<div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8">
-				<div
-					className="h-[1px] w-full"
-					style={{
-						background:
-							'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent)',
-					}}
-				/>
-			</div>
-
-			{/* Bottom bar */}
-			<div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-7 sm:py-8">
-				<div className="flex flex-col md:flex-row justify-between items-center gap-6">
-					{/* Copyright */}
-					<p
-						className="font-body text-xs text-center md:text-left"
-						style={{ color: 'rgba(248, 246, 241, 0.25)' }}
+		<footer>
+			{/* Final CTA */}
+			<section className="relative pt-28 sm:pt-36 pb-20 sm:pb-28">
+				<div className="w-full max-w-6xl mx-auto px-5 sm:px-8 text-center">
+					<h2
+						className="text-[1.75rem] sm:text-[2rem] md:text-[2.25rem] lg:text-[2.75rem] font-bold text-black leading-[1.1] mb-5"
+						style={{
+							fontFamily:
+								'var(--font-inter), system-ui, sans-serif',
+							letterSpacing: '-0.03em',
+						}}
 					>
-						&copy; 2025 Asterra&trade; is a brand of Asterra Solutions Inc.
+						Ready to stop missing calls?
+					</h2>
+					<p
+						className="text-[#6B7280] text-sm sm:text-[15px] md:text-[16px] max-w-[400px] mx-auto mb-8"
+						style={{
+							fontFamily:
+								'var(--font-inter), system-ui, sans-serif',
+							fontWeight: 400,
+							lineHeight: 1.6,
+						}}
+					>
+						Up and running in days. No disruption to how you
+						already operate.
 					</p>
 
-					<div className="flex flex-col sm:flex-row items-center gap-6">
-						{/* Social icons */}
-						<div className="flex items-center gap-5">
-							{socialLinks.map((social) => (
-								<motion.a
-									key={social.label}
-									href={social.href}
-									target={
-										social.href.startsWith('mailto')
-											? undefined
-											: '_blank'
-									}
-									rel={
-										social.href.startsWith('mailto')
-											? undefined
-											: 'noopener noreferrer'
-									}
-									aria-label={social.label}
-									className="block"
-									style={{ color: 'rgba(248, 246, 241, 0.3)' }}
-									whileHover={{
-										scale: 1.15,
-										color: 'rgba(248, 246, 241, 0.85)',
-									}}
-									whileTap={{ scale: 0.9 }}
-									transition={{
-										type: 'spring',
-										stiffness: 400,
-										damping: 20,
-									}}
-								>
-									<FontAwesomeIcon
-										icon={social.icon}
-										className="w-[18px] h-[18px]"
-									/>
-								</motion.a>
-							))}
+					<div className="flex items-center justify-center gap-3">
+						{/* Book a call — dark with fancy hover */}
+						<a
+							href="/contact"
+							className="group relative inline-flex items-center justify-center px-6 py-3 rounded-xl text-[14px] font-semibold transition-all duration-500 ease-out hover:-translate-y-0.5 hover:scale-[1.02] overflow-hidden"
+							style={{
+								background: '#0a0a0a',
+								border: '1px solid rgba(255,255,255,0.1)',
+								fontFamily:
+									'var(--font-inter), system-ui, sans-serif',
+							}}
+						>
+							<div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+								<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-white/5 to-transparent" />
+							</div>
+							<div className="absolute inset-0 -translate-x-[150%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[800ms] ease-out group-hover:translate-x-[150%] pointer-events-none" />
+							<span className="relative z-10 text-white tracking-wide">
+								Book a call
+							</span>
+						</a>
+
+						{/* See pricing — outlined */}
+						<a
+							href="/pricing"
+							className="inline-flex items-center justify-center px-6 py-3 rounded-xl text-[14px] font-semibold border border-[#D1D5DB] text-black hover:bg-black hover:text-white hover:border-black transition-all duration-300"
+							style={{
+								fontFamily:
+									'var(--font-inter), system-ui, sans-serif',
+							}}
+						>
+							See pricing
+						</a>
+					</div>
+				</div>
+			</section>
+
+			{/* Dark footer */}
+			<div
+				className="relative"
+				style={{
+					background:
+						'linear-gradient(180deg, #010101 0%, #000 100%)',
+				}}
+			>
+				<div className="w-full max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16">
+					{/* Top row */}
+					<div className="flex flex-col sm:flex-row justify-between gap-10 sm:gap-8 mb-12">
+						{/* Logo + tagline */}
+						<div className="flex flex-col gap-3">
+							<Link
+								href="/"
+								className="flex items-center gap-2 w-fit"
+							>
+								<Image
+									src="/whitelogo.png"
+									alt="Asterra"
+									width={120}
+									height={30}
+									className="h-6 w-auto"
+									draggable={false}
+								/>
+							</Link>
+							<p
+								className="text-[13px] text-[#6B7280]"
+								style={{
+									fontFamily:
+										'var(--font-inter), system-ui, sans-serif',
+									fontWeight: 400,
+								}}
+							>
+								AI-powered phone handling.
+							</p>
 						</div>
 
-						{/* Legal links */}
-						<div
-							className="flex items-center gap-5 text-xs font-body"
-							style={{ color: 'rgba(248, 246, 241, 0.25)' }}
+						{/* Link columns */}
+						<div className="flex gap-16 sm:gap-20">
+							{FOOTER_LINKS.map((col, i) => (
+								<div key={i} className="flex flex-col gap-3">
+									{col.links.map((link) =>
+										link.href.startsWith('http') ? (
+											<a
+												key={link.label}
+												href={link.href}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="text-[13px] sm:text-[14px] text-[#9CA3AF] hover:text-white transition-colors duration-300"
+												style={{
+													fontFamily:
+														'var(--font-inter), system-ui, sans-serif',
+													fontWeight: 400,
+												}}
+											>
+												{link.label}
+											</a>
+										) : (
+											<Link
+												key={link.label}
+												href={link.href}
+												className="text-[13px] sm:text-[14px] text-[#9CA3AF] hover:text-white transition-colors duration-300"
+												style={{
+													fontFamily:
+														'var(--font-inter), system-ui, sans-serif',
+													fontWeight: 400,
+												}}
+											>
+												{link.label}
+											</Link>
+										),
+									)}
+								</div>
+							))}
+						</div>
+					</div>
+
+					{/* Divider */}
+					<div className="h-px bg-white/10 mb-6" />
+
+					{/* Bottom row */}
+					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+						<p
+							className="text-[12px] sm:text-[13px] text-[#6B7280]"
+							style={{
+								fontFamily:
+									'var(--font-inter), system-ui, sans-serif',
+								fontWeight: 400,
+							}}
 						>
-							<Link
-								href="/privacy"
-								className="transition-colors duration-200 hover:text-[var(--text-on-dark-muted)]"
-								style={{ color: 'inherit' }}
-								onMouseEnter={(e) =>
-									(e.currentTarget.style.color =
-										'var(--text-on-dark-muted)')
-								}
-								onMouseLeave={(e) =>
-									(e.currentTarget.style.color =
-										'rgba(248, 246, 241, 0.25)')
-								}
+							&copy; {new Date().getFullYear()} Asterra&trade; is
+							a brand of Asterra Solutions Inc. All rights
+							reserved.
+						</p>
+
+						<div className="flex items-center gap-4">
+							<a
+								href="mailto:contact@asterra.ca"
+								className="text-[#6B7280] hover:text-white transition-colors duration-300"
 							>
-								Privacy Policy
-							</Link>
-							<span style={{ color: 'rgba(248, 246, 241, 0.12)' }}>
-								|
-							</span>
-							<Link
-								href="/terms"
-								className="transition-colors duration-200 hover:text-[var(--text-on-dark-muted)]"
-								style={{ color: 'inherit' }}
-								onMouseEnter={(e) =>
-									(e.currentTarget.style.color =
-										'var(--text-on-dark-muted)')
-								}
-								onMouseLeave={(e) =>
-									(e.currentTarget.style.color =
-										'rgba(248, 246, 241, 0.25)')
-								}
+								<FontAwesomeIcon
+									icon={faEnvelope}
+									className="w-4 h-4"
+								/>
+							</a>
+							<a
+								href="https://linkedin.com/company/teamasterra/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-[#6B7280] hover:text-white transition-colors duration-300"
 							>
-								Terms of Service
-							</Link>
+								<FontAwesomeIcon
+									icon={faLinkedinIn}
+									className="w-4 h-4"
+								/>
+							</a>
+							<a
+								href="https://x.com/AsterraTeam"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-[#6B7280] hover:text-white transition-colors duration-300"
+							>
+								<FontAwesomeIcon
+									icon={faXTwitter}
+									className="w-4 h-4"
+								/>
+							</a>
+							<a
+								href="https://instagram.com/asterra.ai"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-[#6B7280] hover:text-white transition-colors duration-300"
+							>
+								<FontAwesomeIcon
+									icon={faInstagram}
+									className="w-4 h-4"
+								/>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</footer>
 	);
-};
-
-export default Footer;
+}

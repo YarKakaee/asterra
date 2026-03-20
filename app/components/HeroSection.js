@@ -1,222 +1,404 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import OrderCard from './OrderCard';
+import BorderGlow from './BorderGlow';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const HeroSection = () => {
-	const [mounted, setMounted] = useState(false);
+gsap.registerPlugin(ScrollTrigger);
+
+export default function HeroSection() {
+	const [stage, setStage] = useState(0);
+	const [isKilled, setIsKilled] = useState(false);
+	const sectionRef = useRef(null);
+	const phoneRef = useRef(null);
 
 	useEffect(() => {
-		setMounted(true);
+		const t1 = setTimeout(() => setStage(1), 100);
+		const t2 = setTimeout(() => setStage(2), 300);
+		const t3 = setTimeout(() => setStage(3), 700);
+		const t4 = setTimeout(() => setStage(4), 900);
+		return () => [t1, t2, t3, t4].forEach(clearTimeout);
 	}, []);
 
-	if (!mounted) {
-		return <section className="min-h-screen bg-[var(--ivory)]" />;
-	}
+	useEffect(() => {
+		if (stage < 4 || !phoneRef.current || !sectionRef.current) return;
 
-	const container = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: { duration: 0.8, staggerChildren: 0.1 },
-		},
-	};
+		// No scroll animation on mobile
+		if (window.innerWidth < 1024) {
+			setIsKilled(true);
+			window.dispatchEvent(new Event('heroAnimationKilled'));
+			return;
+		}
 
-	const item = {
-		hidden: { opacity: 0, y: 30 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-		},
-	};
+		let ctx;
+		let animationKilled = false;
 
-	const floatUp = {
-		hidden: { opacity: 0, y: 60, scale: 0.95 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			scale: 1,
-			transition: { duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 },
-		},
-	};
+		const timer = setTimeout(() => {
+			if (animationKilled) return;
+			const phone = phoneRef.current;
+			if (!phone) return;
+
+			// Kill CSS transition so it doesn't fight GSAP
+			phone.style.transition = 'none';
+
+			const vw = window.innerWidth;
+			const vh = window.innerHeight;
+
+			// End position: perfectly centered inside the destination layout spacer
+			const rect = phone.getBoundingClientRect();
+			const phoneWidth = rect.width;
+			const phoneHeight = rect.height;
+
+			let endX, endY;
+			const dest = document.getElementById('phone-destination');
+			const section = document.getElementById('call-now-section');
+
+			if (dest && section && dest.getBoundingClientRect().width > 0) {
+				const destRect = dest.getBoundingClientRect();
+
+				// Nudge slightly to the left (-48px) for perfect visual balance with the 3D perspective
+				endX = destRect.left + destRect.width / 2 - phoneWidth / 2 - 48;
+
+				// Use viewport-center so the phone always lands mid-screen on ANY resolution
+				endY = (vh - phoneHeight) / 2;
+			} else {
+				// Fallback layout when elements are unavailable
+				const maxW = Math.min(1280, vw);
+				const contentLeft = (vw - maxW) / 2;
+				endX = contentLeft + maxW * 0.06;
+				endY = (vh - phoneHeight) / 2;
+			}
+
+			// Track the start position (measured when trigger activates)
+			let startX, startY, startW;
+
+			ctx = gsap.context(() => {
+				ScrollTrigger.create({
+					// Trigger based on call-now-section so the animation completes
+					// when the section is centered — works on all screen sizes
+					trigger: section || sectionRef.current,
+					start: 'top bottom',
+					end: 'center center',
+					scrub: 2,
+					onEnter: () => {
+						// Snapshot current viewport position and switch to fixed
+						const rect = phone.getBoundingClientRect();
+						startX = rect.left;
+						startY = rect.top;
+						startW = rect.width;
+						phone.style.position = 'fixed';
+						phone.style.left = startX + 'px';
+						phone.style.top = startY + 'px';
+						phone.style.width = startW + 'px';
+						phone.style.bottom = 'auto';
+						phone.style.right = 'auto';
+						phone.style.zIndex = '50';
+					},
+					onLeave: () => {
+						// Animation complete: hide animated phone and instantly show static
+						const staticPhone = document.getElementById('static-phone');
+						if (staticPhone) staticPhone.style.opacity = '1';
+						phone.style.display = 'none';
+					},
+					onEnterBack: () => {
+						// Scrolling back up: show animated phone, hide static
+						if (startX === undefined) return;
+						phone.style.display = '';
+						const staticPhone = document.getElementById('static-phone');
+						if (staticPhone) staticPhone.style.opacity = '0';
+						phone.style.position = 'fixed';
+						phone.style.left = startX + 'px';
+						phone.style.top = startY + 'px';
+						phone.style.width = startW + 'px';
+						phone.style.zIndex = '50';
+					},
+					onLeaveBack: () => {
+						// Fully exited backward — restore to hero layout
+						phone.style.position = '';
+						phone.style.left = '';
+						phone.style.top = '';
+						phone.style.width = '';
+						phone.style.bottom = '';
+						phone.style.right = '';
+						phone.style.zIndex = '';
+						phone.style.transform = '';
+						phone.style.filter =
+							'drop-shadow(0 20px 40px rgba(0,0,0,0.25))';
+					},
+					onUpdate: (self) => {
+						if (startX === undefined) return;
+
+						const p = self.progress;
+						const ease = gsap.parseEase('power2.inOut');
+						const ep = ease(p);
+
+						const dx = (endX - startX) * ep;
+						const dy = (endY - startY) * ep;
+						const scale = 1 + 0.15 * ep;
+						const rotY = 12 * ep;
+						const rotX = 3 * ep;
+						const rotZ = 0 * ep;
+
+						phone.style.transform = `translate(${dx}px, ${dy}px) scale(${scale}) perspective(800px) rotateY(${rotY}deg) rotateX(${rotX}deg) rotateZ(${rotZ}deg)`;
+
+						// Shadow expands dynamically as phone "lifts"
+						const shadowX = -15 * ep;
+						const shadowBlur = 40 + 10 * ep;
+						const shadowY = 20 + 30 * ep;
+						const shadowOpacity = 0.25 + 0.25 * ep;
+						phone.style.filter = `drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowOpacity}))`;
+					},
+				});
+			});
+		}, 1000);
+
+		const handleResize = () => {
+			if (animationKilled) return;
+			animationKilled = true;
+			setIsKilled(true);
+			clearTimeout(timer);
+			if (ctx) {
+				ctx.revert();
+				ctx = null;
+			}
+			window.dispatchEvent(new Event('heroAnimationKilled'));
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			clearTimeout(timer);
+			if (ctx) ctx.revert();
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [stage]);
 
 	return (
-		<section className="relative min-h-screen flex items-center pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-32 overflow-hidden">
-			{/* Gradient mesh background */}
-			<div className="absolute inset-0 mesh-warm" />
-
-			{/* Faint dot grid */}
-			<div
-				className="absolute inset-0 opacity-[0.04]"
-				style={{
-					backgroundImage: 'radial-gradient(circle, var(--text-faint) 1px, transparent 1px)',
-					backgroundSize: '32px 32px',
-				}}
-			/>
-
-			<div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 w-full">
-				<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-					{/* Left: Copy — takes 7 cols on lg */}
-					<motion.div
-						className="lg:col-span-7"
-						variants={container}
-						initial="hidden"
-						animate="visible"
-					>
-						{/* Eyebrow */}
-						<motion.div variants={item} className="mb-7">
-							<span className="inline-flex items-center gap-2 font-body text-[11px] font-semibold tracking-[0.18em] uppercase text-[var(--terracotta)]">
-								<span className="w-8 h-[1.5px] bg-[var(--terracotta)] rounded-full" />
-								Phone handling for restaurants
-							</span>
-						</motion.div>
-
-						{/* Headline — oversized Syne with serif italic accent */}
-						<motion.h1
-							variants={item}
-							className="font-display text-[3rem] sm:text-[4rem] lg:text-[4.75rem] xl:text-[5.5rem] leading-[0.95] tracking-[-0.03em] text-[var(--text)] mb-7"
-						>
-							Your restaurant&apos;s
-							<br />
-							phone line.
-							<br />
-							<span className="font-serif italic text-[var(--terracotta)]">Handled.</span>
-						</motion.h1>
-
-						{/* Subline */}
-						<motion.p
-							variants={item}
-							className="font-body text-base sm:text-lg text-[var(--text-muted)] leading-relaxed max-w-md mb-9"
-						>
-							Asterra answers every call, takes orders, and handles questions — so your team stays on the line.
-						</motion.p>
-
-						{/* CTAs */}
-						<motion.div variants={item} className="flex flex-col sm:flex-row items-start gap-3.5">
-							<Link href="/contact">
-								<motion.div
-									className="btn-primary text-[15px] px-7 py-3.5 cursor-pointer"
-									whileHover={{ scale: 1.03, boxShadow: '0 8px 32px rgba(200, 67, 43, 0.3)' }}
-									whileTap={{ scale: 0.97 }}
-									transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-								>
-									Book a Demo
-								</motion.div>
-							</Link>
-
-							<motion.a
-								href="tel:+14374944696"
-								className="btn-ghost text-[15px] px-7 py-3.5 cursor-pointer"
-								whileHover={{ scale: 1.03 }}
-								whileTap={{ scale: 0.97 }}
-								transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-							>
-								<svg className="w-4 h-4 text-[var(--terracotta)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-									<path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-								</svg>
-								Call the live demo
-							</motion.a>
-						</motion.div>
-
-						{/* Trust signals */}
-						<motion.div variants={item} className="flex items-center gap-6 mt-10">
-							<div className="flex items-center gap-2">
-								<div className="w-2 h-2 rounded-full bg-emerald-500" style={{ animation: 'pulse-dot 2s ease-in-out infinite' }} />
-								<span className="font-body text-xs text-[var(--text-faint)]">Live now</span>
-							</div>
-							<span className="font-body text-xs text-[var(--text-faint)]">Serving Toronto & the GTA</span>
-						</motion.div>
-					</motion.div>
-
-					{/* Right: Media Placeholder — takes 5 cols */}
-					<motion.div
-						className="lg:col-span-5 relative"
-						variants={floatUp}
-						initial="hidden"
-						animate="visible"
-					>
-						{/*
-						 ╔══════════════════════════════════════════════════════════════╗
-						 ║  MEDIA PLACEHOLDER — HERO MEDIA                            ║
-						 ║                                                             ║
-						 ║  Type: Video or Image                                       ║
-						 ║  Aspect: ~4:5 portrait (phone mockup)                       ║
-						 ║  Size: 600x750px                                            ║
-						 ║                                                             ║
-						 ║  OPTION A (Recommended): iPhone mockup showing a live       ║
-						 ║  Asterra call — caller asks about menu, system responds.    ║
-						 ║  Use existing /heroiphone.png as starting point.            ║
-						 ║                                                             ║
-						 ║  OPTION B: Short looping video (8-12s) of the phone         ║
-						 ║  interface — call comes in, order is taken, lands in POS.   ║
-						 ║                                                             ║
-						 ║  Art direction: Premium product shot feel. Warm lighting.   ║
-						 ║  Slight float animation. Soft shadow beneath for depth.     ║
-						 ╚══════════════════════════════════════════════════════════════╝
-						*/}
-						<div className="relative">
-							{/* Terracotta glow behind */}
-							<div
-								className="absolute inset-0 -m-10 rounded-[3rem]"
-								style={{
-									background: 'radial-gradient(ellipse at 50% 40%, rgba(200, 67, 43, 0.1) 0%, transparent 65%)',
-									filter: 'blur(50px)',
-								}}
-							/>
-
-							{/* Main media frame */}
-							<div
-								className="relative glass-card rounded-[var(--r-xl)] overflow-hidden"
-								style={{ animation: 'float 7s ease-in-out infinite' }}
-							>
-								<div
-									className="media-slot rounded-[var(--r-xl)]"
-									style={{ aspectRatio: '4/5', minHeight: '420px' }}
-								>
-									<div className="text-center p-10">
-										<div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-white/60 flex items-center justify-center">
-											<svg className="w-7 h-7 text-[var(--text-faint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-												<path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-											</svg>
-										</div>
-										<p className="font-body text-sm font-medium text-[var(--text-muted)]">Hero Media</p>
-										<p className="font-body text-xs text-[var(--text-faint)] mt-1">Phone mockup or product video</p>
-									</div>
-								</div>
-							</div>
-
-							{/* Floating stat — bottom left */}
-							<motion.div
-								className="absolute -bottom-5 -left-4 sm:-bottom-6 sm:-left-6 glass-solid rounded-[var(--r-md)] px-5 py-3.5"
-								initial={{ opacity: 0, x: -24 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ delay: 1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-							>
-								<p className="font-body text-[11px] text-[var(--text-faint)] font-medium uppercase tracking-wider">Calls answered</p>
-								<p className="font-display text-xl font-bold text-[var(--text)] mt-0.5">24/7</p>
-							</motion.div>
-
-							{/* Floating stat — top right */}
-							<motion.div
-								className="absolute -top-4 -right-3 sm:-top-5 sm:-right-5 glass-solid rounded-[var(--r-md)] px-5 py-3.5"
-								initial={{ opacity: 0, x: 24 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ delay: 1.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-							>
-								<p className="font-body text-[11px] text-[var(--text-faint)] font-medium uppercase tracking-wider">Status</p>
-								<div className="flex items-center gap-2 mt-0.5">
-									<div className="w-2 h-2 rounded-full bg-emerald-500" />
-									<p className="font-body text-sm font-semibold text-emerald-700">Active</p>
-								</div>
-							</motion.div>
-						</div>
-					</motion.div>
+		<>
+			<section
+				ref={sectionRef}
+				className="relative min-h-[500px] lg:min-h-screen flex flex-col items-center justify-start pt-44 sm:pt-48 lg:pt-54 pb-16"
+			>
+				{/* Cloud decorations — lowest layer, below gradient */}
+				<div
+					className="absolute inset-0 pointer-events-none overflow-hidden"
+					style={{ zIndex: 0 }}
+				>
+					{/* Above heading, drifting right */}
+					<img
+						src="/cloud.png"
+						alt=""
+						className="absolute select-none hidden sm:block"
+						style={{
+							top: '8%',
+							right: '5%',
+							width: '260px',
+							opacity: 0.3,
+							transform: 'rotate(6deg) scaleX(-1)',
+						}}
+						draggable={false}
+					/>
+					{/* Near description, drifting left */}
+					<img
+						src="/cloud.png"
+						alt=""
+						className="absolute select-none"
+						style={{
+							top: '18%',
+							left: '3%',
+							width: '220px',
+							opacity: 0.25,
+							transform: 'rotate(-5deg)',
+						}}
+						draggable={false}
+					/>
+					{/* Left of video */}
+					<img
+						src="/cloud.png"
+						alt=""
+						className="absolute select-none"
+						style={{
+							top: '52%',
+							left: '1%',
+							width: '360px',
+							opacity: 0.5,
+							transform: 'rotate(-8deg)',
+						}}
+						draggable={false}
+					/>
+					{/* Right of video */}
+					<img
+						src="/cloud.png"
+						alt=""
+						className="absolute select-none hidden sm:block"
+						style={{
+							top: '42%',
+							right: '0%',
+							width: '320px',
+							opacity: 0.45,
+							transform: 'rotate(10deg) scaleX(-1)',
+						}}
+						draggable={false}
+					/>
+					{/* Below video, left-center */}
+					<img
+						src="/cloud.png"
+						alt=""
+						className="absolute select-none"
+						style={{
+							bottom: '4%',
+							left: '18%',
+							width: '280px',
+							opacity: 0.35,
+							transform: 'rotate(5deg)',
+						}}
+						draggable={false}
+					/>
+					{/* Below video, right-center */}
+					<img
+						src="/cloud.png"
+						alt=""
+						className="absolute select-none hidden sm:block"
+						style={{
+							bottom: '1%',
+							right: '12%',
+							width: '340px',
+							opacity: 0.4,
+							transform: 'rotate(-4deg) scaleX(-1)',
+						}}
+						draggable={false}
+					/>
 				</div>
-			</div>
-		</section>
-	);
-};
 
-export default HeroSection;
+				{/* Subtle radial blue gradient background */}
+				<div
+					className="absolute inset-0 pointer-events-none"
+					style={{
+						zIndex: 1,
+						background: `
+							radial-gradient(ellipse 100% 80% at 50% 50%, rgba(147, 197, 253, 0.4) 0%, rgba(191, 219, 254, 0.2) 30%, transparent 60%),
+							radial-gradient(ellipse 70% 60% at 50% 55%, rgba(96, 165, 250, 0.2) 0%, transparent 55%),
+							radial-gradient(ellipse 50% 40% at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%)
+						`,
+					}}
+				/>
+
+				{/* Content */}
+				<div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 sm:px-8">
+					{/* Text block */}
+					<div className="text-center mb-10 sm:mb-14">
+						<h1
+							className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] font-bold text-black leading-[1.08] mb-5"
+							style={{
+								fontFamily:
+									'var(--font-inter), system-ui, sans-serif',
+								letterSpacing: '-0.03em',
+								opacity: stage >= 1 ? 1 : 0,
+								transform:
+									stage >= 1
+										? 'translateY(0)'
+										: 'translateY(20px)',
+								transition:
+									'opacity 0.6s ease-in-out, transform 0.6s ease-in-out',
+							}}
+						>
+							Smarter Phone Handling that
+							<br />
+							Answers, Books, and Orders
+						</h1>
+
+						<p
+							className="text-[#6B7280] text-base sm:text-lg max-w-[480px] mx-auto"
+							style={{
+								fontFamily:
+									'var(--font-inter), system-ui, sans-serif',
+								fontWeight: 400,
+								lineHeight: 1.6,
+								opacity: stage >= 2 ? 1 : 0,
+								transform:
+									stage >= 2
+										? 'translateY(0)'
+										: 'translateY(16px)',
+								transition:
+									'opacity 0.6s ease-in-out, transform 0.6s ease-in-out',
+							}}
+						>
+							A fully trained AI host for your business. Handles
+							the whole call, start to finish. No staff involved.
+						</p>
+					</div>
+
+					{/* Media container */}
+					<div className="relative max-w-[960px] mx-auto">
+						{/* Glow beneath container */}
+						<div className="hero-glow" />
+
+						{/* Glow Wrapper */}
+						<BorderGlow
+							className="relative rounded-[20px]"
+							borderWidth={2}
+							borderRadius={20}
+						>
+							<div
+								className="relative rounded-[20px] overflow-hidden bg-gray-900"
+								style={{ aspectRatio: '16 / 9.5' }}
+							>
+								<video
+									autoPlay
+									loop
+									muted
+									playsInline
+									disablePictureInPicture
+									className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+								>
+									<source
+										src="/herovideo.mp4"
+										type="video/mp4"
+									/>
+								</video>
+							</div>
+
+							<OrderCard visible={stage >= 3} />
+						</BorderGlow>
+
+						{/* Phone PNG */}
+						<div
+							ref={phoneRef}
+							className={`absolute -bottom-14 right-8 sm:-bottom-36 sm:right-4 z-30 w-[160px] sm:w-[200px] md:w-[240px] lg:w-[320px] ${isKilled ? 'hidden' : ''}`}
+							style={{
+								opacity: stage >= 4 ? 1 : 0,
+								transform:
+									stage >= 4
+										? 'translateY(0)'
+										: 'translateY(20px)',
+								transition:
+									'opacity 0.7s ease-in-out, transform 0.7s ease-in-out',
+								filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.25))',
+								transformStyle: 'preserve-3d',
+							}}
+						>
+							<Image
+								src="/phone.png"
+								alt="Phone showing active call with Asterra"
+								width={440}
+								height={880}
+								className="w-full h-auto"
+								priority
+								draggable={false}
+							/>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Spacer — gives the scroll animation room to complete before the next section */}
+			<div
+				className="hidden lg:block w-full"
+				style={{ height: '10vh' }}
+			/>
+		</>
+	);
+}

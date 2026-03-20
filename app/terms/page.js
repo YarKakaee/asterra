@@ -1,785 +1,457 @@
-'use client';
-
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useMobileDetection } from '../utils/mobileOptimization';
 
-const TermsAndConditionsPage = () => {
-	const heroRef = useRef(null);
-	const contentRef = useRef(null);
-	const isMobile = useMobileDetection();
-	const isHeroInView = useInView(heroRef, { once: true, margin: '-100px' });
-	const isContentInView = useInView(contentRef, {
-		once: true,
-		margin: '-50px',
-	});
+export const metadata = {
+	title: 'Terms & Conditions',
+	description: 'Terms and Conditions for Asterra Solutions Inc., governing your use of our AI-powered phone handling services.',
+};
 
-	// Animation variants
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				duration: 0.8,
-				staggerChildren: 0.1,
-			},
-		},
-	};
-
-	const headerVariants = {
-		hidden: { opacity: 0, y: 30 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				duration: 0.8,
-				ease: 'easeOut',
-			},
-		},
-	};
-
-	const sectionVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				duration: 0.6,
-				ease: 'easeOut',
-			},
-		},
-	};
-
-	const currentDate = new Date().toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
+export default function TermsPage() {
+	const h2 =
+		'text-[1.25rem] sm:text-[1.4rem] md:text-[1.5rem] font-bold text-black leading-[1.2] mt-12 mb-4';
+	const h3 =
+		'text-[1rem] sm:text-[1.1rem] font-semibold text-black leading-[1.3] mt-8 mb-3';
+	const p = 'text-[14px] sm:text-[15px] text-[#374151] leading-[1.8] mb-4';
+	const ul =
+		'list-disc pl-6 text-[14px] sm:text-[15px] text-[#374151] leading-[1.8] mb-4 flex flex-col gap-1.5';
+	const strong = 'font-semibold text-black';
+	const font = 'var(--font-inter), system-ui, sans-serif';
 
 	return (
 		<>
-			<Navbar />
-
-			<main>
-				{/* Hero Section */}
-				<section
-					ref={heroRef}
-					className="relative py-20 lg:py-36 overflow-hidden lg:pt-54"
-					style={{
-						background:
-							'linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 0.8) 30%, rgba(241, 245, 249, 0.6) 70%, rgba(255, 255, 255, 1) 100%)',
-					}}
-				>
-					{/* Texture overlay - simplified for mobile performance */}
-					{!isMobile ? (
-						// Desktop: Full blur flow effect
-						<div className="absolute inset-0">
-							{/* Base texture pattern */}
-							<div
-								className="absolute inset-0 opacity-25"
-								style={{
-									backgroundImage:
-										'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 3px, transparent 0)',
-									backgroundSize: '20px 20px',
-								}}
-							/>
-							{/* Blurred texture transition layers */}
-							<div
-								className="absolute inset-0 opacity-20"
-								style={{
-									backgroundImage:
-										'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.1) 2px, transparent 0)',
-									backgroundSize: '20px 20px',
-									filter: 'blur(1px)',
-									maskImage:
-										'linear-gradient(180deg, black 0%, black 60%, transparent 85%)',
-									WebkitMaskImage:
-										'linear-gradient(180deg, black 0%, black 60%, transparent 85%)',
-								}}
-							/>
-							<div
-								className="absolute inset-0 opacity-15"
-								style={{
-									backgroundImage:
-										'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0)',
-									backgroundSize: '20px 20px',
-									filter: 'blur(2px)',
-									maskImage:
-										'linear-gradient(180deg, black 20%, black 70%, transparent 90%)',
-									WebkitMaskImage:
-										'linear-gradient(180deg, black 20%, black 70%, transparent 90%)',
-								}}
-							/>
-							{/* Final gradient overlay for smooth color transition */}
-							<div
-								className="absolute inset-0"
-								style={{
-									background:
-										'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.6) 70%, rgba(255,255,255,0.9) 100%)',
-								}}
-							/>
-						</div>
-					) : (
-						// Mobile: Simple texture with basic gradient
-						<div className="absolute inset-0">
-							<div
-								className="absolute inset-0 opacity-15"
-								style={{
-									backgroundImage:
-										'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.1) 2px, transparent 0)',
-									backgroundSize: '24px 24px',
-								}}
-							/>
-							<div
-								className="absolute inset-0"
-								style={{
-									background:
-										'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 40%, rgba(255,255,255,0.8) 80%, rgba(255,255,255,1) 100%)',
-								}}
-							/>
-						</div>
-					)}
-
-					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-						<motion.div
-							variants={containerVariants}
-							initial="hidden"
-							animate={isHeroInView ? 'visible' : 'hidden'}
-							className="text-center"
-						>
-							{/* Glass Badge */}
-							<motion.div className="mb-8">
-								<div className="inline-flex items-center px-6 py-3 glass-plaque rounded-full text-sm font-semibold text-gray-800">
-									Legal Terms. Clear Expectations.
-								</div>
-							</motion.div>
-
-							{/* Main Headline */}
-							<motion.h1
-								variants={headerVariants}
-								className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-inset"
-							>
-								Terms & Conditions
-							</motion.h1>
-
-							<motion.p
-								variants={headerVariants}
-								className="text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
-							>
-								Clear terms and conditions that govern our
-								business relationship and ensure mutual success
-								in your AI automation journey.
-							</motion.p>
-
-							<motion.div
-								variants={headerVariants}
-								className="text-sm text-gray-500"
-							>
-								Last Updated: {currentDate}
-							</motion.div>
-						</motion.div>
+			<main
+				className="pt-32 sm:pt-40 pb-20 sm:pb-28"
+				style={{ fontFamily: font }}
+			>
+				<div className="w-full max-w-[720px] mx-auto px-5 sm:px-8">
+					{/* Header */}
+					<h1
+						className="text-[1.75rem] sm:text-[2rem] md:text-[2.25rem] font-bold text-black leading-[1.1] mb-4"
+						style={{ letterSpacing: '-0.03em' }}
+					>
+						Terms &amp; Conditions
+					</h1>
+					<div className="flex flex-wrap gap-x-6 gap-y-1 text-[13px] sm:text-[14px] text-[#9CA3AF] mb-10">
+						<span>
+							<span className={strong}>Last Updated:</span> March
+							20, 2026
+						</span>
+						<span>
+							<span className={strong}>Effective Date:</span>{' '}
+							March 20, 2026
+						</span>
 					</div>
-				</section>
+					<div className="h-px bg-[#e5e7eb] mb-10" />
 
-				{/* Content Section */}
-				<section
-					ref={contentRef}
-					className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-gray-50"
-				>
-					<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-						<motion.div
-							variants={containerVariants}
-							initial="hidden"
-							animate={isContentInView ? 'visible' : 'hidden'}
-							className="prose prose-lg max-w-none"
-						>
-							{/* Agreement to Terms */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									1. Agreement to Terms
-								</h2>
-								<div className="bg-gradient-to-r from-gray-50 to-blue-50/30 rounded-2xl p-6 border border-gray-100">
-									<p className="text-gray-700 leading-relaxed mb-0">
-										By accessing our website at asterra.ca,
-										engaging our services, or entering into
-										a service agreement with Asterra
-										(&quot;Company,&quot; &quot;we,&quot;
-										&quot;us,&quot; or &quot;our&quot;), you
-										(&quot;Client,&quot; &quot;you,&quot; or
-										&quot;your&quot;) agree to be bound by
-										these Terms and Conditions. If you do
-										not agree to these terms, you may not
-										use our services or website.
-									</p>
-								</div>
-							</motion.div>
+					{/* 1 */}
+					<h2 className={h2}>1. Agreement</h2>
+					<p className={p}>
+						These Terms and Conditions (&ldquo;Terms&rdquo;) govern
+						your use of Asterra Solutions Inc.&apos;s website
+						(asterra.ca) and services. By using our website, booking
+						a consultation, or entering into a service agreement
+						with us, you agree to be bound by these Terms.
+					</p>
+					<p className={p}>
+						References to &ldquo;Asterra,&rdquo; &ldquo;we,&rdquo;
+						&ldquo;us,&rdquo; or &ldquo;our&rdquo; refer to Asterra
+						Solutions Inc. References to &ldquo;Client,&rdquo;
+						&ldquo;you,&rdquo; or &ldquo;your&rdquo; refer to the
+						business or individual engaging our services.
+					</p>
 
-							{/* Description of Services */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-8">
-									2. Description of Services
-								</h2>
+					{/* 2 */}
+					<h2 className={h2}>2. Our Services</h2>
+					<p className={p}>
+						Asterra provides AI-powered phone handling services for
+						service-based businesses. Our services include:
+					</p>
+					<ul className={ul}>
+						<li>
+							Configuring and deploying a custom AI phone agent
+							trained on your business, menu, hours, policies, and
+							FAQs
+						</li>
+						<li>
+							Answering inbound calls on behalf of your business
+						</li>
+						<li>
+							Taking and placing orders directly into your
+							connected POS system
+						</li>
+						<li>
+							Handling reservation and booking requests through
+							your connected platforms
+						</li>
+						<li>Answering common questions from callers</li>
+						<li>Transferring calls to your staff when required</li>
+						<li>
+							Providing a client dashboard with call logs,
+							metrics, and controls
+						</li>
+						<li>
+							Sending automated SMS confirmations to callers
+							following a booking or reservation (where enabled)
+						</li>
+					</ul>
+					<p className={p}>
+						The specific scope of services for your business is
+						detailed in your individual service agreement.
+					</p>
 
-								<div className="space-y-8">
-									<div className="relative">
-										<div
-											className="rounded-2xl p-8 border"
-											style={{
-												background:
-													'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%)',
-												backdropFilter: 'blur(10px)',
-												border: '1px solid rgba(59, 130, 246, 0.1)',
-												boxShadow:
-													'0 4px 20px rgba(0, 0, 0, 0.05)',
-											}}
-										>
-											<h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-												<div className="w-2 h-2 bg-[#FF5633] rounded-full mr-3"></div>
-												Automation Services
-											</h3>
-											<p className="text-gray-700 mb-4">
-												We provide business automation
-												solutions including but not
-												limited to:
-											</p>
-											<ul className="space-y-3 text-gray-700">
-												<li>
-													<strong>
-														AI receptionist systems:
-													</strong>{' '}
-													Call handling and customer
-													interaction automation
-												</li>
-												<li>
-													<strong>
-														Lead nurturing:
-													</strong>{' '}
-													Customer relationship
-													management automation
-												</li>
-												<li>
-													<strong>
-														Website development:
-													</strong>{' '}
-													Custom websites and
-													optimization
-												</li>
-												<li>
-													<strong>
-														Process automation:
-													</strong>{' '}
-													Custom business workflow
-													solutions
-												</li>
-												<li>
-													<strong>
-														System integration:
-													</strong>{' '}
-													Connecting your existing
-													tools and platforms
-												</li>
-											</ul>
-										</div>
-									</div>
+					{/* 3 */}
+					<h2 className={h2}>3. Service Setup and Onboarding</h2>
 
-									<div className="relative">
-										<div
-											className="rounded-2xl p-8 border"
-											style={{
-												background:
-													'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%)',
-												backdropFilter: 'blur(10px)',
-												border: '1px solid rgba(59, 130, 246, 0.1)',
-												boxShadow:
-													'0 4px 20px rgba(0, 0, 0, 0.05)',
-											}}
-										>
-											<h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-												<div className="w-2 h-2 bg-[#FF5633] rounded-full mr-3"></div>
-												Service Customization
-											</h3>
-											<p className="text-gray-700">
-												All services are customized to
-												meet specific client
-												requirements as outlined in
-												individual service agreements or
-												statements of work.
-											</p>
-										</div>
-									</div>
-								</div>
-							</motion.div>
+					<h3 className={h3}>3.1 Setup Period</h3>
+					<p className={p}>
+						Upon signing a service agreement, we will begin
+						configuring your AI agent. Typical setup takes 3 to 10
+						business days depending on the complexity of your
+						business, integrations required, and responsiveness in
+						providing necessary information.
+					</p>
 
-							{/* Pricing and Payment */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-8">
-									3. Pricing and Payment Terms
-								</h2>
+					<h3 className={h3}>
+						3.2 Client Responsibilities During Setup
+					</h3>
+					<p className={p}>
+						You agree to provide accurate and complete information
+						about your business, including menu details, pricing,
+						hours of operation, specials, policies, and any other
+						information needed to train and configure your agent
+						accurately.
+					</p>
 
-								<div className="grid md:grid-cols-3 gap-6">
-									<div
-										className="rounded-2xl p-6 border"
-										style={{
-											background:
-												'linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(34, 197, 94, 0.02) 100%)',
-											border: '1px solid rgba(34, 197, 94, 0.1)',
-										}}
-									>
-										<h3 className="text-lg font-semibold text-gray-900 mb-3">
-											Fees & Pricing
-										</h3>
-										<ul className="space-y-2 text-gray-700 text-sm">
-											<li>
-												• Service fees as specified in
-												agreements
-											</li>
-											<li>
-												• All prices in Canadian dollars
-											</li>
-											<li>
-												• May include setup and
-												recurring fees
-											</li>
-											<li>
-												• Usage-based charges where
-												applicable
-											</li>
-										</ul>
-									</div>
+					<h3 className={h3}>3.3 Testing</h3>
+					<p className={p}>
+						We will conduct testing before your agent goes live. You
+						will have an opportunity to review and approve the
+						agent&apos;s behavior prior to launch.
+					</p>
 
-									<div
-										className="rounded-2xl p-6 border"
-										style={{
-											background:
-												'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%)',
-											border: '1px solid rgba(59, 130, 246, 0.1)',
-										}}
-									>
-										<h3 className="text-lg font-semibold text-gray-900 mb-3">
-											Payment Terms
-										</h3>
-										<ul className="space-y-2 text-gray-700 text-sm">
-											<li>• Net 30 days payment terms</li>
-											<li>
-												• 1.5% monthly interest on late
-												payments
-											</li>
-											<li>
-												• Service suspension for overdue
-												accounts
-											</li>
-											<li>
-												• All fees are non-refundable
-											</li>
-										</ul>
-									</div>
+					{/* 4 */}
+					<h2 className={h2}>4. Pricing and Payment</h2>
 
-									<div
-										className="rounded-2xl p-6 border"
-										style={{
-											background:
-												'linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(168, 85, 247, 0.02) 100%)',
-											border: '1px solid rgba(168, 85, 247, 0.1)',
-										}}
-									>
-										<h3 className="text-lg font-semibold text-gray-900 mb-3">
-											Taxes & Compliance
-										</h3>
-										<ul className="space-y-2 text-gray-700 text-sm">
-											<li>
-												• Fees exclusive of applicable
-												taxes
-											</li>
-											<li>
-												• Taxes added as required by law
-											</li>
-											<li>
-												• Client responsible for
-												compliance
-											</li>
-											<li>
-												• All applicable regulations
-												apply
-											</li>
-										</ul>
-									</div>
-								</div>
-							</motion.div>
+					<h3 className={h3}>4.1 Flat Monthly Pricing</h3>
+					<p className={p}>
+						Asterra charges a flat monthly fee as specified in your
+						service agreement. Pricing is not usage-based &mdash;
+						your monthly fee does not change based on the number of
+						calls handled within your plan&apos;s included usage.
+					</p>
 
-							{/* Client Responsibilities */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									4. Client Responsibilities
-								</h2>
-								<div className="bg-gradient-to-r from-orange-50 to-red-50/30 rounded-2xl p-6 border border-orange-100 mb-6">
-									<p className="text-gray-700 font-medium mb-0">
-										<strong>
-											Your success depends on
-											collaboration.
-										</strong>{' '}
-										Here&apos;s what we need from you to
-										deliver exceptional results:
-									</p>
-								</div>
+					<h3 className={h3}>4.2 Payment Terms</h3>
+					<ul className={ul}>
+						<li>
+							Monthly fees are invoiced in advance at the start of
+							each billing period
+						</li>
+						<li>Payment is due within 14 days of invoice</li>
+						<li>
+							All fees are in Canadian dollars unless otherwise
+							specified
+						</li>
+						<li>
+							Applicable taxes (including HST/GST) will be added
+							to invoices as required
+						</li>
+					</ul>
 
-								<div className="space-y-6">
-									<div className="border-l-4 border-[#FF5633] pl-6">
-										<h3 className="text-lg font-semibold text-gray-900 mb-2">
-											Information and Access
-										</h3>
-										<p className="text-gray-700">
-											Provide accurate information, grant
-											reasonable system access, respond
-											promptly to requests, and maintain
-											security of login credentials.
-										</p>
-									</div>
+					<h3 className={h3}>4.3 Late Payment</h3>
+					<p className={p}>
+						Overdue invoices may incur interest at a rate of 1.5%
+						per month. We reserve the right to suspend your service
+						if payment is more than 30 days overdue, with reasonable
+						notice provided.
+					</p>
 
-									<div className="border-l-4 border-blue-500 pl-6">
-										<h3 className="text-lg font-semibold text-gray-900 mb-2">
-											System Requirements
-										</h3>
-										<p className="text-gray-700">
-											Ensure systems meet minimum
-											requirements, maintain reliable
-											internet connectivity, and keep
-											software updated as recommended.
-										</p>
-									</div>
+					<h3 className={h3}>4.4 Refunds</h3>
+					<p className={p}>
+						Monthly fees are non-refundable once a billing period
+						has commenced, except where required by applicable law.
+					</p>
 
-									<div className="border-l-4 border-purple-500 pl-6">
-										<h3 className="text-lg font-semibold text-gray-900 mb-2">
-											Legal Compliance
-										</h3>
-										<p className="text-gray-700">
-											Ensure your use of our services
-											complies with all applicable laws,
-											regulations, and industry standards
-											in your jurisdiction.
-										</p>
-									</div>
-								</div>
-							</motion.div>
+					<h3 className={h3}>4.5 Pricing Changes</h3>
+					<p className={p}>
+						We will provide at least 30 days written notice before
+						changing your monthly fee.
+					</p>
 
-							{/* Intellectual Property */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									5. Intellectual Property Rights
-								</h2>
-								<div
-									className="rounded-2xl p-8 border"
-									style={{
-										background:
-											'linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%)',
-										border: '1px solid rgba(34, 197, 94, 0.2)',
-									}}
-								>
-									<div className="grid md:grid-cols-3 gap-6">
-										<div className="flex items-start">
-											<div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-											<div>
-												<strong className="text-gray-900">
-													Our IP:
-												</strong>
-												<span className="text-gray-700">
-													{' '}
-													All proprietary technology,
-													software, and methodologies
-													remain our exclusive
-													property
-												</span>
-											</div>
-										</div>
-										<div className="flex items-start">
-											<div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-											<div>
-												<strong className="text-gray-900">
-													Your Content:
-												</strong>
-												<span className="text-gray-700">
-													{' '}
-													You retain ownership of your
-													business data and
-													pre-existing IP
-												</span>
-											</div>
-										</div>
-										<div className="flex items-start">
-											<div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-											<div>
-												<strong className="text-gray-900">
-													Custom Work:
-												</strong>
-												<span className="text-gray-700">
-													{' '}
-													Custom solutions become your
-													property upon full payment
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</motion.div>
+					{/* 5 */}
+					<h2 className={h2}>5. Cancellation and Termination</h2>
 
-							{/* Service Level Commitments */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									6. Service Level Commitments
-								</h2>
+					<h3 className={h3}>5.1 Cancellation by Client</h3>
+					<p className={p}>
+						You may cancel your service at any time by providing
+						written notice to hello@asterra.ca. Your service will
+						continue until the end of the current billing period. No
+						refund will be issued for the remaining days of that
+						period.
+					</p>
 
-								<div className="space-y-4">
-									{[
-										{
-											title: 'Uptime and Availability',
-											desc: '99.5% uptime target for hosted services with advance notice of scheduled maintenance',
-										},
-										{
-											title: 'Support Services',
-											desc: 'Business hours support Monday-Friday 9 AM to 5 PM EST with emergency support available',
-										},
-										{
-											title: 'Response Times',
-											desc: 'Response times vary by support tier as specified in individual service agreements',
-										},
-										{
-											title: 'Service Credits',
-											desc: 'Service credits may be available for significant downtime as outlined in agreements',
-										},
-									].map((commitment, index) => (
-										<div
-											key={index}
-											className="flex items-start p-4 rounded-xl border border-gray-100 bg-gray-50/50"
-										>
-											<div className="w-8 h-8 bg-[#FF5633] text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
-												{index + 1}
-											</div>
-											<div>
-												<h3 className="font-semibold text-gray-900 mb-1">
-													{commitment.title}
-												</h3>
-												<p className="text-gray-700 text-sm">
-													{commitment.desc}
-												</p>
-											</div>
-										</div>
-									))}
-								</div>
-							</motion.div>
+					<h3 className={h3}>5.2 Pilot Agreements</h3>
+					<p className={p}>
+						If your service agreement includes a pilot period with
+						specific cancellation terms, those terms take precedence
+						over this section.
+					</p>
 
-							{/* Limitations of Liability */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									7. Limitations of Liability
-								</h2>
-								<div className="bg-gradient-to-r from-red-50 to-orange-50/30 rounded-2xl p-6 border border-red-100 mb-6">
-									<p className="text-gray-700 font-medium mb-4">
-										<strong>
-											Important Legal Disclaimers:
-										</strong>
-									</p>
-									<div className="space-y-3 text-sm text-gray-700">
-										<p>
-											<strong>
-												Warranty Disclaimer:
-											</strong>{' '}
-											Our services are provided &quot;AS
-											IS&quot; without warranties of any
-											kind, either express or implied,
-											including warranties of
-											merchantability, fitness for a
-											particular purpose, or
-											non-infringement.
-										</p>
-										<p>
-											<strong>
-												Limitation of Damages:
-											</strong>{' '}
-											Our total liability shall not exceed
-											the amount paid by you for services
-											in the twelve (12) months preceding
-											the claim.
-										</p>
-										<p>
-											<strong>Excluded Damages:</strong>{' '}
-											We shall not be liable for indirect,
-											incidental, special, consequential,
-											or punitive damages, including lost
-											profits or business interruption.
-										</p>
-									</div>
-								</div>
-							</motion.div>
+					<h3 className={h3}>5.3 Termination by Asterra</h3>
+					<p className={p}>
+						We reserve the right to terminate your service if:
+					</p>
+					<ul className={ul}>
+						<li>
+							Payment is not received within 30 days of the due
+							date after reasonable notice
+						</li>
+						<li>
+							You use our services in a manner that violates these
+							Terms or applicable law
+						</li>
+						<li>
+							Continuing to provide services becomes technically
+							or operationally impossible
+						</li>
+					</ul>
+					<p className={p}>
+						We will provide reasonable notice before termination
+						where possible.
+					</p>
 
-							{/* Termination */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									8. Termination
-								</h2>
+					<h3 className={h3}>5.4 Effect of Termination</h3>
+					<p className={p}>
+						Upon termination, your dashboard access will be
+						deactivated and your phone handling agent will be taken
+						offline. Call logs and data will be retained for 7 years
+						for legal and accounting purposes, and you may request
+						an export prior to termination.
+					</p>
 
-								<div className="grid md:grid-cols-2 gap-6">
-									<div
-										className="rounded-2xl p-6 border"
-										style={{
-											background:
-												'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%)',
-											border: '1px solid rgba(59, 130, 246, 0.1)',
-										}}
-									>
-										<h3 className="text-lg font-semibold text-gray-900 mb-3">
-											Termination for Convenience
-										</h3>
-										<p className="text-gray-700 text-sm">
-											Either party may terminate ongoing
-											services with 30 days written
-											notice, subject to any minimum
-											commitment periods in service
-											agreements.
-										</p>
-									</div>
+					{/* 6 */}
+					<h2 className={h2}>6. Phone Numbers and Call Forwarding</h2>
+					<p className={p}>
+						You retain your existing business phone numbers. Our
+						service is activated by forwarding your calls to a
+						number we provide. You may revert your call forwarding
+						at any time to restore normal phone operation.
+					</p>
+					<p className={p}>
+						We are not responsible for any disruption to your phone
+						service caused by your phone carrier, forwarding
+						configuration errors made by you or your carrier, or any
+						outages outside our control.
+					</p>
 
-									<div
-										className="rounded-2xl p-6 border"
-										style={{
-											background:
-												'linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%)',
-											border: '1px solid rgba(239, 68, 68, 0.1)',
-										}}
-									>
-										<h3 className="text-lg font-semibold text-gray-900 mb-3">
-											Termination for Cause
-										</h3>
-										<p className="text-gray-700 text-sm">
-											Either party may terminate
-											immediately for material breach,
-											insolvency, or violation of
-											applicable laws, with 15 days cure
-											period for breaches.
-										</p>
-									</div>
-								</div>
-							</motion.div>
+					{/* 7 */}
+					<h2 className={h2}>
+						7. Integrations and Third-Party Systems
+					</h2>
 
-							{/* Dispute Resolution */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									9. Dispute Resolution
-								</h2>
-								<div
-									className="rounded-2xl p-8 border"
-									style={{
-										background:
-											'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)',
-										border: '1px solid rgba(59, 130, 246, 0.2)',
-									}}
-								>
-									<div className="grid md:grid-cols-2 gap-6">
-										<div>
-											<h3 className="font-semibold text-gray-900 mb-3">
-												Governing Law
-											</h3>
-											<p className="text-gray-700 text-sm">
-												These terms are governed by the
-												laws of the Province of Ontario
-												and Canada.
-											</p>
-										</div>
+					<h3 className={h3}>7.1 Access</h3>
+					<p className={p}>
+						To connect to your POS, reservation, or booking
+						platform, you authorize us to access those systems on
+						your behalf for the purpose of performing the
+						integration.
+					</p>
 
-										<div>
-											<h3 className="font-semibold text-gray-900 mb-3">
-												Resolution Process
-											</h3>
-											<p className="text-gray-700 text-sm">
-												Disputes should first be
-												addressed through good faith
-												negotiations, with binding
-												arbitration available if
-												unresolved.
-											</p>
-										</div>
-									</div>
-								</div>
-							</motion.div>
+					<h3 className={h3}>7.2 Third-Party Availability</h3>
+					<p className={p}>
+						Our ability to integrate with third-party platforms
+						depends on those platforms remaining accessible and
+						compatible. We are not responsible for disruptions
+						caused by changes to third-party APIs, platform outages,
+						or policy changes by those platforms.
+					</p>
 
-							{/* Contact Information */}
-							<motion.div
-								variants={sectionVariants}
-								className="mb-12"
-							>
-								<h2 className="text-3xl font-bold text-gray-900 mb-6">
-									10. Contact Information
-								</h2>
-								<div
-									className="rounded-2xl p-8 border"
-									style={{
-										background:
-											'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)',
-										border: '1px solid rgba(59, 130, 246, 0.2)',
-									}}
-								>
-									<p className="text-gray-700">
-										For questions about these Terms and
-										Conditions, please contact us at{' '}
-										<strong>legal@asterra.ca</strong>
-									</p>
-								</div>
-							</motion.div>
+					<h3 className={h3}>7.3 Accuracy</h3>
+					<p className={p}>
+						We will make reasonable efforts to ensure orders and
+						reservations are placed accurately. In the event of an
+						error, our agent is instructed to remain professional
+						and direct the caller to resolve the issue with your
+						staff at the point of fulfillment. We are not liable for
+						losses arising from order errors where we have followed
+						the information and rules you provided during setup.
+					</p>
 
-							{/* Footer */}
-							<motion.div
-								variants={sectionVariants}
-								className="text-center py-8 border-t border-gray-200"
-							>
-								<p className="text-gray-500 text-sm mb-4">
-									These Terms and Conditions are effective as
-									of {currentDate} and supersede all previous
-									versions.
-								</p>
-								<p className="text-gray-700 font-medium">
-									<strong>
-										By using our services or website, you
-										acknowledge that you have read,
-										understood, and agree to be bound by
-										these Terms and Conditions.
-									</strong>
-								</p>
-							</motion.div>
-						</motion.div>
-					</div>
-				</section>
+					{/* 8 */}
+					<h2 className={h2}>8. Kill Switch and Control Features</h2>
+					<p className={p}>
+						Your dashboard includes a kill switch that allows you to
+						disable phone handling at any time. When disabled, calls
+						will revert to your normal phone line. We also provide
+						an info-only mode that disables order taking while
+						keeping question answering active.
+					</p>
+					<p className={p}>
+						You are responsible for using these controls
+						appropriately. Asterra is not liable for calls that are
+						not handled during periods when you have disabled the
+						service.
+					</p>
+
+					{/* 9 */}
+					<h2 className={h2}>9. AI Limitations and Disclaimer</h2>
+					<p className={p}>
+						Our AI phone agents are designed to handle the most
+						common call types accurately. However, AI systems are
+						not perfect. By using our service, you acknowledge that:
+					</p>
+					<ul className={ul}>
+						<li>
+							The agent may occasionally misunderstand a caller or
+							make an error
+						</li>
+						<li>
+							We make no guarantee that every call will be handled
+							perfectly
+						</li>
+						<li>
+							Our agents are not a substitute for human judgment
+							in complex, sensitive, or unusual situations
+						</li>
+						<li>
+							Smart escalation features are designed to transfer
+							such calls to your staff, but this does not
+							guarantee every edge case will be identified
+						</li>
+					</ul>
+					<p className={p}>
+						We continuously monitor and improve agent performance,
+						and we will work with you to address any recurring
+						issues.
+					</p>
+
+					{/* 10 */}
+					<h2 className={h2}>10. Demo System</h2>
+					<p className={p}>
+						Asterra operates a public demo phone number that routes
+						to a fictional restaurant for prospective clients to
+						experience the service. This demo system is provided for
+						demonstration purposes only. Any information shared with
+						the demo system is not retained beyond 90 days and is
+						not used for any purpose other than demonstrating the
+						service.
+					</p>
+
+					{/* 11 */}
+					<h2 className={h2}>11. Confidentiality</h2>
+					<p className={p}>
+						Both parties agree to keep confidential any non-public
+						information shared in connection with the service,
+						including business data, pricing, configuration details,
+						and operational information. This obligation survives
+						termination of the service.
+					</p>
+
+					{/* 12 */}
+					<h2 className={h2}>12. Intellectual Property</h2>
+
+					<h3 className={h3}>12.1 Asterra&apos;s Property</h3>
+					<p className={p}>
+						All software, systems, AI models, dashboard interfaces,
+						and technology used to provide the service remain the
+						property of Asterra. You receive a limited,
+						non-exclusive, non-transferable license to use the
+						dashboard and services during your active subscription.
+					</p>
+
+					<h3 className={h3}>12.2 Your Property</h3>
+					<p className={p}>
+						Your business information, menu data, call logs, and
+						customer data remain your property. We use this
+						information only to provide and improve the service.
+					</p>
+
+					{/* 13 */}
+					<h2 className={h2}>13. Limitation of Liability</h2>
+					<p className={p}>
+						To the maximum extent permitted by applicable law:
+					</p>
+					<ul className={ul}>
+						<li>
+							Asterra&apos;s total liability to you for any claim
+							arising from the service is limited to the fees paid
+							by you in the three months preceding the claim
+						</li>
+						<li>
+							We are not liable for indirect, incidental,
+							consequential, or punitive damages, including lost
+							revenue or lost orders
+						</li>
+						<li>
+							We are not liable for disruptions caused by
+							third-party systems, phone carriers, or internet
+							outages
+						</li>
+					</ul>
+					<p className={p}>
+						Nothing in these Terms limits liability for gross
+						negligence, willful misconduct, or fraud.
+					</p>
+
+					{/* 14 */}
+					<h2 className={h2}>14. Indemnification</h2>
+					<p className={p}>
+						You agree to indemnify and hold harmless Asterra from
+						any claims, losses, or damages arising from:
+					</p>
+					<ul className={ul}>
+						<li>
+							Your provision of inaccurate business information
+							that causes the agent to behave incorrectly
+						</li>
+						<li>
+							Your misuse of the dashboard or control features
+						</li>
+						<li>
+							Your violation of any applicable law in connection
+							with your use of the service
+						</li>
+					</ul>
+
+					{/* 15 */}
+					<h2 className={h2}>15. Governing Law</h2>
+					<p className={p}>
+						These Terms are governed by the laws of the Province of
+						Ontario and the laws of Canada applicable therein. Any
+						disputes not resolved through good faith negotiation
+						will be submitted to the courts of Ontario.
+					</p>
+
+					{/* 16 */}
+					<h2 className={h2}>16. Changes to These Terms</h2>
+					<p className={p}>
+						We may update these Terms from time to time. We will
+						notify you of material changes at least 30 days in
+						advance by email. Continued use of the service after the
+						effective date of changes constitutes acceptance.
+					</p>
+
+					{/* 17 */}
+					<h2 className={h2}>17. Entire Agreement</h2>
+					<p className={p}>
+						These Terms, together with your individual service
+						agreement, constitute the entire agreement between you
+						and Asterra with respect to the services. In the event
+						of a conflict, the service agreement takes precedence.
+					</p>
+
+					{/* 18 */}
+					<h2 className={h2}>18. Contact</h2>
+					<p className={p}>For questions about these Terms:</p>
+					<p className={p}>
+						<span className={strong}>Asterra Solutions Inc.</span>
+						<br />
+						Email: contact@asterra.ca
+						<br />
+						Website: asterra.ca
+					</p>
+				</div>
 			</main>
 
 			<Footer />
 		</>
 	);
-};
-
-export default TermsAndConditionsPage;
+}
