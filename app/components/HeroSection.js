@@ -182,7 +182,7 @@ export default function HeroSection() {
 		<>
 			<section
 				ref={sectionRef}
-				className="relative min-h-[500px] lg:min-h-screen flex flex-col items-center justify-start pt-44 sm:pt-48 lg:pt-54 pb-16"
+				className="relative z-40 min-h-[500px] lg:min-h-screen flex flex-col items-center justify-start pt-44 sm:pt-48 lg:pt-54 pb-16"
 			>
 				{/* Cloud decorations — lowest layer, below gradient */}
 				<div
