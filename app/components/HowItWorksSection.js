@@ -1,6 +1,7 @@
 'use client';
 
 import ScrollReveal from './ScrollReveal';
+import Image from 'next/image';
 
 const CARDS = [
 	{
@@ -46,11 +47,13 @@ function BentoCard({ image, title, description, className }) {
 		<div
 			className={`bento-card relative overflow-hidden rounded-3xl ${className}`}
 		>
-			<img
+			<Image
 				src={image}
 				alt={title}
-				className="absolute inset-0 w-full h-full object-cover"
+				fill
+				className="absolute inset-0 object-cover"
 				draggable={false}
+				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 			/>
 			<div className="bento-card-overlay absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
 				<h3

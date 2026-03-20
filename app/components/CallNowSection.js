@@ -47,8 +47,10 @@ export default function CallNowSection() {
 				className="absolute inset-0 pointer-events-none"
 				style={{ zIndex: 0 }}
 			>
-				<img
+				<Image
 					src="/Cloud.png"
+					width={600}
+					height={400}
 					alt=""
 					className="absolute select-none opacity-30"
 					style={{
