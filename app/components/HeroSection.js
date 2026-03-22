@@ -301,12 +301,13 @@ export default function HeroSection() {
 									'var(--font-inter), system-ui, sans-serif',
 								letterSpacing: '-0.03em',
 								opacity: stage >= 1 ? 1 : 0,
+								filter: stage >= 1 ? 'blur(0px)' : 'blur(8px)',
 								transform:
 									stage >= 1
 										? 'translateY(0)'
 										: 'translateY(20px)',
 								transition:
-									'opacity 0.6s ease-in-out, transform 0.6s ease-in-out',
+									'opacity 0.6s ease-in-out, filter 0.6s ease-in-out, transform 0.6s ease-in-out',
 							}}
 						>
 							Smarter Phone Handling that
@@ -315,19 +316,21 @@ export default function HeroSection() {
 						</h1>
 
 						<p
-							className="text-[#6B7280] text-[14px] sm:text-lg max-w-[480px] mx-auto"
+							className="text-[13px] sm:text-[18px] max-w-[480px] mx-auto"
 							style={{
 								fontFamily:
 									'var(--font-inter), system-ui, sans-serif',
 								fontWeight: 400,
+								color: 'rgb(23,23,23)',
 								lineHeight: 1.6,
 								opacity: stage >= 2 ? 1 : 0,
+								filter: stage >= 2 ? 'blur(0px)' : 'blur(6px)',
 								transform:
 									stage >= 2
 										? 'translateY(0)'
 										: 'translateY(16px)',
 								transition:
-									'opacity 0.6s ease-in-out, transform 0.6s ease-in-out',
+									'opacity 0.6s ease-in-out, filter 0.6s ease-in-out, transform 0.6s ease-in-out',
 							}}
 						>
 							A fully trained AI host for your business. Handles

@@ -98,7 +98,7 @@ export default function HowItWorksSection() {
 					</ScrollReveal>
 					<ScrollReveal delay={0.1}>
 						<p
-							className="text-[#6B7280] text-base sm:text-lg mx-auto"
+							className="text-[#6B7280] text-base mx-auto"
 							style={{
 								fontFamily:
 									'var(--font-inter), system-ui, sans-serif',
@@ -106,8 +106,8 @@ export default function HowItWorksSection() {
 								lineHeight: 1.6,
 							}}
 						>
-							Orders placed, tables booked, questions answered.
-							No staff required.
+							Orders placed, tables booked, questions answered. No
+							staff required.
 						</p>
 					</ScrollReveal>
 				</div>
@@ -121,10 +121,7 @@ export default function HowItWorksSection() {
 						margin="-60px"
 						className="md:col-span-4 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					>
-						<BentoCard
-							{...CARDS[0]}
-							className="h-full w-full"
-						/>
+						<BentoCard {...CARDS[0]} className="h-full w-full" />
 					</ScrollReveal>
 					<ScrollReveal
 						delay={0.1}
@@ -133,10 +130,7 @@ export default function HowItWorksSection() {
 						margin="-60px"
 						className="md:col-span-8 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					>
-						<BentoCard
-							{...CARDS[1]}
-							className="h-full w-full"
-						/>
+						<BentoCard {...CARDS[1]} className="h-full w-full" />
 					</ScrollReveal>
 
 					{/* Row 2 */}
@@ -147,10 +141,7 @@ export default function HowItWorksSection() {
 						margin="-60px"
 						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					>
-						<BentoCard
-							{...CARDS[2]}
-							className="h-full w-full"
-						/>
+						<BentoCard {...CARDS[2]} className="h-full w-full" />
 					</ScrollReveal>
 					<ScrollReveal
 						delay={0.2}
@@ -159,10 +150,7 @@ export default function HowItWorksSection() {
 						margin="-60px"
 						className="md:col-span-6 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					>
-						<BentoCard
-							{...CARDS[3]}
-							className="h-full w-full"
-						/>
+						<BentoCard {...CARDS[3]} className="h-full w-full" />
 					</ScrollReveal>
 
 					{/* Row 3 */}
@@ -173,10 +161,7 @@ export default function HowItWorksSection() {
 						margin="-60px"
 						className="md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					>
-						<BentoCard
-							{...CARDS[4]}
-							className="h-full w-full"
-						/>
+						<BentoCard {...CARDS[4]} className="h-full w-full" />
 					</ScrollReveal>
 					<ScrollReveal
 						delay={0.3}
@@ -185,10 +170,7 @@ export default function HowItWorksSection() {
 						margin="-60px"
 						className="md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[350px]"
 					>
-						<BentoCard
-							{...CARDS[5]}
-							className="h-full w-full"
-						/>
+						<BentoCard {...CARDS[5]} className="h-full w-full" />
 					</ScrollReveal>
 				</div>
 			</div>

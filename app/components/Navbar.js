@@ -48,7 +48,8 @@ export default function Navbar() {
 							<Link
 								key={link.href}
 								href={link.href}
-								className="nav-link relative px-4 py-2 text-[14px] font-medium text-gray-700 rounded-lg transition-colors duration-300 hover:text-black whitespace-nowrap"
+								className="nav-link relative px-4 py-2 text-[14px] font-medium rounded-lg transition-colors duration-300 hover:text-black whitespace-nowrap"
+								style={{ color: 'rgb(23,23,23)' }}
 							>
 								<span className="relative z-10">
 									{link.label}
