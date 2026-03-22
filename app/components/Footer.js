@@ -31,7 +31,7 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
 	return (
-		<footer>
+		<footer className="bg-white">
 			{/* Final CTA */}
 			<section className="relative pt-28 sm:pt-36 pb-20 sm:pb-28">
 				<div className="w-full max-w-6xl mx-auto px-5 sm:px-8 text-center">
@@ -54,8 +54,8 @@ export default function Footer() {
 							lineHeight: 1.6,
 						}}
 					>
-						Up and running in days. No disruption to how you
-						already operate.
+						Up and running in days. No disruption to how you already
+						operate.
 					</p>
 
 					<div className="flex items-center justify-center gap-3">
@@ -94,146 +94,137 @@ export default function Footer() {
 				</div>
 			</section>
 
-			{/* Dark footer */}
-			<div
-				className="relative"
-				style={{
-					background:
-						'linear-gradient(180deg, #010101 0%, #000 100%)',
-				}}
-			>
-				<div className="w-full max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16">
-					{/* Top row */}
-					<div className="flex flex-col sm:flex-row justify-between gap-10 sm:gap-8 mb-12">
-						{/* Logo + tagline */}
-						<div className="flex flex-col gap-3">
-							<Link
-								href="/"
-								className="flex items-center gap-2 w-fit"
-							>
-								<Image
-									src="/whitelogo.png"
-									alt="Asterra"
-									width={120}
-									height={30}
-									className="h-6 w-auto"
-									draggable={false}
-								/>
-							</Link>
-							<p
-								className="text-[13px] text-[#6B7280]"
-								style={{
-									fontFamily:
-										'var(--font-inter), system-ui, sans-serif',
-									fontWeight: 400,
-								}}
-							>
-								AI-powered phone handling.
-							</p>
-						</div>
-
-						{/* Link columns */}
-						<div className="flex gap-16 sm:gap-20">
-							{FOOTER_LINKS.map((col, i) => (
-								<div key={i} className="flex flex-col gap-3">
-									{col.links.map((link) =>
-										link.href.startsWith('http') ? (
-											<a
-												key={link.label}
-												href={link.href}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="text-[13px] sm:text-[14px] text-[#9CA3AF] hover:text-white transition-colors duration-300"
-												style={{
-													fontFamily:
-														'var(--font-inter), system-ui, sans-serif',
-													fontWeight: 400,
-												}}
-											>
-												{link.label}
-											</a>
-										) : (
-											<Link
-												key={link.label}
-												href={link.href}
-												className="text-[13px] sm:text-[14px] text-[#9CA3AF] hover:text-white transition-colors duration-300"
-												style={{
-													fontFamily:
-														'var(--font-inter), system-ui, sans-serif',
-													fontWeight: 400,
-												}}
-											>
-												{link.label}
-											</Link>
-										),
-									)}
-								</div>
-							))}
-						</div>
-					</div>
-
-					{/* Divider */}
-					<div className="h-px bg-white/10 mb-6" />
-
-					{/* Bottom row */}
-					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+			{/* Footer */}
+			<div className="w-full max-w-7xl mx-auto px-5 sm:px-8 pt-14 sm:pt-16 pb-6">
+				{/* Top row */}
+				<div className="flex flex-col sm:flex-row justify-between gap-10 sm:gap-8 mb-12">
+					{/* Logo + tagline */}
+					<div className="flex flex-col gap-3">
+						<Link
+							href="/"
+							className="flex items-center gap-2 w-fit"
+						>
+							<Image
+								src="/navlogo.png"
+								alt="Asterra"
+								width={130}
+								height={32}
+								className="h-7 w-auto"
+								draggable={false}
+							/>
+						</Link>
 						<p
-							className="text-[12px] sm:text-[13px] text-[#6B7280]"
+							className="text-[13px] text-[#6B7280]"
 							style={{
 								fontFamily:
 									'var(--font-inter), system-ui, sans-serif',
 								fontWeight: 400,
 							}}
 						>
-							&copy; {new Date().getFullYear()} Asterra&trade; is
-							a brand of Asterra Solutions Inc. All rights
-							reserved.
+							AI phone handling that answers calls, places orders, and books reservations.
 						</p>
+					</div>
 
-						<div className="flex items-center gap-4">
-							<a
-								href="mailto:contact@asterra.ca"
-								className="text-[#6B7280] hover:text-white transition-colors duration-300"
-							>
-								<FontAwesomeIcon
-									icon={faEnvelope}
-									className="w-4 h-4"
-								/>
-							</a>
-							<a
-								href="https://linkedin.com/company/teamasterra/"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-[#6B7280] hover:text-white transition-colors duration-300"
-							>
-								<FontAwesomeIcon
-									icon={faLinkedinIn}
-									className="w-4 h-4"
-								/>
-							</a>
-							<a
-								href="https://x.com/AsterraTeam"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-[#6B7280] hover:text-white transition-colors duration-300"
-							>
-								<FontAwesomeIcon
-									icon={faXTwitter}
-									className="w-4 h-4"
-								/>
-							</a>
-							<a
-								href="https://instagram.com/asterra.ai"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-[#6B7280] hover:text-white transition-colors duration-300"
-							>
-								<FontAwesomeIcon
-									icon={faInstagram}
-									className="w-4 h-4"
-								/>
-							</a>
-						</div>
+					{/* Link columns */}
+					<div className="flex gap-16 sm:gap-20">
+						{FOOTER_LINKS.map((col, i) => (
+							<div key={i} className="flex flex-col gap-3">
+								{col.links.map((link) =>
+									link.href.startsWith('http') ? (
+										<a
+											key={link.label}
+											href={link.href}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="text-[13px] sm:text-[14px] text-[#6B7280] hover:text-black transition-colors duration-300"
+											style={{
+												fontFamily:
+													'var(--font-inter), system-ui, sans-serif',
+												fontWeight: 400,
+											}}
+										>
+											{link.label}
+										</a>
+									) : (
+										<Link
+											key={link.label}
+											href={link.href}
+											className="text-[13px] sm:text-[14px] text-[#6B7280] hover:text-black transition-colors duration-300"
+											style={{
+												fontFamily:
+													'var(--font-inter), system-ui, sans-serif',
+												fontWeight: 400,
+											}}
+										>
+											{link.label}
+										</Link>
+									),
+								)}
+							</div>
+						))}
+					</div>
+				</div>
+
+				{/* Divider */}
+				<div className="h-px bg-black/10 mb-6" />
+
+				{/* Bottom row */}
+				<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+					<p
+						className="text-[12px] sm:text-[13px] text-[#6B7280]"
+						style={{
+							fontFamily:
+								'var(--font-inter), system-ui, sans-serif',
+							fontWeight: 400,
+						}}
+					>
+						&copy; {new Date().getFullYear()} Asterra&trade; is a
+						brand of Asterra Solutions Inc. All rights reserved.
+					</p>
+
+					<div className="flex items-center gap-4">
+						<a
+							href="mailto:contact@asterra.ca"
+							className="text-[#6B7280] hover:text-black transition-colors duration-300"
+						>
+							<FontAwesomeIcon
+								icon={faEnvelope}
+								className="w-4 h-4"
+							/>
+						</a>
+						<a
+							href="https://linkedin.com/company/teamasterra/"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-[#6B7280] hover:text-black transition-colors duration-300"
+						>
+							<FontAwesomeIcon
+								icon={faLinkedinIn}
+								className="w-4 h-4"
+							/>
+						</a>
+						<a
+							href="https://x.com/AsterraTeam"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-[#6B7280] hover:text-black transition-colors duration-300"
+						>
+							<FontAwesomeIcon
+								icon={faXTwitter}
+								className="w-4 h-4"
+							/>
+						</a>
+						<a
+							href="https://instagram.com/asterra.ai"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-[#6B7280] hover:text-black transition-colors duration-300"
+						>
+							<FontAwesomeIcon
+								icon={faInstagram}
+								className="w-4 h-4"
+							/>
+						</a>
 					</div>
 				</div>
 			</div>

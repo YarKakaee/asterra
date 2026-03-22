@@ -1,13 +1,48 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import OrderCard from './OrderCard';
 import BorderGlow from './BorderGlow';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const SHIMMER_TEXT = 'Smarter Phone Handling that Answers, Books, and Orders';
+
+function HeadingShimmer({ stage }) {
+	const spread = useMemo(() => SHIMMER_TEXT.length * 2, []);
+
+	return (
+		<motion.h1
+			className="text-[1.5rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] font-bold leading-[1.08] mb-5 inline-block bg-[length:250%_100%,auto] bg-clip-text text-transparent [background-repeat:no-repeat,padding-box]"
+			style={{
+				fontFamily: 'var(--font-inter), system-ui, sans-serif',
+				letterSpacing: '-0.03em',
+				opacity: stage >= 1 ? 1 : 0,
+				filter: stage >= 1 ? 'blur(0px)' : 'blur(8px)',
+				transform: stage >= 1 ? 'translateY(0)' : 'translateY(20px)',
+				transition:
+					'opacity 0.6s ease-in-out, filter 0.6s ease-in-out, transform 0.6s ease-in-out',
+				'--spread': `${spread}px`,
+				backgroundImage: `linear-gradient(90deg, #0000 calc(50% - ${spread}px), rgba(100,100,100,0.7), #0000 calc(50% + ${spread}px)), linear-gradient(#000, #000)`,
+			}}
+			initial={{ backgroundPosition: '100% center' }}
+			animate={stage >= 1 ? { backgroundPosition: '0% center' } : { backgroundPosition: '100% center' }}
+			transition={{
+				repeat: Infinity,
+				duration: 3,
+				ease: 'linear',
+			}}
+		>
+			Smarter Phone Handling that
+			<br />
+			Answers, Books, and Orders
+		</motion.h1>
+	);
+}
 
 export default function HeroSection() {
 	const [stage, setStage] = useState(0);
@@ -294,26 +329,7 @@ export default function HeroSection() {
 				<div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 sm:px-8">
 					{/* Text block */}
 					<div className="text-center mb-10 sm:mb-14">
-						<h1
-							className="text-[1.5rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] font-bold text-black leading-[1.08] mb-5"
-							style={{
-								fontFamily:
-									'var(--font-inter), system-ui, sans-serif',
-								letterSpacing: '-0.03em',
-								opacity: stage >= 1 ? 1 : 0,
-								filter: stage >= 1 ? 'blur(0px)' : 'blur(8px)',
-								transform:
-									stage >= 1
-										? 'translateY(0)'
-										: 'translateY(20px)',
-								transition:
-									'opacity 0.6s ease-in-out, filter 0.6s ease-in-out, transform 0.6s ease-in-out',
-							}}
-						>
-							Smarter Phone Handling that
-							<br />
-							Answers, Books, and Orders
-						</h1>
+						<HeadingShimmer stage={stage} />
 
 						<p
 							className="text-[13px] sm:text-[18px] max-w-[480px] mx-auto"
