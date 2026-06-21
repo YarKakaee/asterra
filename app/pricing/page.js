@@ -2,7 +2,8 @@ import Footer from '../components/Footer';
 
 export const metadata = {
 	title: 'Pricing',
-	description: 'Simple, flat monthly pricing for Asterra\'s AI phone handling. One predictable number every month with no per-minute charges.',
+	description:
+		"Simple, flat monthly pricing for Asterra's AI phone handling. One predictable number every month with no per-minute charges.",
 };
 
 const CHECK = (
@@ -27,7 +28,7 @@ const CHECK = (
 const PLANS = [
 	{
 		name: 'Starter',
-		price: 299,
+		price: 150,
 		subline: 'If you get around 25 calls a day',
 		featuresLabel: "WHAT'S INCLUDED",
 		features: [
@@ -44,7 +45,7 @@ const PLANS = [
 	},
 	{
 		name: 'Standard',
-		price: 599,
+		price: 250,
 		subline: 'If you get around 50 calls a day',
 		featuresLabel: 'EVERYTHING IN STARTER, PLUS',
 		features: [
@@ -59,7 +60,7 @@ const PLANS = [
 	},
 	{
 		name: 'Busy',
-		price: 799,
+		price: 350,
 		subline: 'If you get around 75 calls a day',
 		featuresLabel: 'EVERYTHING IN STANDARD, PLUS',
 		features: [
