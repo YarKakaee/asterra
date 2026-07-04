@@ -28,7 +28,7 @@ const CHECK = (
 const PLANS = [
 	{
 		name: 'Starter',
-		price: 199,
+		price: 249,
 		subline: 'If you get around 25 calls a day',
 		featuresLabel: "WHAT'S INCLUDED",
 		features: [
@@ -45,7 +45,7 @@ const PLANS = [
 	},
 	{
 		name: 'Standard',
-		price: 249,
+		price: 299,
 		subline: 'If you get around 50 calls a day',
 		featuresLabel: 'EVERYTHING IN STARTER, PLUS',
 		features: [
@@ -60,7 +60,7 @@ const PLANS = [
 	},
 	{
 		name: 'Busy',
-		price: 299,
+		price: 349,
 		subline: 'If you get around 75 calls a day',
 		featuresLabel: 'EVERYTHING IN STANDARD, PLUS',
 		features: [
